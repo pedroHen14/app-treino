@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">app-treino</string>
+    <string name="app_name">Treino</string>
+
+    <!-- Navegação -->
+    <string name="nav_today">Hoje</string>
+    <string name="nav_workouts">Treinos</string>
+    <string name="nav_history">Histórico</string>
+
+    <!-- Placeholders -->
+    <string name="workouts_coming_soon">Em breve: modelos de treino e agenda semanal.</string>
+    <string name="history_coming_soon">Em breve: histórico de sessões e progressão.</string>
 </resources>
