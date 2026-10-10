@@ -10,6 +10,57 @@
     <string name="today_workout_card_title">Treino do dia</string>
     <string name="today_workout_card_empty">Nenhum treino agendado ainda.</string>
 
+    <!-- Ações comuns -->
+    <string name="action_navigate_up">Voltar</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_save">Salvar</string>
+    <string name="action_edit">Editar</string>
+    <string name="action_archive">Arquivar</string>
+    <string name="action_unarchive">Desarquivar</string>
+    <string name="action_delete">Excluir</string>
+    <string name="action_undo">Desfazer</string>
+
+    <!-- Grupos musculares -->
+    <string name="muscle_group_chest">Peito</string>
+    <string name="muscle_group_back">Costas</string>
+    <string name="muscle_group_shoulders">Ombros</string>
+    <string name="muscle_group_biceps">Bíceps</string>
+    <string name="muscle_group_triceps">Tríceps</string>
+    <string name="muscle_group_forearms">Antebraços</string>
+    <string name="muscle_group_quadriceps">Quadríceps</string>
+    <string name="muscle_group_hamstrings">Posteriores</string>
+    <string name="muscle_group_glutes">Glúteos</string>
+    <string name="muscle_group_calves">Panturrilhas</string>
+    <string name="muscle_group_abs">Abdômen</string>
+
+    <!-- Catálogo de exercícios -->
+    <string name="exercise_catalog_title">Exercícios</string>
+    <string name="exercise_search_hint">Buscar exercício</string>
+    <string name="exercise_filter_all">Todos</string>
+    <string name="exercise_show_archived">Mostrar arquivados</string>
+    <string name="exercise_list_empty">Nenhum exercício encontrado.</string>
+    <string name="exercise_add">Novo exercício</string>
+    <string name="exercise_item_options">Opções do exercício</string>
+    <string name="exercise_label_custom">Personalizado</string>
+    <string name="exercise_label_archived">Arquivado</string>
+    <string name="exercise_archived">Exercício arquivado</string>
+    <string name="exercise_unarchived">Exercício desarquivado</string>
+    <string name="exercise_deleted">Exercício excluído</string>
+    <string name="exercise_delete_title">Excluir \"%1$s\"?</string>
+    <string name="exercise_delete_message">Esta ação não pode ser desfeita.</string>
+    <string name="exercise_cannot_delete_title">Não é possível excluir</string>
+    <string name="exercise_form_new_title">Novo exercício</string>
+    <string name="exercise_form_edit_title">Editar exercício</string>
+    <string name="exercise_form_name">Nome</string>
+    <string name="exercise_form_muscle_group">Grupo muscular</string>
+    <string name="exercise_error_name_blank">Informe o nome do exercício.</string>
+    <string name="exercise_error_name_exists">Já existe um exercício com esse nome.</string>
+    <string name="exercise_error_muscle_group_required">Selecione o grupo muscular.</string>
+    <string name="exercise_error_not_found">Exercício não encontrado.</string>
+    <string name="exercise_error_not_custom">Exercícios do catálogo inicial só podem ser arquivados.</string>
+    <string name="exercise_error_used_in_session">Este exercício já foi usado em uma sessão de treino. Você pode arquivá-lo: ele some da seleção, mas continua no histórico.</string>
+    <string name="exercise_error_used_in_template">Este exercício faz parte de um modelo de treino. Você pode arquivá-lo para que ele não apareça mais na seleção.</string>
+
     <!-- Placeholders -->
     <string name="workouts_coming_soon">Em breve: modelos de treino e agenda semanal.</string>
     <string name="history_coming_soon">Em breve: histórico de sessões e progressão.</string>
