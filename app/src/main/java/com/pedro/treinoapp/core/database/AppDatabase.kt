@@ -3,6 +3,7 @@ package com.pedro.treinoapp.core.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.pedro.treinoapp.feature.exercise.data.local.ExerciseDao
 import com.pedro.treinoapp.feature.exercise.data.local.ExerciseEntity
 import com.pedro.treinoapp.feature.session.data.local.SessionExerciseEntity
 import com.pedro.treinoapp.feature.session.data.local.WorkoutSessionEntity
@@ -26,6 +27,8 @@ import com.pedro.treinoapp.feature.workout.data.local.WorkoutTemplateEntity
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
+
+    abstract fun exerciseDao(): ExerciseDao
 
     companion object {
         const val NAME = "treino.db"
