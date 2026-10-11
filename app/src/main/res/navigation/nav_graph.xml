@@ -21,6 +21,26 @@
             android:id="@+id/action_workout_to_exerciseCatalog"
             app:destination="@id/exerciseCatalogFragment" />
 
+        <action
+            android:id="@+id/action_workout_to_templateEditor"
+            app:destination="@id/templateEditorFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/templateEditorFragment"
+        android:name="com.pedro.treinoapp.feature.workout.presentation.editor.TemplateEditorFragment"
+        tools:layout="@layout/fragment_template_editor">
+
+        <argument
+            android:name="templateId"
+            android:defaultValue="-1L"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_templateEditor_to_exerciseCatalog"
+            app:destination="@id/exerciseCatalogFragment" />
+
     </fragment>
 
     <fragment
@@ -28,6 +48,17 @@
         android:name="com.pedro.treinoapp.feature.exercise.presentation.catalog.ExerciseCatalogFragment"
         android:label="@string/exercise_catalog_title"
         tools:layout="@layout/fragment_exercise_catalog">
+
+        <argument
+            android:name="selectionMode"
+            android:defaultValue="false"
+            app:argType="boolean" />
+
+        <argument
+            android:name="excludedIds"
+            android:defaultValue="@null"
+            app:argType="long[]"
+            app:nullable="true" />
 
         <action
             android:id="@+id/action_exerciseCatalog_to_exerciseForm"

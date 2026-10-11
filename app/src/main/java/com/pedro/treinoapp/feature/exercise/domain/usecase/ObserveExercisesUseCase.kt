@@ -1,8 +1,8 @@
 package com.pedro.treinoapp.feature.exercise.domain.usecase
 
+import com.pedro.treinoapp.core.text.toSearchKey
 import com.pedro.treinoapp.feature.exercise.domain.model.Exercise
 import com.pedro.treinoapp.feature.exercise.domain.model.ExerciseFilter
-import com.pedro.treinoapp.feature.exercise.domain.model.toSearchKey
 import com.pedro.treinoapp.feature.exercise.domain.repository.ExerciseRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine

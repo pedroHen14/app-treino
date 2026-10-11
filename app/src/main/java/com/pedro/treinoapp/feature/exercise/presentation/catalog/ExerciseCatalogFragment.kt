@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -33,10 +34,18 @@ class ExerciseCatalogFragment : Fragment() {
 
     private val viewModel: ExerciseCatalogViewModel by viewModels()
 
-    private val adapter = ExerciseAdapter(
-        onClick = { if (it.isCustom) openForm(it.id) },
-        onMenuClick = ::showItemMenu,
-    )
+    private val adapter by lazy {
+        ExerciseAdapter(
+            selectionMode = viewModel.isSelectionMode,
+            onClick = {
+                when {
+                    viewModel.isSelectionMode -> viewModel.toggleSelection(it)
+                    it.isCustom -> openForm(it.id)
+                }
+            },
+            onMenuClick = ::showItemMenu,
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,15 +62,19 @@ class ExerciseCatalogFragment : Fragment() {
         setUpMuscleGroupChips()
         binding.list.adapter = adapter
         binding.search.doAfterTextChanged { viewModel.onQueryChange(it?.toString().orEmpty()) }
-        binding.addButton.setOnClickListener { openForm(exerciseId = null) }
+        if (viewModel.isSelectionMode) binding.addButton.isVisible = false
+        binding.addButton.setOnClickListener {
+            if (viewModel.isSelectionMode) returnSelection() else openForm(exerciseId = null)
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.uiState.collect { state ->
-                        adapter.submitList(state.exercises)
+                        adapter.submitList(state.items)
                         binding.emptyMessage.visibility =
-                            if (!state.isLoading && state.exercises.isEmpty()) View.VISIBLE else View.GONE
+                            if (!state.isLoading && state.items.isEmpty()) View.VISIBLE else View.GONE
+                        if (viewModel.isSelectionMode) renderSelectionButton(state.selectedCount)
                     }
                 }
                 launch { viewModel.events.collect(::handleEvent) }
@@ -69,8 +82,24 @@ class ExerciseCatalogFragment : Fragment() {
         }
     }
 
+    private fun renderSelectionButton(selectedCount: Int) {
+        binding.addButton.text = getString(R.string.exercise_add_selected, selectedCount)
+        if (selectedCount > 0) binding.addButton.show() else binding.addButton.hide()
+    }
+
+    private fun returnSelection() {
+        val navController = findNavController()
+        navController.previousBackStackEntry?.savedStateHandle?.set(RESULT_SELECTED_IDS, viewModel.selection)
+        navController.navigateUp()
+    }
+
     private fun setUpToolbar() {
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
+        if (viewModel.isSelectionMode) {
+            binding.toolbar.setTitle(R.string.exercise_select_title)
+            binding.toolbar.menu.clear()
+            return
+        }
         val showArchived = binding.toolbar.menu.findItem(R.id.action_show_archived)
         showArchived.isChecked = viewModel.filter.value.includeArchived
         binding.toolbar.setOnMenuItemClickListener { item ->
@@ -157,5 +186,16 @@ class ExerciseCatalogFragment : Fragment() {
         super.onDestroyView()
         binding.list.adapter = null
         _binding = null
+    }
+
+    companion object {
+        /** Abre o catálogo para escolher exercícios; a escolha volta em [RESULT_SELECTED_IDS]. */
+        const val ARG_SELECTION_MODE = "selectionMode"
+
+        /** Exercícios que não devem aparecer no modo seleção (ex.: os que o modelo já tem). */
+        const val ARG_EXCLUDED_IDS = "excludedIds"
+
+        /** `LongArray` gravado no `SavedStateHandle` de quem abriu o catálogo. */
+        const val RESULT_SELECTED_IDS = "selectedExerciseIds"
     }
 }

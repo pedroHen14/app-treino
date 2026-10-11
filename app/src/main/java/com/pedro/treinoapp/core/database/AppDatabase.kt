@@ -9,7 +9,9 @@ import com.pedro.treinoapp.feature.session.data.local.SessionExerciseEntity
 import com.pedro.treinoapp.feature.session.data.local.WorkoutSessionEntity
 import com.pedro.treinoapp.feature.session.data.local.WorkoutSetEntity
 import com.pedro.treinoapp.feature.workout.data.local.TemplateExerciseEntity
+import com.pedro.treinoapp.feature.workout.data.local.WeeklyScheduleDao
 import com.pedro.treinoapp.feature.workout.data.local.WeeklyScheduleEntity
+import com.pedro.treinoapp.feature.workout.data.local.WorkoutTemplateDao
 import com.pedro.treinoapp.feature.workout.data.local.WorkoutTemplateEntity
 
 @Database(
@@ -29,6 +31,10 @@ import com.pedro.treinoapp.feature.workout.data.local.WorkoutTemplateEntity
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun exerciseDao(): ExerciseDao
+
+    abstract fun workoutTemplateDao(): WorkoutTemplateDao
+
+    abstract fun weeklyScheduleDao(): WeeklyScheduleDao
 
     companion object {
         const val NAME = "treino.db"

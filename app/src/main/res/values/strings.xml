@@ -43,6 +43,10 @@
     <string name="exercise_item_options">Opções do exercício</string>
     <string name="exercise_label_custom">Personalizado</string>
     <string name="exercise_label_archived">Arquivado</string>
+    <string name="exercise_select_title">Adicionar exercícios</string>
+    <string name="exercise_add_selected">Adicionar (%1$d)</string>
+    <string name="exercise_state_selected">Selecionado</string>
+    <string name="exercise_state_not_selected">Não selecionado</string>
     <string name="exercise_archived">Exercício arquivado</string>
     <string name="exercise_unarchived">Exercício desarquivado</string>
     <string name="exercise_deleted">Exercício excluído</string>
@@ -61,7 +65,75 @@
     <string name="exercise_error_used_in_session">Este exercício já foi usado em uma sessão de treino. Você pode arquivá-lo: ele some da seleção, mas continua no histórico.</string>
     <string name="exercise_error_used_in_template">Este exercício faz parte de um modelo de treino. Você pode arquivá-lo para que ele não apareça mais na seleção.</string>
 
+    <!-- Dias da semana -->
+    <string name="day_monday">Segunda</string>
+    <string name="day_tuesday">Terça</string>
+    <string name="day_wednesday">Quarta</string>
+    <string name="day_thursday">Quinta</string>
+    <string name="day_friday">Sexta</string>
+    <string name="day_saturday">Sábado</string>
+    <string name="day_sunday">Domingo</string>
+    <string name="day_monday_short">Seg</string>
+    <string name="day_tuesday_short">Ter</string>
+    <string name="day_wednesday_short">Qua</string>
+    <string name="day_thursday_short">Qui</string>
+    <string name="day_friday_short">Sex</string>
+    <string name="day_saturday_short">Sáb</string>
+    <string name="day_sunday_short">Dom</string>
+    <!-- "Segunda, terça e sexta" -->
+    <string name="list_last_separator">%1$s e %2$s</string>
+
+    <!-- Treinos e agenda -->
+    <string name="schedule_header">Agenda da semana</string>
+    <string name="schedule_rest">Descanso</string>
+    <string name="schedule_day_description">%1$s: %2$s. Toque para alterar.</string>
+    <string name="templates_header">Modelos</string>
+    <string name="templates_empty">Nenhum modelo ainda. Crie um modelo, como \"Upper\" ou \"Lower\", para montar sua agenda.</string>
+    <string name="template_new">Novo modelo</string>
+    <string name="template_item_options">Opções do modelo %1$s</string>
+    <string name="action_duplicate">Duplicar</string>
+    <plurals name="template_exercise_count">
+        <item quantity="one">%d exercício</item>
+        <item quantity="other">%d exercícios</item>
+    </plurals>
+    <string name="template_copy_name">%1$s (cópia)</string>
+    <string name="template_copy_name_numbered">%1$s (cópia %2$d)</string>
+    <string name="template_duplicated">Modelo duplicado</string>
+    <string name="template_deleted">Modelo excluído</string>
+    <string name="template_delete_title">Excluir \"%1$s\"?</string>
+    <string name="template_delete_message">Esta ação não pode ser desfeita. Sessões já registradas continuam no histórico.</string>
+    <!-- %1$s: dias da agenda, ex.: "segunda e quinta" -->
+    <plurals name="template_delete_message_scheduled">
+        <item quantity="one">Este modelo está na agenda de %1$s, que vai virar dia de descanso. Sessões já registradas continuam no histórico.</item>
+        <item quantity="other">Este modelo está na agenda de %1$s, que vão virar dias de descanso. Sessões já registradas continuam no histórico.</item>
+    </plurals>
+
+    <!-- Editor de modelo -->
+    <string name="template_new_title">Novo modelo</string>
+    <string name="template_edit_title">Editar modelo</string>
+    <string name="template_name">Nome do modelo</string>
+    <string name="template_exercises_header">Exercícios</string>
+    <string name="template_drag_hint">Arraste para reordenar</string>
+    <string name="template_exercises_empty">Nenhum exercício. Adicione pelo menos um.</string>
+    <string name="template_add_exercise">Adicionar exercício</string>
+    <string name="template_drag_handle">Arrastar para reordenar</string>
+    <string name="template_remove_exercise">Remover %1$s</string>
+    <string name="template_sets">Séries</string>
+    <string name="template_reps_min">Reps</string>
+    <string name="template_reps_max">Até</string>
+    <string name="template_reps_max_placeholder">Fixo</string>
+    <string name="template_discard_title">Descartar alterações?</string>
+    <string name="template_discard_message">As alterações neste modelo não foram salvas.</string>
+    <string name="template_discard">Descartar</string>
+    <string name="template_keep_editing">Continuar editando</string>
+    <string name="template_error_name_blank">Informe o nome do modelo.</string>
+    <string name="template_error_name_exists">Já existe um modelo com esse nome.</string>
+    <string name="template_error_no_exercises">Adicione pelo menos um exercício.</string>
+    <string name="template_error_not_found">Modelo não encontrado.</string>
+    <string name="template_error_duplicate_exercise">Este exercício já está no modelo.</string>
+    <string name="template_error_sets">Informe de %1$d a %2$d séries.</string>
+    <string name="template_error_reps">Informe repetições de %1$d a %2$d, com o mínimo menor ou igual ao máximo.</string>
+
     <!-- Placeholders -->
-    <string name="workouts_coming_soon">Em breve: modelos de treino e agenda semanal.</string>
     <string name="history_coming_soon">Em breve: histórico de sessões e progressão.</string>
 </resources>
