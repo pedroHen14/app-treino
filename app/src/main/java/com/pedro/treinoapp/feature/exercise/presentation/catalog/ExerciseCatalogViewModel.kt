@@ -58,6 +58,9 @@ class ExerciseCatalogViewModel @Inject constructor(
 
     val isSelectionMode: Boolean = savedStateHandle[ExerciseCatalogFragment.ARG_SELECTION_MODE] ?: false
 
+    /** Seleção única: o primeiro toque já devolve o exercício (ex.: trocar um exercício da sessão). */
+    val isSingleSelection: Boolean = savedStateHandle[ExerciseCatalogFragment.ARG_SINGLE_SELECTION] ?: false
+
     private val excludedIds: Set<Long> =
         savedStateHandle.get<LongArray>(ExerciseCatalogFragment.ARG_EXCLUDED_IDS)?.toSet().orEmpty()
 

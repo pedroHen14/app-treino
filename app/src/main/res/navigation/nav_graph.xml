@@ -5,6 +5,16 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/todayFragment">
 
+    <!-- Abre a sessão em andamento de qualquer lugar (tela Hoje, escolha de treino, retomada ao abrir o app). -->
+    <action
+        android:id="@+id/action_global_session"
+        app:destination="@id/sessionFragment"
+        app:launchSingleTop="true" />
+
+    <action
+        android:id="@+id/action_global_startWorkout"
+        app:destination="@id/startWorkoutBottomSheet" />
+
     <fragment
         android:id="@+id/todayFragment"
         android:name="com.pedro.treinoapp.feature.today.presentation.TodayFragment"
@@ -55,6 +65,11 @@
             app:argType="boolean" />
 
         <argument
+            android:name="singleSelection"
+            android:defaultValue="false"
+            app:argType="boolean" />
+
+        <argument
             android:name="excludedIds"
             android:defaultValue="@null"
             app:argType="long[]"
@@ -77,6 +92,26 @@
             app:argType="long" />
 
     </dialog>
+
+    <fragment
+        android:id="@+id/sessionFragment"
+        android:name="com.pedro.treinoapp.feature.session.presentation.SessionFragment"
+        tools:layout="@layout/fragment_session">
+
+        <argument
+            android:name="sessionId"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_session_to_exerciseCatalog"
+            app:destination="@id/exerciseCatalogFragment" />
+
+    </fragment>
+
+    <dialog
+        android:id="@+id/startWorkoutBottomSheet"
+        android:name="com.pedro.treinoapp.feature.session.presentation.start.StartWorkoutBottomSheet"
+        tools:layout="@layout/bottom_sheet_start_workout" />
 
     <fragment
         android:id="@+id/historyFragment"

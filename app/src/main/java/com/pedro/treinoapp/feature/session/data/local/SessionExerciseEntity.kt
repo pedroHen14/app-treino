@@ -7,6 +7,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.pedro.treinoapp.feature.exercise.data.local.ExerciseEntity
 
+/** O alvo de repetições é copiado do modelo ao iniciar a sessão; nulo quando o exercício entrou avulso. */
 @Entity(
     tableName = "session_exercise",
     foreignKeys = [
@@ -30,4 +31,6 @@ data class SessionExerciseEntity(
     @ColumnInfo(name = "session_id") val sessionId: Long,
     @ColumnInfo(name = "exercise_id") val exerciseId: Long,
     @ColumnInfo(name = "position") val position: Int,
+    @ColumnInfo(name = "target_reps_min") val targetRepsMin: Int? = null,
+    @ColumnInfo(name = "target_reps_max") val targetRepsMax: Int? = null,
 )

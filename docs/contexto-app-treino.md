@@ -14,8 +14,8 @@ App Android nativo (Kotlin, XML Views) para logbook de treinos de musculação, 
 - template_exercise: id, template_id (FK cascade), exercise_id (FK restrict), position, target_sets, target_reps_min, target_reps_max
 - weekly_schedule: day_of_week (PK), template_id (FK set null = descanso)
 - workout_session: id, template_id (FK set null), template_name (cópia do nome), date (epoch day), started_at, finished_at (nulo = em andamento), makeup_for_date (dia reposto, epoch day), notes
-- session_exercise: id, session_id (FK cascade), exercise_id (FK restrict), position
-- workout_set: id, session_exercise_id (FK cascade), position, weight_grams (Int), reps, is_completed, completed_at
+- session_exercise: id, session_id (FK cascade), exercise_id (FK restrict), position, target_reps_min, target_reps_max (alvo copiado do modelo, nulo em exercício avulso)
+- workout_set: id, session_exercise_id (FK cascade), position, weight_grams (Int, nulo = não preenchida), reps (nulo = não preenchida), is_completed, completed_at
 
 Decisões:
 - O que é planejado (exercise, workout_template, template_exercise, weekly_schedule) fica separado do que é executado (workout_session, session_exercise, workout_set). Editar um modelo nunca altera o histórico.

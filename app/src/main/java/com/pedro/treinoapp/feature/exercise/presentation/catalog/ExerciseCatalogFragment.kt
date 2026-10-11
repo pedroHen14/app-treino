@@ -39,6 +39,7 @@ class ExerciseCatalogFragment : Fragment() {
             selectionMode = viewModel.isSelectionMode,
             onClick = {
                 when {
+                    viewModel.isSingleSelection -> returnSelection(longArrayOf(it.id))
                     viewModel.isSelectionMode -> viewModel.toggleSelection(it)
                     it.isCustom -> openForm(it.id)
                 }
@@ -74,7 +75,9 @@ class ExerciseCatalogFragment : Fragment() {
                         adapter.submitList(state.items)
                         binding.emptyMessage.visibility =
                             if (!state.isLoading && state.items.isEmpty()) View.VISIBLE else View.GONE
-                        if (viewModel.isSelectionMode) renderSelectionButton(state.selectedCount)
+                        if (viewModel.isSelectionMode && !viewModel.isSingleSelection) {
+                            renderSelectionButton(state.selectedCount)
+                        }
                     }
                 }
                 launch { viewModel.events.collect(::handleEvent) }
@@ -87,16 +90,18 @@ class ExerciseCatalogFragment : Fragment() {
         if (selectedCount > 0) binding.addButton.show() else binding.addButton.hide()
     }
 
-    private fun returnSelection() {
+    private fun returnSelection(ids: LongArray = viewModel.selection) {
         val navController = findNavController()
-        navController.previousBackStackEntry?.savedStateHandle?.set(RESULT_SELECTED_IDS, viewModel.selection)
+        navController.previousBackStackEntry?.savedStateHandle?.set(RESULT_SELECTED_IDS, ids)
         navController.navigateUp()
     }
 
     private fun setUpToolbar() {
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         if (viewModel.isSelectionMode) {
-            binding.toolbar.setTitle(R.string.exercise_select_title)
+            binding.toolbar.setTitle(
+                if (viewModel.isSingleSelection) R.string.exercise_select_one_title else R.string.exercise_select_title,
+            )
             binding.toolbar.menu.clear()
             return
         }
@@ -191,6 +196,9 @@ class ExerciseCatalogFragment : Fragment() {
     companion object {
         /** Abre o catálogo para escolher exercícios; a escolha volta em [RESULT_SELECTED_IDS]. */
         const val ARG_SELECTION_MODE = "selectionMode"
+
+        /** Com o modo seleção: um toque escolhe o exercício e fecha o catálogo. */
+        const val ARG_SINGLE_SELECTION = "singleSelection"
 
         /** Exercícios que não devem aparecer no modo seleção (ex.: os que o modelo já tem). */
         const val ARG_EXCLUDED_IDS = "excludedIds"
