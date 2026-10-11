@@ -119,8 +119,8 @@
     <string name="template_drag_handle">Arrastar para reordenar</string>
     <string name="template_remove_exercise">Remover %1$s</string>
     <string name="template_sets">Séries</string>
-    <string name="template_reps_min">Reps mín.</string>
-    <string name="template_reps_max">Reps máx.</string>
+    <string name="template_reps_min">Reps</string>
+    <string name="template_reps_max">Até</string>
     <string name="template_reps_max_placeholder">Fixo</string>
     <string name="template_discard_title">Descartar alterações?</string>
     <string name="template_discard_message">As alterações neste modelo não foram salvas.</string>
