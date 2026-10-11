@@ -8,7 +8,24 @@
 
     <!-- Hoje -->
     <string name="today_workout_card_title">Treino do dia</string>
-    <string name="today_workout_card_empty">Nenhum treino agendado ainda.</string>
+    <string name="today_workout_scheduled">Previsto na agenda de hoje</string>
+    <string name="today_workout_rest">Nenhum treino previsto para hoje.</string>
+    <string name="today_workout_done">Treino de hoje concluído</string>
+    <string name="today_workout_in_progress">Treino em andamento</string>
+    <string name="today_workout_start">Iniciar treino</string>
+    <string name="today_workout_resume">Continuar treino</string>
+    <string name="today_workout_other">Treino avulso</string>
+
+    <!-- Escolha de treino avulso -->
+    <string name="start_workout_title">Iniciar treino avulso</string>
+    <string name="start_workout_no_templates">Nenhum modelo criado. Você pode começar uma sessão vazia.</string>
+    <string name="start_workout_empty">Sessão vazia</string>
+    <string name="start_workout_empty_details">Adicione os exercícios durante o treino</string>
+    <string name="start_workout_makeup_title">É uma reposição?</string>
+    <!-- %1$s: modelo; %2$s: dia da semana, ex.: "segunda" -->
+    <string name="start_workout_makeup_message">%1$s estava agendado para %2$s e ainda não foi feito. Este treino é a reposição desse dia?</string>
+    <string name="start_workout_makeup_yes">Sim, é reposição</string>
+    <string name="start_workout_makeup_no">Não</string>
 
     <!-- Ações comuns -->
     <string name="action_navigate_up">Voltar</string>

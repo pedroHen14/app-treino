@@ -11,6 +11,10 @@
         app:destination="@id/sessionFragment"
         app:launchSingleTop="true" />
 
+    <action
+        android:id="@+id/action_global_startWorkout"
+        app:destination="@id/startWorkoutBottomSheet" />
+
     <fragment
         android:id="@+id/todayFragment"
         android:name="com.pedro.treinoapp.feature.today.presentation.TodayFragment"
@@ -103,6 +107,11 @@
             app:destination="@id/exerciseCatalogFragment" />
 
     </fragment>
+
+    <dialog
+        android:id="@+id/startWorkoutBottomSheet"
+        android:name="com.pedro.treinoapp.feature.session.presentation.start.StartWorkoutBottomSheet"
+        tools:layout="@layout/bottom_sheet_start_workout" />
 
     <fragment
         android:id="@+id/historyFragment"

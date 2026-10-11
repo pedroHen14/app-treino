@@ -1,7 +1,7 @@
 package com.pedro.treinoapp.feature.today.presentation
 
 import androidx.fragment.app.Fragment
-import com.pedro.treinoapp.feature.workout.presentation.today.TodayWorkoutCardFragment
+import com.pedro.treinoapp.feature.session.presentation.today.TodayWorkoutCardFragment
 
 /**
  * Cards exibidos na tela Hoje, na ordem em que aparecem. Cada card é um Fragment
