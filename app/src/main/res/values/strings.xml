@@ -44,6 +44,7 @@
     <string name="exercise_label_custom">Personalizado</string>
     <string name="exercise_label_archived">Arquivado</string>
     <string name="exercise_select_title">Adicionar exercícios</string>
+    <string name="exercise_select_one_title">Trocar exercício</string>
     <string name="exercise_add_selected">Adicionar (%1$d)</string>
     <string name="exercise_state_selected">Selecionado</string>
     <string name="exercise_state_not_selected">Não selecionado</string>
@@ -133,6 +134,66 @@
     <string name="template_error_duplicate_exercise">Este exercício já está no modelo.</string>
     <string name="template_error_sets">Informe de %1$d a %2$d séries.</string>
     <string name="template_error_reps">Informe repetições de %1$d a %2$d, com o mínimo menor ou igual ao máximo.</string>
+
+    <!-- Sessão de treino -->
+    <string name="session_free_title">Treino livre</string>
+    <string name="session_empty">Nenhum exercício nesta sessão. Adicione o primeiro.</string>
+    <string name="session_add_exercise">Adicionar exercício</string>
+    <string name="session_add_set">Adicionar série</string>
+    <string name="session_exercise_options">Opções de %1$s</string>
+    <!-- %1$s: "8–12" ou "10" -->
+    <string name="session_target_reps">Alvo: %1$s reps</string>
+    <string name="session_weight">Carga (kg)</string>
+    <string name="session_weight_placeholder">kg</string>
+    <string name="session_weight_minus">Diminuir 0,5 kg</string>
+    <string name="session_weight_plus">Aumentar 0,5 kg</string>
+    <string name="session_reps">Reps</string>
+    <string name="session_set_done">Série %1$d concluída</string>
+    <string name="session_remove_set">Remover série %1$d</string>
+    <string name="session_replace_exercise">Trocar exercício</string>
+    <string name="session_remove_exercise">Remover exercício</string>
+    <string name="session_remove_exercise_title">Remover \"%1$s\"?</string>
+    <string name="session_remove_exercise_message">As séries deste exercício saem da sessão. O modelo não muda.</string>
+    <string name="session_finish">Finalizar</string>
+    <string name="session_finish_title">Finalizar treino?</string>
+    <string name="session_finish_message">A sessão será salva no histórico.</string>
+    <plurals name="session_finish_pending_message">
+        <item quantity="one">%d série não foi concluída e será descartada. Exercícios sem séries concluídas saem da sessão.</item>
+        <item quantity="other">%d séries não foram concluídas e serão descartadas. Exercícios sem séries concluídas saem da sessão.</item>
+    </plurals>
+    <string name="session_keep_training">Continuar treinando</string>
+    <string name="session_no_completed_title">Nenhuma série concluída</string>
+    <string name="session_no_completed_message">Não há nada para salvar no histórico. Deseja descartar esta sessão?</string>
+    <string name="session_discard">Cancelar treino</string>
+    <string name="session_discard_title">Cancelar treino?</string>
+    <string name="session_discard_message">A sessão será descartada e nada ficará no histórico.</string>
+    <string name="session_saved">Treino salvo no histórico</string>
+    <string name="session_discarded">Treino cancelado</string>
+    <string name="session_rest_idle">Descanso</string>
+    <!-- %1$s: tempo restante, ex.: "1:30" -->
+    <string name="session_rest_running">Descanso %1$s</string>
+    <string name="session_rest_paused">Pausado %1$s</string>
+    <string name="session_rest_finished">Descanso concluído</string>
+    <string name="session_rest_default">Padrão %1$s</string>
+    <string name="session_rest_dismiss">OK</string>
+    <string name="session_rest_duration">Tempo padrão de descanso</string>
+    <string name="session_rest_minus">−15s</string>
+    <string name="session_rest_plus">+15s</string>
+    <string name="session_rest_minus_description">Diminuir 15 segundos</string>
+    <string name="session_rest_plus_description">Aumentar 15 segundos</string>
+    <string name="session_rest_pause">Pausar descanso</string>
+    <string name="session_rest_resume">Retomar descanso</string>
+    <string name="session_rest_skip">Pular descanso</string>
+    <string name="session_error_already_active">Já existe um treino em andamento. Finalize ou cancele antes de iniciar outro.</string>
+    <string name="session_error_not_found">Sessão não encontrada ou já finalizada.</string>
+    <string name="session_error_makeup_date">A reposição só vale para dias anteriores desta semana.</string>
+    <string name="session_error_weight">Carga em kg, com incremento mínimo de 0,5 kg.</string>
+    <string name="session_error_reps">Informe repetições de %1$d a %2$d.</string>
+    <string name="session_error_missing_values">Preencha carga e repetições para concluir a série.</string>
+    <string name="session_error_too_many_sets">Cada exercício pode ter até %1$d séries.</string>
+    <string name="session_error_duplicate_exercise">Este exercício já está na sessão.</string>
+    <string name="session_error_no_completed_sets">Conclua pelo menos uma série para salvar o treino.</string>
+    <string name="session_error_rest_duration">O descanso deve ficar entre %1$s e %2$s.</string>
 
     <!-- Placeholders -->
     <string name="history_coming_soon">Em breve: histórico de sessões e progressão.</string>

@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Aviso de fim do descanso entre séries. -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:name=".TreinoApplication"
         android:allowBackup="true"
