@@ -1,6 +1,7 @@
 package com.pedro.treinoapp.feature.exercise.presentation.catalog
 
 import androidx.annotation.StringRes
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pedro.treinoapp.R
@@ -21,7 +22,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -29,8 +30,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class ExerciseCatalogUiState(
-    val exercises: List<Exercise> = emptyList(),
+    val items: List<ExerciseListItem> = emptyList(),
     val isLoading: Boolean = true,
+    val selectedCount: Int = 0,
 )
 
 sealed interface ExerciseCatalogEvent {
@@ -41,20 +43,43 @@ sealed interface ExerciseCatalogEvent {
     data class OfferArchive(val exercise: Exercise, @StringRes val reasonRes: Int) : ExerciseCatalogEvent
 }
 
+/**
+ * No modo seleção (aberto pelo editor de modelo) o catálogo esconde arquivados e os exercícios
+ * que o modelo já tem, e permite marcar vários. A ordem dos ids selecionados é a ordem dos toques.
+ */
 @HiltViewModel
 class ExerciseCatalogViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
     observeExercises: ObserveExercisesUseCase,
     private val archiveExercise: ArchiveExerciseUseCase,
     private val unarchiveExercise: UnarchiveExerciseUseCase,
     private val deleteExercise: DeleteExerciseUseCase,
 ) : ViewModel() {
 
+    val isSelectionMode: Boolean = savedStateHandle[ExerciseCatalogFragment.ARG_SELECTION_MODE] ?: false
+
+    private val excludedIds: Set<Long> =
+        savedStateHandle.get<LongArray>(ExerciseCatalogFragment.ARG_EXCLUDED_IDS)?.toSet().orEmpty()
+
+    private val selectedIds = savedStateHandle.getStateFlow(KEY_SELECTED_IDS, LongArray(0))
+
     private val _filter = MutableStateFlow(ExerciseFilter())
     val filter: StateFlow<ExerciseFilter> = _filter.asStateFlow()
 
-    val uiState: StateFlow<ExerciseCatalogUiState> = observeExercises(_filter)
-        .map { ExerciseCatalogUiState(exercises = it, isLoading = false) }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), ExerciseCatalogUiState())
+    val uiState: StateFlow<ExerciseCatalogUiState> = combine(observeExercises(_filter), selectedIds) { exercises, selected ->
+        val items = exercises
+            .filter { it.id !in excludedIds }
+            .map { ExerciseListItem(it, isSelected = it.id in selected) }
+        ExerciseCatalogUiState(items = items, isLoading = false, selectedCount = selected.size)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), ExerciseCatalogUiState())
+
+    val selection: LongArray get() = selectedIds.value
+
+    fun toggleSelection(exercise: Exercise) {
+        val current = selectedIds.value
+        savedStateHandle[KEY_SELECTED_IDS] =
+            if (exercise.id in current) current.filter { it != exercise.id }.toLongArray() else current + exercise.id
+    }
 
     private val _events = Channel<ExerciseCatalogEvent>(Channel.BUFFERED)
     val events: Flow<ExerciseCatalogEvent> = _events.receiveAsFlow()
@@ -92,5 +117,9 @@ class ExerciseCatalogViewModel @Inject constructor(
 
     private suspend fun showError(error: ExerciseError) {
         _events.send(ExerciseCatalogEvent.ShowMessage(error.messageRes()))
+    }
+
+    private companion object {
+        const val KEY_SELECTED_IDS = "selected_ids"
     }
 }

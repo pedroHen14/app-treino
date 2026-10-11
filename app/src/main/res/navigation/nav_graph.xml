@@ -29,6 +29,17 @@
         android:label="@string/exercise_catalog_title"
         tools:layout="@layout/fragment_exercise_catalog">
 
+        <argument
+            android:name="selectionMode"
+            android:defaultValue="false"
+            app:argType="boolean" />
+
+        <argument
+            android:name="excludedIds"
+            android:defaultValue="@null"
+            app:argType="long[]"
+            app:nullable="true" />
+
         <action
             android:id="@+id/action_exerciseCatalog_to_exerciseForm"
             app:destination="@id/exerciseFormBottomSheet" />
