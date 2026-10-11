@@ -1,0 +1,72 @@
+[
+  { "name": "Supino reto com barra", "muscleGroup": "CHEST" },
+  { "name": "Supino reto com halteres", "muscleGroup": "CHEST" },
+  { "name": "Supino inclinado com barra", "muscleGroup": "CHEST" },
+  { "name": "Supino inclinado com halteres", "muscleGroup": "CHEST" },
+  { "name": "Supino declinado", "muscleGroup": "CHEST" },
+  { "name": "Crucifixo com halteres", "muscleGroup": "CHEST" },
+  { "name": "Crossover", "muscleGroup": "CHEST" },
+  { "name": "Peck deck", "muscleGroup": "CHEST" },
+  { "name": "Flexão de braço", "muscleGroup": "CHEST" },
+
+  { "name": "Barra fixa", "muscleGroup": "BACK" },
+  { "name": "Puxada frontal", "muscleGroup": "BACK" },
+  { "name": "Puxada com triângulo", "muscleGroup": "BACK" },
+  { "name": "Remada curvada com barra", "muscleGroup": "BACK" },
+  { "name": "Remada unilateral com halter", "muscleGroup": "BACK" },
+  { "name": "Remada baixa", "muscleGroup": "BACK" },
+  { "name": "Remada cavalinho", "muscleGroup": "BACK" },
+  { "name": "Pulldown com corda", "muscleGroup": "BACK" },
+  { "name": "Levantamento terra", "muscleGroup": "BACK" },
+
+  { "name": "Desenvolvimento com barra", "muscleGroup": "SHOULDERS" },
+  { "name": "Desenvolvimento com halteres", "muscleGroup": "SHOULDERS" },
+  { "name": "Elevação lateral", "muscleGroup": "SHOULDERS" },
+  { "name": "Elevação frontal", "muscleGroup": "SHOULDERS" },
+  { "name": "Crucifixo inverso", "muscleGroup": "SHOULDERS" },
+  { "name": "Face pull", "muscleGroup": "SHOULDERS" },
+  { "name": "Encolhimento com halteres", "muscleGroup": "SHOULDERS" },
+
+  { "name": "Rosca direta com barra", "muscleGroup": "BICEPS" },
+  { "name": "Rosca alternada", "muscleGroup": "BICEPS" },
+  { "name": "Rosca martelo", "muscleGroup": "BICEPS" },
+  { "name": "Rosca Scott", "muscleGroup": "BICEPS" },
+  { "name": "Rosca concentrada", "muscleGroup": "BICEPS" },
+  { "name": "Rosca no cabo", "muscleGroup": "BICEPS" },
+
+  { "name": "Tríceps pulley", "muscleGroup": "TRICEPS" },
+  { "name": "Tríceps corda", "muscleGroup": "TRICEPS" },
+  { "name": "Tríceps testa", "muscleGroup": "TRICEPS" },
+  { "name": "Tríceps francês", "muscleGroup": "TRICEPS" },
+  { "name": "Mergulho nas paralelas", "muscleGroup": "TRICEPS" },
+  { "name": "Supino fechado", "muscleGroup": "TRICEPS" },
+
+  { "name": "Rosca de punho", "muscleGroup": "FOREARMS" },
+  { "name": "Rosca inversa", "muscleGroup": "FOREARMS" },
+
+  { "name": "Agachamento livre", "muscleGroup": "QUADRICEPS" },
+  { "name": "Agachamento frontal", "muscleGroup": "QUADRICEPS" },
+  { "name": "Agachamento búlgaro", "muscleGroup": "QUADRICEPS" },
+  { "name": "Agachamento hack", "muscleGroup": "QUADRICEPS" },
+  { "name": "Leg press 45°", "muscleGroup": "QUADRICEPS" },
+  { "name": "Cadeira extensora", "muscleGroup": "QUADRICEPS" },
+  { "name": "Afundo", "muscleGroup": "QUADRICEPS" },
+
+  { "name": "Mesa flexora", "muscleGroup": "HAMSTRINGS" },
+  { "name": "Cadeira flexora", "muscleGroup": "HAMSTRINGS" },
+  { "name": "Stiff", "muscleGroup": "HAMSTRINGS" },
+  { "name": "Levantamento terra romeno", "muscleGroup": "HAMSTRINGS" },
+
+  { "name": "Elevação pélvica", "muscleGroup": "GLUTES" },
+  { "name": "Glúteo na polia", "muscleGroup": "GLUTES" },
+  { "name": "Cadeira abdutora", "muscleGroup": "GLUTES" },
+
+  { "name": "Panturrilha em pé", "muscleGroup": "CALVES" },
+  { "name": "Panturrilha sentado", "muscleGroup": "CALVES" },
+  { "name": "Panturrilha no leg press", "muscleGroup": "CALVES" },
+
+  { "name": "Abdominal supra", "muscleGroup": "ABS" },
+  { "name": "Abdominal na polia", "muscleGroup": "ABS" },
+  { "name": "Elevação de pernas", "muscleGroup": "ABS" },
+  { "name": "Prancha", "muscleGroup": "ABS" }
+]

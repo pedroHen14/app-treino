@@ -15,7 +15,37 @@
         android:id="@+id/workoutFragment"
         android:name="com.pedro.treinoapp.feature.workout.presentation.WorkoutFragment"
         android:label="@string/nav_workouts"
-        tools:layout="@layout/fragment_workout" />
+        tools:layout="@layout/fragment_workout">
+
+        <action
+            android:id="@+id/action_workout_to_exerciseCatalog"
+            app:destination="@id/exerciseCatalogFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/exerciseCatalogFragment"
+        android:name="com.pedro.treinoapp.feature.exercise.presentation.catalog.ExerciseCatalogFragment"
+        android:label="@string/exercise_catalog_title"
+        tools:layout="@layout/fragment_exercise_catalog">
+
+        <action
+            android:id="@+id/action_exerciseCatalog_to_exerciseForm"
+            app:destination="@id/exerciseFormBottomSheet" />
+
+    </fragment>
+
+    <dialog
+        android:id="@+id/exerciseFormBottomSheet"
+        android:name="com.pedro.treinoapp.feature.exercise.presentation.form.ExerciseFormBottomSheet"
+        tools:layout="@layout/bottom_sheet_exercise_form">
+
+        <argument
+            android:name="exerciseId"
+            android:defaultValue="-1L"
+            app:argType="long" />
+
+    </dialog>
 
     <fragment
         android:id="@+id/historyFragment"

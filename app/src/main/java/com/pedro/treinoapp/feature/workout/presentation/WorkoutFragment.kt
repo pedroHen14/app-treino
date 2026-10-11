@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.pedro.treinoapp.R
 import com.pedro.treinoapp.databinding.FragmentWorkoutBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,6 +23,15 @@ class WorkoutFragment : Fragment() {
     ): View {
         _binding = FragmentWorkoutBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.toolbar.setOnMenuItemClickListener { item ->
+            if (item.itemId != R.id.action_exercise_catalog) return@setOnMenuItemClickListener false
+            findNavController().navigate(R.id.action_workout_to_exerciseCatalog)
+            true
+        }
     }
 
     override fun onDestroyView() {
