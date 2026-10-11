@@ -7,6 +7,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.time.Instant
 
+/** Carga e repetições nulas indicam série ainda não preenchida; série concluída sempre tem as duas. */
 @Entity(
     tableName = "workout_set",
     foreignKeys = [
@@ -23,8 +24,8 @@ data class WorkoutSetEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo(name = "session_exercise_id") val sessionExerciseId: Long,
     @ColumnInfo(name = "position") val position: Int,
-    @ColumnInfo(name = "weight_grams") val weightGrams: Int,
-    @ColumnInfo(name = "reps") val reps: Int,
+    @ColumnInfo(name = "weight_grams") val weightGrams: Int?,
+    @ColumnInfo(name = "reps") val reps: Int?,
     @ColumnInfo(name = "is_completed") val isCompleted: Boolean = false,
     @ColumnInfo(name = "completed_at") val completedAt: Instant? = null,
 )
