@@ -55,6 +55,8 @@ sealed interface SessionListItem {
         val setId: Long,
         val number: Int,
         val weightText: String,
+        /** Muda quando a carga é alterada pelos botões ±, para o campo aceitar o valor mesmo em foco. */
+        val weightRevision: Int,
         val repsText: String,
         val targetReps: RepRange?,
         val isCompleted: Boolean,
@@ -169,7 +171,10 @@ class SessionViewModel @Inject constructor(
         val set = session?.findSet(setId) ?: return
         val current = drafts.value[setId]?.weight?.let { parseWeight(it).getOrNull() } ?: set.weightGrams ?: 0
         val next = ((current + deltaGrams) / WorkoutSet.WEIGHT_STEP_GRAMS * WorkoutSet.WEIGHT_STEP_GRAMS).coerceAtLeast(0)
-        drafts.update { it + (setId to (it[setId] ?: SetDraft()).copy(weight = null)) }
+        drafts.update { drafts ->
+            val draft = drafts[setId] ?: SetDraft()
+            drafts + (setId to draft.copy(weight = null, weightRevision = draft.weightRevision + 1))
+        }
         val reps = drafts.value[setId]?.reps?.let { parseReps(it).getOrNull() } ?: set.reps
         save(setId, next, reps)
     }
@@ -302,6 +307,7 @@ class SessionViewModel @Inject constructor(
                     setId = set.id,
                     number = index + 1,
                     weightText = draft?.weight ?: set.weightGrams?.let(::formatWeight).orEmpty(),
+                    weightRevision = draft?.weightRevision ?: 0,
                     repsText = draft?.reps ?: set.reps?.toString().orEmpty(),
                     targetReps = exercise.targetReps,
                     isCompleted = set.isCompleted,
@@ -312,7 +318,7 @@ class SessionViewModel @Inject constructor(
             listOf(header) + rows + footer
         }
 
-    private data class SetDraft(val weight: String? = null, val reps: String? = null)
+    private data class SetDraft(val weight: String? = null, val reps: String? = null, val weightRevision: Int = 0)
 
     private companion object {
         const val KEY_PENDING_REPLACEMENT = "pending_replacement"

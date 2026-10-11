@@ -67,6 +67,7 @@ class SessionAdapter(
 
         private var setId: Long = 0
         private var isCompleted = false
+        private var weightRevision = 0
 
         /** Evita que o texto escrito pelo próprio bind volte como edição do usuário. */
         private var isBinding = false
@@ -85,12 +86,15 @@ class SessionAdapter(
 
         fun bind(item: SessionListItem.SetRow) {
             val context = binding.root.context
+            // Holder reaproveitado para outra série: os campos precisam receber os valores dela.
+            val isOtherSet = item.setId != setId
             isBinding = true
             setId = item.setId
             isCompleted = item.isCompleted
             binding.number.text = item.number.toString()
-            binding.weight.setTextIfChanged(item.weightText)
-            binding.reps.setTextIfChanged(item.repsText)
+            binding.weight.setTextIfChanged(item.weightText, force = isOtherSet || item.weightRevision != weightRevision)
+            weightRevision = item.weightRevision
+            binding.reps.setTextIfChanged(item.repsText, force = isOtherSet)
             isBinding = false
 
             binding.repsLayout.placeholderText = item.targetReps?.format()
@@ -104,9 +108,14 @@ class SessionAdapter(
             binding.error.text = item.error?.message(context)
         }
 
-        /** Escreve só quando o valor mudou fora do campo, para não mexer no cursor de quem digita. */
-        private fun EditText.setTextIfChanged(value: String) {
-            if (text?.toString() != value) setText(value)
+        /**
+         * Campo em foco é de quem está digitando: a lista chega de forma assíncrona e pode trazer um
+         * texto já ultrapassado, que moveria o cursor. Só [force] (botões ±, outra série) escreve nele.
+         */
+        private fun EditText.setTextIfChanged(value: String, force: Boolean) {
+            if (text?.toString() == value || (hasFocus() && !force)) return
+            setText(value)
+            if (hasFocus()) setSelection(value.length)
         }
 
         private fun EditText.watch(onChange: (String) -> Unit) = addTextChangedListener(object : TextWatcher {
