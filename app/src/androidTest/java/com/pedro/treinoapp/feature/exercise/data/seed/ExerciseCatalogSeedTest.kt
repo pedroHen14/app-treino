@@ -5,8 +5,8 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.pedro.treinoapp.core.database.AppDatabase
+import com.pedro.treinoapp.core.text.toNameKey
 import com.pedro.treinoapp.feature.exercise.domain.model.MuscleGroup
-import com.pedro.treinoapp.feature.exercise.domain.model.toNameKey
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals

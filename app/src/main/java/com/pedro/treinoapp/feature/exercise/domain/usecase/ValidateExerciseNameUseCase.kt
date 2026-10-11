@@ -1,9 +1,9 @@
 package com.pedro.treinoapp.feature.exercise.domain.usecase
 
+import com.pedro.treinoapp.core.text.normalizeName
+import com.pedro.treinoapp.core.text.toNameKey
 import com.pedro.treinoapp.feature.exercise.domain.model.ExerciseError
 import com.pedro.treinoapp.feature.exercise.domain.model.ExerciseResult
-import com.pedro.treinoapp.feature.exercise.domain.model.normalizeExerciseName
-import com.pedro.treinoapp.feature.exercise.domain.model.toNameKey
 import com.pedro.treinoapp.feature.exercise.domain.repository.ExerciseRepository
 import javax.inject.Inject
 
@@ -18,7 +18,7 @@ class ValidateExerciseNameUseCase @Inject constructor(
     private val repository: ExerciseRepository,
 ) {
     suspend operator fun invoke(rawName: String, excludingId: Long? = null): ExerciseResult<String> {
-        val name = rawName.normalizeExerciseName()
+        val name = rawName.normalizeName()
         if (name.isEmpty()) return ExerciseResult.Failure(ExerciseError.NameBlank)
 
         val key = name.toNameKey()
