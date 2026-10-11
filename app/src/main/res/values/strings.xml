@@ -98,7 +98,7 @@
     </plurals>
     <string name="template_copy_name">%1$s (cópia)</string>
     <string name="template_copy_name_numbered">%1$s (cópia %2$d)</string>
-    <string name="template_duplicated">Modelo duplicado como \"%1$s\"</string>
+    <string name="template_duplicated">Modelo duplicado</string>
     <string name="template_deleted">Modelo excluído</string>
     <string name="template_delete_title">Excluir \"%1$s\"?</string>
     <string name="template_delete_message">Esta ação não pode ser desfeita. Sessões já registradas continuam no histórico.</string>
@@ -135,6 +135,5 @@
     <string name="template_error_reps">Informe repetições de %1$d a %2$d, com o mínimo menor ou igual ao máximo.</string>
 
     <!-- Placeholders -->
-    <string name="workouts_coming_soon">Em breve: modelos de treino e agenda semanal.</string>
     <string name="history_coming_soon">Em breve: histórico de sessões e progressão.</string>
 </resources>
