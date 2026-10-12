@@ -107,6 +107,10 @@
     <string name="exercise_error_used_in_session">Este exercício já foi usado em uma sessão de treino. Você pode arquivá-lo: ele some da seleção, mas continua no histórico.</string>
     <string name="exercise_error_used_in_template">Este exercício faz parte de um modelo de treino. Você pode arquivá-lo para que ele não apareça mais na seleção.</string>
 
+    <!-- Importação do wger -->
+    <string name="wger_error_no_connection">Sem conexão com a internet. Verifique a rede e tente novamente.</string>
+    <string name="wger_error_unavailable">Não foi possível consultar o wger agora. Tente novamente mais tarde.</string>
+
     <!-- Dias da semana -->
     <string name="day_monday">Segunda</string>
     <string name="day_tuesday">Terça</string>

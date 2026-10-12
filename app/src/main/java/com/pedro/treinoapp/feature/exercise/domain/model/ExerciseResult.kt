@@ -14,4 +14,14 @@ sealed interface ExerciseError {
     data object NotCustom : ExerciseError
     data object UsedInSession : ExerciseError
     data object UsedInTemplate : ExerciseError
+
+    /** Importação bloqueada: o catálogo já tem esse exercício, que é sugerido no lugar. */
+    data class AlreadyInCatalog(val existing: Exercise) : ExerciseError
+    data object MuscleGroupRequired : ExerciseError
+
+    /** Sem internet ou o servidor não respondeu a tempo. */
+    data object NoConnection : ExerciseError
+
+    /** O wger respondeu com erro ou num formato inesperado. */
+    data object ServiceUnavailable : ExerciseError
 }

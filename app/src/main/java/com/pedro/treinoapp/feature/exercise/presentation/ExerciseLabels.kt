@@ -28,4 +28,8 @@ fun ExerciseError.messageRes(): Int = when (this) {
     ExerciseError.NotCustom -> R.string.exercise_error_not_custom
     ExerciseError.UsedInSession -> R.string.exercise_error_used_in_session
     ExerciseError.UsedInTemplate -> R.string.exercise_error_used_in_template
+    is ExerciseError.AlreadyInCatalog -> R.string.exercise_error_name_exists
+    ExerciseError.MuscleGroupRequired -> R.string.exercise_error_muscle_group_required
+    ExerciseError.NoConnection -> R.string.wger_error_no_connection
+    ExerciseError.ServiceUnavailable -> R.string.wger_error_unavailable
 }
