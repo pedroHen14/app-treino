@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -19,6 +20,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.pedro.treinoapp.R
 import com.pedro.treinoapp.databinding.FragmentSessionBinding
 import com.pedro.treinoapp.feature.exercise.presentation.catalog.ExerciseCatalogFragment
+import com.pedro.treinoapp.feature.history.presentation.progress.ExerciseProgressFragment
 import com.pedro.treinoapp.feature.session.domain.timer.RestTimerState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -36,6 +38,13 @@ class SessionFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: SessionViewModel by viewModels()
+
+    /** Na edição do histórico, voltar salva: séries vazias não podem ficar numa sessão finalizada. */
+    private val saveEditOnBack = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            viewModel.saveEdit()
+        }
+    }
 
     private val adapter = SessionAdapter(
         onExerciseMenu = ::showExerciseMenu,
@@ -58,10 +67,13 @@ class SessionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, saveEditOnBack)
+        binding.toolbar.setNavigationOnClickListener {
+            if (viewModel.uiState.value.isEditing) viewModel.saveEdit() else findNavController().navigateUp()
+        }
         binding.toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.action_finish -> viewModel.requestFinish()
+                R.id.action_finish -> if (viewModel.uiState.value.isEditing) viewModel.saveEdit() else viewModel.requestFinish()
                 R.id.action_discard -> confirmDiscard()
                 else -> return@setOnMenuItemClickListener false
             }
@@ -108,11 +120,22 @@ class SessionFragment : Fragment() {
             return
         }
         binding.progress.isVisible = state.isLoading
-        binding.toolbar.title = state.templateName ?: getString(R.string.session_free_title)
+        renderMode(state)
         adapter.submitList(state.items)
         binding.emptyMessage.isVisible = !state.isLoading && state.items.isEmpty()
         binding.addExercise.isEnabled = !state.isLoading
-        renderTimer(state.timer, state.defaultRest)
+        if (!state.isEditing) renderTimer(state.timer, state.defaultRest)
+    }
+
+    private fun renderMode(state: SessionUiState) {
+        val templateTitle = state.templateName ?: getString(R.string.session_free_title)
+        binding.toolbar.title = if (state.isEditing) getString(R.string.session_edit_title) else templateTitle
+        binding.toolbar.subtitle = if (state.isEditing) templateTitle else null
+        binding.toolbar.menu.findItem(R.id.action_finish)
+            ?.setTitle(if (state.isEditing) R.string.action_save else R.string.session_finish)
+        binding.toolbar.menu.findItem(R.id.action_discard)?.isVisible = !state.isEditing
+        binding.timerPanel.isVisible = !state.isEditing
+        saveEditOnBack.isEnabled = state.isEditing
     }
 
     private fun renderTimer(timer: RestTimerState, defaultRest: Duration) {
@@ -158,6 +181,15 @@ class SessionFragment : Fragment() {
                 Toast.makeText(requireContext(), R.string.session_discarded, Toast.LENGTH_SHORT).show()
                 leave()
             }
+            SessionEvent.EditSaved -> {
+                Toast.makeText(requireContext(), R.string.session_edit_saved, Toast.LENGTH_SHORT).show()
+                leave()
+            }
+            SessionEvent.OfferDelete -> offerDelete()
+            SessionEvent.Deleted -> {
+                Toast.makeText(requireContext(), R.string.session_detail_deleted, Toast.LENGTH_SHORT).show()
+                leave()
+            }
         }
     }
 
@@ -181,6 +213,15 @@ class SessionFragment : Fragment() {
             .setMessage(R.string.session_no_completed_message)
             .setNegativeButton(R.string.session_keep_training, null)
             .setPositiveButton(R.string.session_discard) { _, _ -> viewModel.discard() }
+            .show()
+    }
+
+    private fun offerDelete() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.session_edit_empty_title)
+            .setMessage(R.string.session_edit_empty_message)
+            .setNegativeButton(R.string.session_keep_editing, null)
+            .setPositiveButton(R.string.action_delete) { _, _ -> viewModel.delete() }
             .show()
     }
 
@@ -211,6 +252,10 @@ class SessionFragment : Fragment() {
             inflate(R.menu.menu_session_exercise)
             setOnMenuItemClickListener { item ->
                 when (item.itemId) {
+                    R.id.action_progress -> findNavController().navigate(
+                        R.id.action_session_to_exerciseProgress,
+                        bundleOf(ExerciseProgressFragment.ARG_EXERCISE_ID to header.exerciseId),
+                    )
                     R.id.action_replace -> openExercisePicker(replacing = header.sessionExerciseId)
                     R.id.action_remove -> confirmRemoveExercise(header)
                 }
