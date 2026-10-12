@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:minHeight="36dp"
+    android:orientation="horizontal"
+    android:paddingEnd="8dp">
+
+    <TextView
+        android:id="@+id/number"
+        android:layout_width="72dp"
+        android:layout_height="wrap_content"
+        android:importantForAccessibility="no"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        tools:text="Série 1" />
+
+    <TextView
+        android:id="@+id/values"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:importantForAccessibility="no"
+        android:textAppearance="?attr/textAppearanceBodyLarge"
+        tools:text="62,5 kg × 10" />
+
+    <TextView
+        android:id="@+id/record"
+        style="@style/Widget.Treino.RecordBadge"
+        android:importantForAccessibility="no"
+        android:visibility="gone"
+        tools:text="Novo recorde de carga"
+        tools:visibility="visible" />
+
+</LinearLayout>
