@@ -27,10 +27,11 @@ data class WeekDay(
 )
 
 /**
- * Resumo da semana corrente: os sete dias de segunda a domingo, sessões que não cumprem nenhum dia
+ * Resumo da semana de [today]: os sete dias de segunda a domingo, sessões que não cumprem nenhum dia
  * agendado, volume (gramas × repetições) e quantas séries bateram recorde.
  */
 data class WeeklySummary(
+    val today: LocalDate,
     val days: List<WeekDay>,
     val extraCount: Int,
     val volume: Long,

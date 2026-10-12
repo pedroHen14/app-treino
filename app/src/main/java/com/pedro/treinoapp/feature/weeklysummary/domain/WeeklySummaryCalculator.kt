@@ -57,6 +57,7 @@ object WeeklySummaryCalculator {
             .count { it in weekSetIds }
 
         return WeeklySummary(
+            today = today,
             days = days,
             extraCount = unmatched.size,
             volume = Volume.ofSets(weekSets),
