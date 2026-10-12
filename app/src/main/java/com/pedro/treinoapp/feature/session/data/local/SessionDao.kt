@@ -62,6 +62,12 @@ abstract class SessionDao {
     abstract suspend fun getSessionDays(from: LocalDate, to: LocalDate): List<SessionDayRow>
 
     @Query(
+        "SELECT date, template_id, makeup_for_date FROM workout_session " +
+            "WHERE date BETWEEN :from AND :to AND finished_at IS NOT NULL ORDER BY date, started_at",
+    )
+    abstract fun observeFinishedSessionDays(from: LocalDate, to: LocalDate): Flow<List<SessionDayRow>>
+
+    @Query(
         "SELECT ws.weight_grams, ws.reps FROM workout_set ws " +
             "WHERE ws.is_completed = 1 AND ws.session_exercise_id = (" +
             "SELECT se.id FROM session_exercise se JOIN workout_session s ON s.id = se.session_id " +

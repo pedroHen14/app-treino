@@ -16,6 +16,30 @@
     <string name="today_workout_resume">Continuar treino</string>
     <string name="today_workout_other">Treino avulso</string>
 
+    <!-- Resumo semanal -->
+    <string name="weekly_summary_title">Esta semana</string>
+    <!-- %1$d: realizados, %2$d: planejados; a quantidade segue os planejados -->
+    <plurals name="weekly_summary_progress">
+        <item quantity="one">%1$d de %2$d treino</item>
+        <item quantity="other">%1$d de %2$d treinos</item>
+    </plurals>
+    <string name="weekly_summary_no_plan">Nenhum treino na agenda</string>
+    <plurals name="weekly_summary_extra">
+        <item quantity="one">+%d extra</item>
+        <item quantity="other">+%d extras</item>
+    </plurals>
+    <string name="weekly_summary_volume">Volume</string>
+    <string name="weekly_summary_records">Recordes</string>
+    <string name="weekly_summary_status_done">feito</string>
+    <string name="weekly_summary_status_made_up">reposto</string>
+    <string name="weekly_summary_status_pending">pendente</string>
+    <string name="weekly_summary_status_missed">perdido</string>
+    <string name="weekly_summary_status_rest">descanso</string>
+    <!-- Leitor de tela. %1$s: dia da semana, %2$s: status. Ex.: "Segunda-feira, descanso" -->
+    <string name="weekly_summary_day_description">%1$s, %2$s</string>
+    <!-- Leitor de tela. %1$s: dia da semana, %2$s: modelo, %3$s: status. Ex.: "Terça-feira, Lower, reposto" -->
+    <string name="weekly_summary_day_with_template_description">%1$s, %2$s, %3$s</string>
+
     <!-- Escolha de treino avulso -->
     <string name="start_workout_title">Iniciar treino avulso</string>
     <string name="start_workout_no_templates">Nenhum modelo criado. Você pode começar uma sessão vazia.</string>

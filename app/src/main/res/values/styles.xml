@@ -22,6 +22,21 @@
         <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
 
+    <!-- Bloco de número do resumo semanal (volume, recordes); lido inteiro pelo leitor de tela. -->
+    <style name="Widget.Treino.WeeklyStat" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">@drawable/bg_badge</item>
+        <item name="android:backgroundTint">?attr/colorSurfaceContainerHighest</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
     <!-- Cabeçalho de seção em listas (mês no histórico, execuções na progressão). -->
     <style name="Widget.Treino.SectionHeader" parent="">
         <item name="android:layout_width">match_parent</item>
