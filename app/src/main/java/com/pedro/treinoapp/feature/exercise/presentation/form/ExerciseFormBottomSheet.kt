@@ -11,12 +11,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pedro.treinoapp.R
 import com.pedro.treinoapp.databinding.BottomSheetExerciseFormBinding
 import com.pedro.treinoapp.feature.exercise.domain.model.MuscleGroup
+import com.pedro.treinoapp.feature.exercise.presentation.catalog.ExerciseCatalogFragment
 import com.pedro.treinoapp.feature.exercise.presentation.labelRes
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -66,6 +68,10 @@ class ExerciseFormBottomSheet : BottomSheetDialogFragment() {
 
     private fun render(state: ExerciseFormUiState) {
         if (state.isSaved) {
+            state.createdId?.let { id ->
+                findNavController().previousBackStackEntry?.savedStateHandle
+                    ?.set(ExerciseCatalogFragment.RESULT_CREATED_IDS, longArrayOf(id))
+            }
             dismiss()
             return
         }

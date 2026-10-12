@@ -56,7 +56,8 @@ data class WgerImportUiState(
 )
 
 sealed interface WgerSearchEvent {
-    data class Imported(val name: String) : WgerSearchEvent
+    /** [importedIds] acumula tudo o que foi importado nesta tela, para devolver ao catálogo. */
+    data class Imported(val name: String, val importedIds: List<Long>) : WgerSearchEvent
 
     /** Importação bloqueada; a tela oferece ver o exercício que já está no catálogo. */
     data class AlreadyInCatalog(val existing: Exercise) : WgerSearchEvent
@@ -82,6 +83,8 @@ class WgerSearchViewModel @Inject constructor(
 
     private val _events = Channel<WgerSearchEvent>(Channel.BUFFERED)
     val events: Flow<WgerSearchEvent> = _events.receiveAsFlow()
+
+    private val importedIds = mutableListOf<Long>()
 
     private fun search(term: String): Flow<WgerSearchUiState> = flow {
         if (term.length < SearchWgerExercisesUseCase.MIN_TERM_LENGTH) {
@@ -129,7 +132,8 @@ class WgerSearchViewModel @Inject constructor(
             when (val result = importExercise(form.exercise, form.name, form.muscleGroup)) {
                 is ExerciseResult.Success -> {
                     _importState.value = null
-                    _events.send(WgerSearchEvent.Imported(form.name.trim()))
+                    importedIds += result.value
+                    _events.send(WgerSearchEvent.Imported(form.name.trim(), importedIds.toList()))
                 }
                 is ExerciseResult.Failure -> {
                     val error = result.error

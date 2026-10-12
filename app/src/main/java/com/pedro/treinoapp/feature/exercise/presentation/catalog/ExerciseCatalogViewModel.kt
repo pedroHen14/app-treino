@@ -84,6 +84,12 @@ class ExerciseCatalogViewModel @Inject constructor(
             if (exercise.id in current) current.filter { it != exercise.id }.toLongArray() else current + exercise.id
     }
 
+    /** Junta à seleção (sem alternar): usado para exercícios recém-cadastrados ou importados. */
+    fun select(ids: LongArray) {
+        val current = selectedIds.value
+        savedStateHandle[KEY_SELECTED_IDS] = current + ids.filter { it !in current && it !in excludedIds }
+    }
+
     private val _events = Channel<ExerciseCatalogEvent>(Channel.BUFFERED)
     val events: Flow<ExerciseCatalogEvent> = _events.receiveAsFlow()
 

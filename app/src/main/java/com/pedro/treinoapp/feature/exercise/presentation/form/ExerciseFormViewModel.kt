@@ -31,6 +31,8 @@ data class ExerciseFormUiState(
     @StringRes val generalError: Int? = null,
     val isSaving: Boolean = false,
     val isSaved: Boolean = false,
+    /** Id do exercício criado; nulo na edição. Volta para quem abriu o formulário. */
+    val createdId: Long? = null,
 )
 
 @HiltViewModel
@@ -94,7 +96,8 @@ class ExerciseFormViewModel @Inject constructor(
             }
             _uiState.update {
                 when (result) {
-                    is ExerciseResult.Success -> it.copy(isSaving = false, isSaved = true)
+                    // Só a criação devolve o id (Long); a edição devolve Unit.
+                    is ExerciseResult.Success -> it.copy(isSaving = false, isSaved = true, createdId = result.value as? Long)
                     is ExerciseResult.Failure -> it.withError(result.error).copy(isSaving = false)
                 }
             }

@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.withResumed
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -84,6 +85,33 @@ class ExerciseCatalogFragment : Fragment() {
             }
         }
         observeSuggestedExercise()
+        observeCreatedExercises()
+    }
+
+    /**
+     * Exercícios cadastrados ou importados a partir do seletor já voltam escolhidos:
+     * na seleção única o cadastrado é devolvido direto; na múltipla entram na seleção.
+     */
+    private fun observeCreatedExercises() {
+        val entry = findNavController().currentBackStackEntry ?: return
+        val savedStateHandle = entry.savedStateHandle
+        savedStateHandle.getLiveData<LongArray>(RESULT_CREATED_IDS).observe(viewLifecycleOwner) { ids ->
+            if (ids == null) return@observe
+            savedStateHandle.remove<LongArray>(RESULT_CREATED_IDS)
+            if (!viewModel.isSelectionMode || ids.isEmpty()) return@observe
+            // O formulário grava o resultado ainda aberto: espera ele sair da pilha antes de navegar.
+            viewLifecycleOwner.lifecycleScope.launch { entry.withResumed { onExercisesCreated(ids) } }
+        }
+    }
+
+    private fun onExercisesCreated(ids: LongArray) {
+        if (viewModel.isSingleSelection) {
+            if (ids.size == 1) returnSelection(ids)
+            return
+        }
+        viewModel.select(ids)
+        val message = resources.getQuantityString(R.plurals.exercise_added_to_selection, ids.size, ids.size)
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 
     /** Ao voltar da importação do wger com um duplicado, filtra o catálogo pelo exercício existente. */
@@ -122,6 +150,20 @@ class ExerciseCatalogFragment : Fragment() {
                 if (viewModel.isSingleSelection) R.string.exercise_select_one_title else R.string.exercise_select_title,
             )
             binding.toolbar.menu.clear()
+            binding.toolbar.inflateMenu(R.menu.menu_exercise_selection)
+            binding.toolbar.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.action_new_exercise -> {
+                        openForm(exerciseId = null)
+                        true
+                    }
+                    R.id.action_import_wger -> {
+                        findNavController().navigate(R.id.action_exerciseCatalog_to_wgerSearch)
+                        true
+                    }
+                    else -> false
+                }
+            }
             return
         }
         val showArchived = binding.toolbar.menu.findItem(R.id.action_show_archived)
@@ -238,5 +280,8 @@ class ExerciseCatalogFragment : Fragment() {
 
         /** Se o sugerido está arquivado, o catálogo passa a mostrar arquivados. */
         const val RESULT_SUGGESTED_ARCHIVED = "suggestedExerciseArchived"
+
+        /** `LongArray` com os exercícios cadastrados ou importados enquanto o catálogo estava aberto. */
+        const val RESULT_CREATED_IDS = "createdExerciseIds"
     }
 }
