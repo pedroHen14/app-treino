@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.pedro.treinoapp.R
 import com.pedro.treinoapp.databinding.ItemTemplateExerciseBinding
+import com.pedro.treinoapp.feature.workout.domain.model.TemplateExercise
 import com.pedro.treinoapp.feature.workout.presentation.message
 
 class TemplateExerciseAdapter(
@@ -41,6 +42,9 @@ class TemplateExerciseAdapter(
                 if (event.actionMasked == MotionEvent.ACTION_DOWN) onStartDrag(this)
                 false
             }
+            // A sugestão vem das constantes do domínio, que também a aplicam quando o campo fica vazio.
+            binding.setsLayout.placeholderText = TemplateExercise.DEFAULT_SETS.toString()
+            binding.repsMinLayout.placeholderText = TemplateExercise.DEFAULT_REPS.min.toString()
             binding.sets.watch { onSetsChange(exerciseId, it) }
             binding.repsMin.watch { onRepsMinChange(exerciseId, it) }
             binding.repsMax.watch { onRepsMaxChange(exerciseId, it) }

@@ -4,7 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pedro.treinoapp.feature.exercise.domain.usecase.GetExerciseUseCase
-import com.pedro.treinoapp.feature.workout.domain.model.RepRange
 import com.pedro.treinoapp.feature.workout.domain.model.TemplateExercise
 import com.pedro.treinoapp.feature.workout.domain.model.WorkoutError
 import com.pedro.treinoapp.feature.workout.domain.model.WorkoutResult
@@ -21,7 +20,7 @@ import javax.inject.Inject
 
 /**
  * Linha do editor. Séries e repetições ficam como texto enquanto o usuário digita;
- * a conversão e a validação acontecem ao salvar. Reps máx. vazio significa valor fixo.
+ * a conversão e a validação acontecem ao salvar (ver [TemplateExercise.fromInput]).
  */
 data class EditorExercise(
     val exerciseId: Long,
@@ -91,13 +90,13 @@ class TemplateEditorViewModel @Inject constructor(
         val present = _uiState.value.exercises.map { it.exerciseId }.toSet()
         val added = ids.filter { it !in present }.mapNotNull { id ->
             getExercise(id)?.let { exercise ->
-                val defaults = TemplateExercise.DEFAULT_REPS
+                // Campos vazios: a sugestão aparece como placeholder e vale se o usuário não digitar nada.
                 EditorExercise(
                     exerciseId = exercise.id,
                     exerciseName = exercise.name,
-                    sets = TemplateExercise.DEFAULT_SETS.toString(),
-                    repsMin = defaults.min.toString(),
-                    repsMax = defaults.max.toString(),
+                    sets = "",
+                    repsMin = "",
+                    repsMax = "",
                 )
             }
         }
@@ -176,15 +175,5 @@ class TemplateEditorViewModel @Inject constructor(
         repsMax = if (targetReps.isFixed) "" else targetReps.max.toString(),
     )
 
-    /** Texto inválido vira 0, que a validação do domínio rejeita com a mensagem certa. */
-    private fun EditorExercise.toDomain(): TemplateExercise {
-        val min = repsMin.trim().toIntOrNull() ?: 0
-        val max = repsMax.trim().takeIf { it.isNotEmpty() }?.let { it.toIntOrNull() ?: 0 } ?: min
-        return TemplateExercise(
-            exerciseId = exerciseId,
-            exerciseName = exerciseName,
-            targetSets = sets.trim().toIntOrNull() ?: 0,
-            targetReps = RepRange(min, max),
-        )
-    }
+    private fun EditorExercise.toDomain() = TemplateExercise.fromInput(exerciseId, exerciseName, sets, repsMin, repsMax)
 }
