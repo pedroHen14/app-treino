@@ -88,6 +88,13 @@ class WgerExerciseMapperTest {
     }
 
     @Test
+    fun `raw line breaks inside a paragraph become spaces`() {
+        val html = "<p>Adjust the weights based on the\nmotion.</p>\n<p>Repeat.</p>"
+
+        assertEquals("Adjust the weights based on the motion.\nRepeat.", html.htmlToPlainText())
+    }
+
+    @Test
     fun `empty html description becomes null`() {
         assertNull("<p> </p>\n".htmlToPlainText())
     }

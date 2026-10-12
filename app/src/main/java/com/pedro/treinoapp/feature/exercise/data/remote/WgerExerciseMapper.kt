@@ -59,8 +59,14 @@ private val listItemTag = Regex("(?i)<li[^>]*>")
 private val anyTag = Regex("<[^>]+>")
 private val whitespace = Regex("\\s+")
 
-/** As descrições do wger vêm em HTML simples (parágrafos e listas). @return nulo se ficar vazio. */
+/**
+ * As descrições do wger vêm em HTML simples (parágrafos e listas). Quebras de linha cruas
+ * valem como espaço, como no navegador; só as tags quebram linha.
+ *
+ * @return nulo se ficar vazio.
+ */
 internal fun String.htmlToPlainText(): String? = this
+    .replace(whitespace, " ")
     .replace(lineBreakTags, "\n")
     .replace(listItemTag, "• ")
     .replace(anyTag, "")
