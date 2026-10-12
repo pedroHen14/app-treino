@@ -87,6 +87,10 @@
     <string name="exercise_select_title">Adicionar exercícios</string>
     <string name="exercise_select_one_title">Trocar exercício</string>
     <string name="exercise_add_selected">Adicionar (%1$d)</string>
+    <plurals name="exercise_added_to_selection">
+        <item quantity="one">Exercício novo adicionado à seleção</item>
+        <item quantity="other">%d exercícios novos adicionados à seleção</item>
+    </plurals>
     <string name="exercise_state_selected">Selecionado</string>
     <string name="exercise_state_not_selected">Não selecionado</string>
     <string name="exercise_archived">Exercício arquivado</string>

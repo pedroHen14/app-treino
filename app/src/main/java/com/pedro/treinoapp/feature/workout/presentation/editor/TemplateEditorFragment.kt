@@ -16,6 +16,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pedro.treinoapp.R
 import com.pedro.treinoapp.databinding.FragmentTemplateEditorBinding
@@ -67,6 +68,8 @@ class TemplateEditorFragment : Fragment() {
         }
         binding.name.doAfterTextChanged { viewModel.onNameChange(it?.toString().orEmpty()) }
         binding.list.adapter = adapter
+        // Cada tecla atualiza a linha; a animação de "change" trocaria o ViewHolder e o campo perderia o foco e o cursor.
+        (binding.list.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
         touchHelper.attachToRecyclerView(binding.list)
         binding.addExercise.setOnClickListener { openExercisePicker() }
 

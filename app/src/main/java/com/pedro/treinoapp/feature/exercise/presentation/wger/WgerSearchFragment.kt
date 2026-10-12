@@ -84,8 +84,12 @@ class WgerSearchFragment : Fragment() {
 
     private fun handleEvent(event: WgerSearchEvent) {
         when (event) {
-            is WgerSearchEvent.Imported ->
+            is WgerSearchEvent.Imported -> {
                 Snackbar.make(binding.root, getString(R.string.wger_imported, event.name), Snackbar.LENGTH_SHORT).show()
+                // No modo seleção, o catálogo marca os importados ao voltar.
+                findNavController().previousBackStackEntry?.savedStateHandle
+                    ?.set(ExerciseCatalogFragment.RESULT_CREATED_IDS, event.importedIds.toLongArray())
+            }
 
             is WgerSearchEvent.AlreadyInCatalog -> showAlreadyInCatalog(event.existing)
         }

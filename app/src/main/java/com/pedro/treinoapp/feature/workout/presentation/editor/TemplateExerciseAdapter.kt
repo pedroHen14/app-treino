@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.pedro.treinoapp.R
 import com.pedro.treinoapp.databinding.ItemTemplateExerciseBinding
+import com.pedro.treinoapp.feature.workout.domain.model.TemplateExercise
 import com.pedro.treinoapp.feature.workout.presentation.message
 
 class TemplateExerciseAdapter(
@@ -41,6 +42,9 @@ class TemplateExerciseAdapter(
                 if (event.actionMasked == MotionEvent.ACTION_DOWN) onStartDrag(this)
                 false
             }
+            // A sugestão vem das constantes do domínio, que também a aplicam quando o campo fica vazio.
+            binding.setsLayout.placeholderText = TemplateExercise.DEFAULT_SETS.toString()
+            binding.repsMinLayout.placeholderText = TemplateExercise.DEFAULT_REPS.min.toString()
             binding.sets.watch { onSetsChange(exerciseId, it) }
             binding.repsMin.watch { onRepsMinChange(exerciseId, it) }
             binding.repsMax.watch { onRepsMaxChange(exerciseId, it) }
@@ -49,11 +53,12 @@ class TemplateExerciseAdapter(
         fun bind(item: EditorExercise) {
             val context = binding.root.context
             isBinding = true
+            val isSameItem = exerciseId == item.exerciseId
             exerciseId = item.exerciseId
             binding.name.text = item.exerciseName
-            binding.sets.setTextIfChanged(item.sets)
-            binding.repsMin.setTextIfChanged(item.repsMin)
-            binding.repsMax.setTextIfChanged(item.repsMax)
+            binding.sets.setTextIfChanged(item.sets, isSameItem)
+            binding.repsMin.setTextIfChanged(item.repsMin, isSameItem)
+            binding.repsMax.setTextIfChanged(item.repsMax, isSameItem)
             isBinding = false
             binding.error.isVisible = item.error != null
             binding.error.text = item.error?.message(context)
@@ -61,8 +66,13 @@ class TemplateExerciseAdapter(
             binding.remove.setOnClickListener { onRemove(item) }
         }
 
-        /** Escreve só quando o valor mudou fora do campo, para não mexer no cursor de quem digita. */
-        private fun EditText.setTextIfChanged(value: String) {
+        /**
+         * Escreve só quando o valor mudou fora do campo, para não mexer no cursor de quem digita.
+         * Com o campo em foco o texto digitado manda: o diff do ListAdapter roda em segundo plano e
+         * pode entregar um estado anterior à última tecla, o que voltaria o texto e o cursor.
+         */
+        private fun EditText.setTextIfChanged(value: String, isSameItem: Boolean) {
+            if (isSameItem && hasFocus()) return
             if (text?.toString() != value) setText(value)
         }
 
