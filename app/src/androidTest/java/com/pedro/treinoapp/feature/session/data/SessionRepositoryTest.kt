@@ -157,4 +157,28 @@ class SessionRepositoryTest {
         repository.delete(makeup)
         assertEquals(1, repository.getSessionDays(monday, today).size)
     }
+
+    @Test
+    fun finishedSessionDaysOnlyIncludeFinishedSessionsInTheRangeInOrder() = runBlocking {
+        val monday = today.minusDays(3)
+        val sunday = monday.plusDays(6)
+        suspend fun finished(date: LocalDate, makeupForDate: LocalDate? = null) {
+            repository.finish(create(date, makeupForDate = makeupForDate), start)
+        }
+        finished(today)
+        finished(monday.minusDays(1))
+        finished(sunday.plusDays(1))
+        finished(monday.plusDays(2), makeupForDate = monday.plusDays(1))
+        finished(sunday)
+        create(today)
+
+        assertEquals(
+            listOf(
+                SessionDay(monday.plusDays(2), null, monday.plusDays(1)),
+                SessionDay(today, null, null),
+                SessionDay(sunday, null, null),
+            ),
+            repository.observeFinishedSessionDays(monday, sunday).first(),
+        )
+    }
 }
