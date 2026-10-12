@@ -25,6 +25,9 @@ interface SessionRepository {
     /** Sessões com data entre [from] e [to], inclusive. */
     suspend fun getSessionDays(from: LocalDate, to: LocalDate): List<SessionDay>
 
+    /** Sessões finalizadas com data entre [from] e [to], inclusive, em ordem cronológica. */
+    fun observeFinishedSessionDays(from: LocalDate, to: LocalDate): Flow<List<SessionDay>>
+
     /** Séries concluídas do exercício na sessão finalizada mais recente que o tem; vazia se nunca foi feito. */
     suspend fun getLastCompletedSets(exerciseId: Long): List<WorkoutSet>
 

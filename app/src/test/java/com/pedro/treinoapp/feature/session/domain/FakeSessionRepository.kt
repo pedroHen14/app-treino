@@ -34,7 +34,14 @@ class FakeSessionRepository(initial: List<WorkoutSession> = emptyList()) : Sessi
         sessions.map { list -> list.filter { it.date == date && !it.isActive }.map { it.templateId } }
 
     override suspend fun getSessionDays(from: LocalDate, to: LocalDate): List<SessionDay> =
-        sessions.value.filter { it.date in from..to }.map { SessionDay(it.date, it.templateId, it.makeupForDate) }
+        sessions.value.filter { it.date in from..to }.map { it.toSessionDay() }
+
+    override fun observeFinishedSessionDays(from: LocalDate, to: LocalDate): Flow<List<SessionDay>> =
+        sessions.map { list ->
+            list.filter { it.date in from..to && !it.isActive }
+                .sortedWith(compareBy<WorkoutSession> { it.date }.thenBy { it.startedAt })
+                .map { it.toSessionDay() }
+        }
 
     override suspend fun getLastCompletedSets(exerciseId: Long): List<WorkoutSet> =
         sessions.value
@@ -124,6 +131,8 @@ class FakeSessionRepository(initial: List<WorkoutSession> = emptyList()) : Sessi
         targetReps = targetReps,
         sets = sets.withIds(),
     )
+
+    private fun WorkoutSession.toSessionDay() = SessionDay(date, templateId, makeupForDate)
 
     private fun List<WorkoutSet>.withIds() = map { it.copy(id = nextId++) }
 

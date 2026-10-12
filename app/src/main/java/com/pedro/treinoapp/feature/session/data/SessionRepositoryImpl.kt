@@ -44,6 +44,9 @@ class SessionRepositoryImpl @Inject constructor(
     override suspend fun getSessionDays(from: LocalDate, to: LocalDate): List<SessionDay> =
         dao.getSessionDays(from, to).map { it.toDomain() }
 
+    override fun observeFinishedSessionDays(from: LocalDate, to: LocalDate): Flow<List<SessionDay>> =
+        dao.observeFinishedSessionDays(from, to).map { rows -> rows.map { it.toDomain() } }
+
     override suspend fun getLastCompletedSets(exerciseId: Long): List<WorkoutSet> =
         dao.getLastCompletedSets(exerciseId).map { it.toDomain() }
 
