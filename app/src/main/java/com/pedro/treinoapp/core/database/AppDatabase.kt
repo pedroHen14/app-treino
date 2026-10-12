@@ -6,6 +6,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.pedro.treinoapp.feature.exercise.data.local.ExerciseDao
 import com.pedro.treinoapp.feature.exercise.data.local.ExerciseEntity
+import com.pedro.treinoapp.feature.history.data.local.HistoryDao
 import com.pedro.treinoapp.feature.session.data.local.SessionDao
 import com.pedro.treinoapp.feature.session.data.local.SessionExerciseEntity
 import com.pedro.treinoapp.feature.session.data.local.WorkoutSessionEntity
@@ -44,6 +45,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun weeklyScheduleDao(): WeeklyScheduleDao
 
     abstract fun sessionDao(): SessionDao
+
+    abstract fun historyDao(): HistoryDao
 
     companion object {
         const val NAME = "treino.db"

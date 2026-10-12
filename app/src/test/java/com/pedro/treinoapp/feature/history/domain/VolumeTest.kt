@@ -13,12 +13,16 @@ class VolumeTest {
 
     @Test
     fun `exercise volume is the sum of its sets`() {
-        assertEquals(1_100_000L, Volume.ofSets(listOf(60_000 to 10, 62_500 to 8)))
+        val sets = listOf(recordedSet(1, weightGrams = 60_000, reps = 10), recordedSet(2, weightGrams = 62_500, reps = 8))
+
+        assertEquals(1_100_000L, Volume.ofSets(sets))
     }
 
     @Test
     fun `volume does not overflow at the maximum values`() {
-        val sets = List(WorkoutSet.MAX_SETS) { WorkoutSet.MAX_WEIGHT_GRAMS to WorkoutSet.MAX_REPS }
+        val sets = List(WorkoutSet.MAX_SETS) {
+            recordedSet(it.toLong(), weightGrams = WorkoutSet.MAX_WEIGHT_GRAMS, reps = WorkoutSet.MAX_REPS)
+        }
 
         assertEquals(19_980_000_000L, Volume.ofSets(sets))
     }

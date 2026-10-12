@@ -6,6 +6,7 @@ import java.time.LocalDate
 data class RecordedSet(
     val setId: Long,
     val sessionId: Long,
+    val exerciseId: Long,
     val date: LocalDate,
     val weightGrams: Int,
     val reps: Int,
