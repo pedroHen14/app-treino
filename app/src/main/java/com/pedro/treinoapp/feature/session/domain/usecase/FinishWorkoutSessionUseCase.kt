@@ -18,7 +18,7 @@ class FinishWorkoutSessionUseCase @Inject constructor(
     private val clock: Clock,
 ) {
     suspend operator fun invoke(sessionId: Long): SessionResult<Unit> {
-        val session = repository.getEditable(sessionId) ?: return SessionResult.Failure(SessionError.NotFound)
+        val session = repository.getActive(sessionId) ?: return SessionResult.Failure(SessionError.NotFound)
         if (session.completedSetCount == 0) return SessionResult.Failure(SessionError.NoCompletedSets)
         repository.finish(sessionId, clock.instant())
         restTimer.skip()

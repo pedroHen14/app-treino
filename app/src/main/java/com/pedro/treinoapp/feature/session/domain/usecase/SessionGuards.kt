@@ -5,8 +5,11 @@ import com.pedro.treinoapp.feature.session.domain.model.WorkoutSession
 import com.pedro.treinoapp.feature.session.domain.model.WorkoutSet
 import com.pedro.treinoapp.feature.session.domain.repository.SessionRepository
 
-/** Só a sessão em andamento pode ser editada; o histórico não muda por aqui. */
-internal suspend fun SessionRepository.getEditable(sessionId: Long): WorkoutSession? =
+/** Séries e exercícios podem ser alterados tanto na sessão em andamento quanto numa já finalizada (edição do histórico). */
+internal suspend fun SessionRepository.getEditable(sessionId: Long): WorkoutSession? = get(sessionId)
+
+/** Concluir séries, finalizar e descartar só valem para a sessão em andamento. */
+internal suspend fun SessionRepository.getActive(sessionId: Long): WorkoutSession? =
     get(sessionId)?.takeIf { it.isActive }
 
 /** Carga em múltiplos de 0,5 kg e repetições a partir de 1. Valores nulos são série não preenchida. */

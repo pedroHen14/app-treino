@@ -41,5 +41,11 @@ interface SessionRepository {
 
     /** Descarta séries não concluídas e exercícios que ficarem sem séries, e marca a sessão como finalizada. */
     suspend fun finish(sessionId: Long, finishedAt: Instant)
+
+    /**
+     * Fecha a edição de uma sessão finalizada: séries preenchidas e não concluídas passam a concluídas em
+     * [completedAt]; as vazias e os exercícios que ficarem sem séries são descartados.
+     */
+    suspend fun saveEdit(sessionId: Long, completedAt: Instant)
     suspend fun delete(sessionId: Long)
 }

@@ -126,6 +126,13 @@ abstract class SessionDao {
     @Query("UPDATE workout_session SET finished_at = :finishedAt WHERE id = :sessionId")
     protected abstract suspend fun setFinishedAt(sessionId: Long, finishedAt: Instant)
 
+    @Query(
+        "UPDATE workout_set SET is_completed = 1, completed_at = :completedAt " +
+            "WHERE is_completed = 0 AND weight_grams IS NOT NULL AND reps IS NOT NULL AND session_exercise_id IN " +
+            "(SELECT id FROM session_exercise WHERE session_id = :sessionId)",
+    )
+    protected abstract suspend fun completeFilledSets(sessionId: Long, completedAt: Instant)
+
     /** A posição de exercícios e séries é a ordem nas listas recebidas. */
     @Transaction
     open suspend fun insertWithExercises(
@@ -164,6 +171,13 @@ abstract class SessionDao {
         deletePendingSets(sessionId)
         deleteEmptyExercises(sessionId)
         setFinishedAt(sessionId, finishedAt)
+    }
+
+    @Transaction
+    open suspend fun saveEdit(sessionId: Long, completedAt: Instant) {
+        completeFilledSets(sessionId, completedAt)
+        deletePendingSets(sessionId)
+        deleteEmptyExercises(sessionId)
     }
 
     private fun List<WorkoutSetEntity>.withPositions(sessionExerciseId: Long) =

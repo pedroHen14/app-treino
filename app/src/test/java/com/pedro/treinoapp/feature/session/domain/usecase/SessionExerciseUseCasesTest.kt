@@ -88,11 +88,10 @@ class SessionExerciseUseCasesTest {
     }
 
     @Test
-    fun `finished session exercises cannot be changed`() = runTest {
-        assertEquals(
-            SessionResult.Failure(SessionError.NotFound),
-            AddSessionExercisesUseCase(repository, prefill)(20, listOf(1)),
-        )
-        assertEquals(SessionResult.Failure(SessionError.NotFound), RemoveSessionExerciseUseCase(repository)(20, 300))
+    fun `finished session exercises can be changed while editing`() = runTest {
+        assertEquals(SessionResult.Success(Unit), AddSessionExercisesUseCase(repository, prefill)(20, listOf(1)))
+        assertEquals(SessionResult.Success(Unit), RemoveSessionExerciseUseCase(repository)(20, 300))
+
+        assertEquals(listOf(1L), repository.current.first { it.id == 20L }.exercises.map { it.exerciseId })
     }
 }

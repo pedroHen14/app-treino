@@ -79,11 +79,18 @@ class SetUseCasesTest {
     }
 
     @Test
-    fun `finished sessions cannot be edited`() = runTest {
-        assertEquals(
-            SessionResult.Failure(SessionError.NotFound),
-            UpdateSetUseCase(repository)(20, 4, weightGrams = 55_000, reps = 10),
-        )
+    fun `sets of a finished session can be edited`() = runTest {
+        assertEquals(SessionResult.Success(Unit), UpdateSetUseCase(repository)(20, 4, weightGrams = 55_000, reps = 10))
+
+        assertEquals(55_000, set(4).weightGrams)
+        assertTrue(set(4).isCompleted)
+    }
+
+    @Test
+    fun `sets of a finished session cannot be completed or uncompleted`() = runTest {
+        assertEquals(SessionResult.Failure(SessionError.NotFound), completeSet()(sessionId = 20, setId = 4))
+        assertEquals(SessionResult.Failure(SessionError.NotFound), UncompleteSetUseCase(repository)(20, 4))
+        assertTrue(set(4).isCompleted)
     }
 
     @Test
