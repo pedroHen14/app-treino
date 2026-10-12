@@ -76,6 +76,8 @@ class ExerciseFormBottomSheet : BottomSheetDialogFragment() {
         if (binding.name.text?.toString() != state.name) binding.name.setText(state.name)
         val groupLabel = state.muscleGroup?.let { getString(it.labelRes()) }.orEmpty()
         if (binding.muscleGroup.text?.toString() != groupLabel) binding.muscleGroup.setText(groupLabel, false)
+        binding.description.isVisible = state.description != null
+        binding.description.text = state.description
 
         binding.nameLayout.error = state.nameError?.let(::getString)
         binding.muscleGroupLayout.error = state.muscleGroupError?.let(::getString)

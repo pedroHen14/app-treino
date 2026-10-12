@@ -59,6 +59,15 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Só leitura; vem da importação do wger. -->
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textAppearance="?attr/textAppearanceBodyMedium"
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/general_error"
         android:layout_width="match_parent"
