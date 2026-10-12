@@ -6,4 +6,7 @@ data class Exercise(
     val muscleGroup: MuscleGroup,
     val isCustom: Boolean,
     val isArchived: Boolean = false,
+    val description: String? = null,
+    /** Id do exercício na API do wger, quando foi importado de lá. */
+    val wgerId: Long? = null,
 )

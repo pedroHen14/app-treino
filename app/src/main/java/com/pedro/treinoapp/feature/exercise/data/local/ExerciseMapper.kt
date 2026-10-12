@@ -9,14 +9,16 @@ fun ExerciseEntity.toDomain() = Exercise(
     muscleGroup = MuscleGroup.valueOf(muscleGroup),
     isCustom = isCustom,
     isArchived = isArchived,
+    description = description,
+    wgerId = wgerId,
 )
 
-/** O wgerId não existe no domínio ainda (PBI 7), então é preservado de quem chama. */
-fun Exercise.toEntity(wgerId: Long? = null) = ExerciseEntity(
+fun Exercise.toEntity() = ExerciseEntity(
     id = id,
     name = name,
     muscleGroup = muscleGroup.name,
     isCustom = isCustom,
     isArchived = isArchived,
+    description = description,
     wgerId = wgerId,
 )

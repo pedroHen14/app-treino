@@ -20,6 +20,8 @@ import com.pedro.treinoapp.feature.workout.data.local.WorkoutTemplateEntity
 /**
  * Versão 2: carga e repetições da série passam a aceitar nulo (série não preenchida) e
  * `session_exercise` guarda o alvo de repetições do modelo.
+ *
+ * Versão 3: `exercise` ganha `description`, preenchida na importação do wger.
  */
 @Database(
     entities = [
@@ -31,9 +33,12 @@ import com.pedro.treinoapp.feature.workout.data.local.WorkoutTemplateEntity
         SessionExerciseEntity::class,
         WorkoutSetEntity::class,
     ],
-    version = 2,
+    version = 3,
     exportSchema = true,
-    autoMigrations = [AutoMigration(from = 1, to = 2)],
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2),
+        AutoMigration(from = 2, to = 3),
+    ],
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
