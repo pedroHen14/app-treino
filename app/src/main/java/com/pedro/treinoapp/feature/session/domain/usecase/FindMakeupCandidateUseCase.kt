@@ -1,5 +1,6 @@
 package com.pedro.treinoapp.feature.session.domain.usecase
 
+import com.pedro.treinoapp.core.time.weekStart
 import com.pedro.treinoapp.feature.session.domain.model.SessionDay
 import com.pedro.treinoapp.feature.session.domain.repository.SessionRepository
 import com.pedro.treinoapp.feature.workout.domain.repository.WeeklyScheduleRepository

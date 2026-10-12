@@ -1,5 +1,6 @@
 package com.pedro.treinoapp.feature.session.domain.usecase
 
+import com.pedro.treinoapp.core.time.weekStart
 import com.pedro.treinoapp.feature.session.domain.model.NewSessionExercise
 import com.pedro.treinoapp.feature.session.domain.model.NewWorkoutSession
 import com.pedro.treinoapp.feature.session.domain.model.SessionError
