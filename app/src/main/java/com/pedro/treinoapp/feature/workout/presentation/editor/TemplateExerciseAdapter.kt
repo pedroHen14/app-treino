@@ -53,11 +53,12 @@ class TemplateExerciseAdapter(
         fun bind(item: EditorExercise) {
             val context = binding.root.context
             isBinding = true
+            val isSameItem = exerciseId == item.exerciseId
             exerciseId = item.exerciseId
             binding.name.text = item.exerciseName
-            binding.sets.setTextIfChanged(item.sets)
-            binding.repsMin.setTextIfChanged(item.repsMin)
-            binding.repsMax.setTextIfChanged(item.repsMax)
+            binding.sets.setTextIfChanged(item.sets, isSameItem)
+            binding.repsMin.setTextIfChanged(item.repsMin, isSameItem)
+            binding.repsMax.setTextIfChanged(item.repsMax, isSameItem)
             isBinding = false
             binding.error.isVisible = item.error != null
             binding.error.text = item.error?.message(context)
@@ -65,8 +66,13 @@ class TemplateExerciseAdapter(
             binding.remove.setOnClickListener { onRemove(item) }
         }
 
-        /** Escreve só quando o valor mudou fora do campo, para não mexer no cursor de quem digita. */
-        private fun EditText.setTextIfChanged(value: String) {
+        /**
+         * Escreve só quando o valor mudou fora do campo, para não mexer no cursor de quem digita.
+         * Com o campo em foco o texto digitado manda: o diff do ListAdapter roda em segundo plano e
+         * pode entregar um estado anterior à última tecla, o que voltaria o texto e o cursor.
+         */
+        private fun EditText.setTextIfChanged(value: String, isSameItem: Boolean) {
+            if (isSameItem && hasFocus()) return
             if (text?.toString() != value) setText(value)
         }
 
