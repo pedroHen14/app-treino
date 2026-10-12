@@ -74,5 +74,7 @@ class SessionRepositoryImpl @Inject constructor(
 
     override suspend fun finish(sessionId: Long, finishedAt: Instant) = dao.finish(sessionId, finishedAt)
 
+    override suspend fun saveEdit(sessionId: Long, completedAt: Instant) = dao.saveEdit(sessionId, completedAt)
+
     override suspend fun delete(sessionId: Long) = dao.deleteSession(sessionId)
 }

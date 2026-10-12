@@ -12,7 +12,7 @@ class DiscardWorkoutSessionUseCase @Inject constructor(
     private val restTimer: RestTimer,
 ) {
     suspend operator fun invoke(sessionId: Long): SessionResult<Unit> {
-        repository.getEditable(sessionId) ?: return SessionResult.Failure(SessionError.NotFound)
+        repository.getActive(sessionId) ?: return SessionResult.Failure(SessionError.NotFound)
         repository.delete(sessionId)
         restTimer.skip()
         return SessionResult.Success(Unit)

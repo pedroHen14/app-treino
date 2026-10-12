@@ -17,7 +17,7 @@ class CompleteSetUseCase @Inject constructor(
     private val clock: Clock,
 ) {
     suspend operator fun invoke(sessionId: Long, setId: Long): SessionResult<Unit> {
-        val set = repository.getEditable(sessionId)?.findSet(setId)
+        val set = repository.getActive(sessionId)?.findSet(setId)
             ?: return SessionResult.Failure(SessionError.NotFound)
         if (set.isCompleted) return SessionResult.Success(Unit)
         if (!set.isFilled) return SessionResult.Failure(SessionError.MissingValues)

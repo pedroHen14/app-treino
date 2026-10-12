@@ -14,6 +14,7 @@ import com.pedro.treinoapp.R
 import com.pedro.treinoapp.databinding.ItemSessionExerciseFooterBinding
 import com.pedro.treinoapp.databinding.ItemSessionExerciseHeaderBinding
 import com.pedro.treinoapp.databinding.ItemSessionSetBinding
+import com.pedro.treinoapp.feature.history.presentation.labelRes
 import com.pedro.treinoapp.feature.session.domain.model.WorkoutSet
 import com.pedro.treinoapp.feature.workout.presentation.format
 
@@ -101,9 +102,13 @@ class SessionAdapter(
             binding.weightLayout.placeholderText = context.getString(R.string.session_weight_placeholder)
             // O estado vem sempre do ViewModel: o toque desfaz a marcação local até a mudança chegar.
             binding.done.isChecked = item.isCompleted
+            binding.done.isVisible = item.canToggleCompleted
             binding.done.contentDescription = context.getString(R.string.session_set_done, item.number)
+            val record = item.records.firstOrNull()
+            binding.record.isVisible = record != null
+            binding.record.text = record?.let { context.getString(it.labelRes()) }
             binding.remove.contentDescription = context.getString(R.string.session_remove_set, item.number)
-            binding.root.isActivated = item.isCompleted
+            binding.root.isActivated = item.isCompleted && item.canToggleCompleted
             binding.error.isVisible = item.error != null
             binding.error.text = item.error?.message(context)
         }

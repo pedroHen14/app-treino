@@ -10,7 +10,7 @@ class UncompleteSetUseCase @Inject constructor(
     private val repository: SessionRepository,
 ) {
     suspend operator fun invoke(sessionId: Long, setId: Long): SessionResult<Unit> {
-        repository.getEditable(sessionId)?.findSet(setId) ?: return SessionResult.Failure(SessionError.NotFound)
+        repository.getActive(sessionId)?.findSet(setId) ?: return SessionResult.Failure(SessionError.NotFound)
         repository.setCompleted(setId, completedAt = null)
         return SessionResult.Success(Unit)
     }

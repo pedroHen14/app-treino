@@ -2,6 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/action_progress"
+        android:title="@string/session_progress" />
+
+    <item
         android:id="@+id/action_replace"
         android:title="@string/session_replace_exercise" />
 

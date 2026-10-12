@@ -106,6 +106,10 @@
             android:id="@+id/action_session_to_exerciseCatalog"
             app:destination="@id/exerciseCatalogFragment" />
 
+        <action
+            android:id="@+id/action_session_to_exerciseProgress"
+            app:destination="@id/exerciseProgressFragment" />
+
     </fragment>
 
     <dialog
@@ -117,6 +121,42 @@
         android:id="@+id/historyFragment"
         android:name="com.pedro.treinoapp.feature.history.presentation.HistoryFragment"
         android:label="@string/nav_history"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_history">
+
+        <action
+            android:id="@+id/action_history_to_sessionDetail"
+            app:destination="@id/sessionDetailFragment" />
+
+        <action
+            android:id="@+id/action_history_to_exerciseProgress"
+            app:destination="@id/exerciseProgressFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/sessionDetailFragment"
+        android:name="com.pedro.treinoapp.feature.history.presentation.detail.SessionDetailFragment"
+        tools:layout="@layout/fragment_session_detail">
+
+        <argument
+            android:name="sessionId"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/action_sessionDetail_to_exerciseProgress"
+            app:destination="@id/exerciseProgressFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/exerciseProgressFragment"
+        android:name="com.pedro.treinoapp.feature.history.presentation.progress.ExerciseProgressFragment"
+        tools:layout="@layout/fragment_exercise_progress">
+
+        <argument
+            android:name="exerciseId"
+            app:argType="long" />
+
+    </fragment>
 
 </navigation>

@@ -3,6 +3,8 @@ package com.pedro.treinoapp.feature.session.presentation
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pedro.treinoapp.feature.history.domain.model.RecordType
+import com.pedro.treinoapp.feature.history.domain.usecase.ObserveSessionRecordsUseCase
 import com.pedro.treinoapp.feature.session.domain.model.SessionError
 import com.pedro.treinoapp.feature.session.domain.model.SessionResult
 import com.pedro.treinoapp.feature.session.domain.model.WorkoutSession
@@ -12,6 +14,7 @@ import com.pedro.treinoapp.feature.session.domain.timer.RestTimerState
 import com.pedro.treinoapp.feature.session.domain.usecase.AddSessionExercisesUseCase
 import com.pedro.treinoapp.feature.session.domain.usecase.AddSetUseCase
 import com.pedro.treinoapp.feature.session.domain.usecase.CompleteSetUseCase
+import com.pedro.treinoapp.feature.session.domain.usecase.DeleteFinishedSessionUseCase
 import com.pedro.treinoapp.feature.session.domain.usecase.DiscardWorkoutSessionUseCase
 import com.pedro.treinoapp.feature.session.domain.usecase.FinishWorkoutSessionUseCase
 import com.pedro.treinoapp.feature.session.domain.usecase.ObserveRestTimerDurationUseCase
@@ -19,6 +22,7 @@ import com.pedro.treinoapp.feature.session.domain.usecase.ObserveSessionUseCase
 import com.pedro.treinoapp.feature.session.domain.usecase.RemoveSessionExerciseUseCase
 import com.pedro.treinoapp.feature.session.domain.usecase.RemoveSetUseCase
 import com.pedro.treinoapp.feature.session.domain.usecase.ReplaceSessionExerciseUseCase
+import com.pedro.treinoapp.feature.session.domain.usecase.SaveSessionEditUseCase
 import com.pedro.treinoapp.feature.session.domain.usecase.SetRestTimerDurationUseCase
 import com.pedro.treinoapp.feature.session.domain.usecase.UncompleteSetUseCase
 import com.pedro.treinoapp.feature.session.domain.usecase.UpdateSetUseCase
@@ -43,6 +47,7 @@ sealed interface SessionListItem {
 
     data class Header(
         val sessionExerciseId: Long,
+        val exerciseId: Long,
         val exerciseName: String,
         val targetReps: RepRange?,
     ) : SessionListItem {
@@ -60,6 +65,10 @@ sealed interface SessionListItem {
         val repsText: String,
         val targetReps: RepRange?,
         val isCompleted: Boolean,
+        /** Na edição do histórico não há o que concluir: toda série preenchida conta. */
+        val canToggleCompleted: Boolean,
+        /** Recordes que a série bateu, recalculados a cada conclusão, edição ou exclusão. */
+        val records: Set<RecordType>,
         val error: SessionError?,
     ) : SessionListItem {
         override val key get() = "s$setId"
@@ -72,8 +81,10 @@ sealed interface SessionListItem {
 
 data class SessionUiState(
     val isLoading: Boolean = true,
-    /** Sessão finalizada, descartada ou inexistente: a tela fecha. */
+    /** Sessão finalizada ou descartada a partir daqui, ou inexistente: a tela fecha. */
     val isClosed: Boolean = false,
+    /** Sessão já finalizada aberta pelo histórico: sem timer nem conclusão de séries. */
+    val isEditing: Boolean = false,
     val templateName: String? = null,
     val items: List<SessionListItem> = emptyList(),
     val exerciseIds: List<Long> = emptyList(),
@@ -93,6 +104,13 @@ sealed interface SessionEvent {
     data object OfferDiscard : SessionEvent
     data object Saved : SessionEvent
     data object Discarded : SessionEvent
+
+    /** Edição do histórico salva. */
+    data object EditSaved : SessionEvent
+
+    /** A edição deixou o treino sem séries: oferece excluí-lo do histórico. */
+    data object OfferDelete : SessionEvent
+    data object Deleted : SessionEvent
 }
 
 @HiltViewModel
@@ -112,6 +130,9 @@ class SessionViewModel @Inject constructor(
     private val replaceExercise: ReplaceSessionExerciseUseCase,
     private val finishSession: FinishWorkoutSessionUseCase,
     private val discardSession: DiscardWorkoutSessionUseCase,
+    private val saveSessionEdit: SaveSessionEditUseCase,
+    private val deleteSession: DeleteFinishedSessionUseCase,
+    observeRecords: ObserveSessionRecordsUseCase,
 ) : ViewModel() {
 
     private val sessionId: Long = checkNotNull(savedStateHandle[SessionFragment.ARG_SESSION_ID])
@@ -129,24 +150,38 @@ class SessionViewModel @Inject constructor(
 
     private var session: WorkoutSession? = null
 
+    /**
+     * O modo é decidido pela primeira leitura: aberta finalizada, é edição do histórico; aberta em
+     * andamento, ficar finalizada depois (ao salvar) fecha a tela. Guardado para sobreviver à recriação.
+     */
+    private var isEditing: Boolean?
+        get() = savedStateHandle[KEY_EDITING]
+        set(value) {
+            savedStateHandle[KEY_EDITING] = value
+        }
+
     private val _events = Channel<SessionEvent>(Channel.BUFFERED)
     val events: Flow<SessionEvent> = _events.receiveAsFlow()
 
+    private val sessionWithRecords = combine(observeSession(sessionId), observeRecords(sessionId), ::Pair)
+
     val uiState: StateFlow<SessionUiState> = combine(
-        observeSession(sessionId),
+        sessionWithRecords,
         drafts,
         errors,
         restTimer.state,
         observeRestDuration(),
-    ) { session, drafts, errors, timer, defaultRest ->
+    ) { (session, records), drafts, errors, timer, defaultRest ->
         this.session = session
-        if (session == null || !session.isActive) {
+        val editing = session?.let { isEditing ?: (!it.isActive).also { mode -> isEditing = mode } } ?: false
+        if (session == null || (!editing && !session.isActive)) {
             SessionUiState(isLoading = false, isClosed = true)
         } else {
             SessionUiState(
                 isLoading = false,
+                isEditing = editing,
                 templateName = session.templateName,
-                items = session.toItems(drafts, errors),
+                items = session.toItems(drafts, errors, records, canToggleCompleted = !editing),
                 exerciseIds = session.exercises.map { it.exerciseId },
                 completedSetCount = session.completedSetCount,
                 pendingSetCount = session.pendingSetCount,
@@ -252,6 +287,25 @@ class SessionViewModel @Inject constructor(
         }
     }
 
+    /** Fecha a edição do histórico; sem séries, oferece excluir o treino em vez de salvar. */
+    fun saveEdit() = viewModelScope.launch {
+        when (val result = saveSessionEdit(sessionId)) {
+            is SessionResult.Success -> _events.send(SessionEvent.EditSaved)
+            is SessionResult.Failure -> if (result.error == SessionError.NoCompletedSets) {
+                _events.send(SessionEvent.OfferDelete)
+            } else {
+                _events.send(SessionEvent.ShowError(result.error))
+            }
+        }
+    }
+
+    fun delete() = viewModelScope.launch {
+        when (val result = deleteSession(sessionId)) {
+            is SessionResult.Success -> _events.send(SessionEvent.Deleted)
+            is SessionResult.Failure -> _events.send(SessionEvent.ShowError(result.error))
+        }
+    }
+
     private fun saveDraft(setId: Long) {
         val set = session?.findSet(setId) ?: return
         val draft = drafts.value[setId] ?: return
@@ -297,9 +351,14 @@ class SessionViewModel @Inject constructor(
         }
     }
 
-    private fun WorkoutSession.toItems(drafts: Map<Long, SetDraft>, errors: Map<Long, SessionError>) =
+    private fun WorkoutSession.toItems(
+        drafts: Map<Long, SetDraft>,
+        errors: Map<Long, SessionError>,
+        records: Map<Long, Set<RecordType>>,
+        canToggleCompleted: Boolean,
+    ) =
         exercises.flatMap { exercise ->
-            val header = SessionListItem.Header(exercise.id, exercise.exerciseName, exercise.targetReps)
+            val header = SessionListItem.Header(exercise.id, exercise.exerciseId, exercise.exerciseName, exercise.targetReps)
             val rows = exercise.sets.mapIndexed { index, set ->
                 val draft = drafts[set.id]
                 SessionListItem.SetRow(
@@ -311,6 +370,8 @@ class SessionViewModel @Inject constructor(
                     repsText = draft?.reps ?: set.reps?.toString().orEmpty(),
                     targetReps = exercise.targetReps,
                     isCompleted = set.isCompleted,
+                    canToggleCompleted = canToggleCompleted,
+                    records = records[set.id].orEmpty(),
                     error = errors[set.id],
                 )
             }
@@ -322,5 +383,6 @@ class SessionViewModel @Inject constructor(
 
     private companion object {
         const val KEY_PENDING_REPLACEMENT = "pending_replacement"
+        const val KEY_EDITING = "editing"
     }
 }

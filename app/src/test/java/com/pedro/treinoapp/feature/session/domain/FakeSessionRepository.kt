@@ -101,6 +101,20 @@ class FakeSessionRepository(initial: List<WorkoutSession> = emptyList()) : Sessi
         )
     }
 
+    override suspend fun saveEdit(sessionId: Long, completedAt: Instant) = editSession(sessionId) { session ->
+        session.copy(
+            exercises = session.exercises
+                .map { exercise ->
+                    exercise.copy(
+                        sets = exercise.sets
+                            .filter { it.isCompleted || it.isFilled }
+                            .map { if (it.isCompleted) it else it.copy(isCompleted = true, completedAt = completedAt) },
+                    )
+                }
+                .filter { it.sets.isNotEmpty() },
+        )
+    }
+
     override suspend fun delete(sessionId: Long) = sessions.update { list -> list.filterNot { it.id == sessionId } }
 
     private fun NewSessionExercise.toSessionExercise() = SessionExercise(

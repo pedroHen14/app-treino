@@ -99,6 +99,17 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/record"
+        style="@style/Widget.Treino.RecordBadge"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="4dp"
+        android:accessibilityLiveRegion="polite"
+        android:visibility="gone"
+        tools:text="Novo recorde de carga"
+        tools:visibility="visible" />
+
+    <TextView
         android:id="@+id/error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
