@@ -25,6 +25,7 @@ data class ExerciseFormUiState(
     val isLoading: Boolean = false,
     val name: String = "",
     val muscleGroup: MuscleGroup? = null,
+    val description: String? = null,
     @StringRes val nameError: Int? = null,
     @StringRes val muscleGroupError: Int? = null,
     @StringRes val generalError: Int? = null,
@@ -57,7 +58,12 @@ class ExerciseFormViewModel @Inject constructor(
             if (exercise == null) {
                 it.copy(isLoading = false, generalError = R.string.exercise_error_not_found)
             } else {
-                it.copy(isLoading = false, name = exercise.name, muscleGroup = exercise.muscleGroup)
+                it.copy(
+                    isLoading = false,
+                    name = exercise.name,
+                    muscleGroup = exercise.muscleGroup,
+                    description = exercise.description,
+                )
             }
         }
     }

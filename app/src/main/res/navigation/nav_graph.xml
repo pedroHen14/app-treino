@@ -79,6 +79,10 @@
             android:id="@+id/action_exerciseCatalog_to_exerciseForm"
             app:destination="@id/exerciseFormBottomSheet" />
 
+        <action
+            android:id="@+id/action_exerciseCatalog_to_wgerSearch"
+            app:destination="@id/wgerSearchFragment" />
+
     </fragment>
 
     <dialog
@@ -92,6 +96,12 @@
             app:argType="long" />
 
     </dialog>
+
+    <fragment
+        android:id="@+id/wgerSearchFragment"
+        android:name="com.pedro.treinoapp.feature.exercise.presentation.wger.WgerSearchFragment"
+        android:label="@string/wger_search_title"
+        tools:layout="@layout/fragment_wger_search" />
 
     <fragment
         android:id="@+id/sessionFragment"

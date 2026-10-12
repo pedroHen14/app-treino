@@ -83,6 +83,25 @@ class ExerciseCatalogFragment : Fragment() {
                 launch { viewModel.events.collect(::handleEvent) }
             }
         }
+        observeSuggestedExercise()
+    }
+
+    /** Ao voltar da importação do wger com um duplicado, filtra o catálogo pelo exercício existente. */
+    private fun observeSuggestedExercise() {
+        val savedStateHandle = findNavController().currentBackStackEntry?.savedStateHandle ?: return
+        savedStateHandle.getLiveData<String>(RESULT_SUGGESTED_NAME).observe(viewLifecycleOwner) { name ->
+            if (name == null) return@observe
+            val archived = savedStateHandle.remove<Boolean>(RESULT_SUGGESTED_ARCHIVED) ?: false
+            savedStateHandle.remove<String>(RESULT_SUGGESTED_NAME)
+
+            if (archived && !viewModel.filter.value.includeArchived) {
+                binding.toolbar.menu.findItem(R.id.action_show_archived)?.isChecked = true
+                viewModel.onShowArchivedChange(true)
+            }
+            (binding.muscleGroups.getChildAt(0) as? Chip)?.isChecked = true
+            binding.search.setText(name)
+            binding.search.setSelection(name.length)
+        }
     }
 
     private fun renderSelectionButton(selectedCount: Int) {
@@ -108,10 +127,18 @@ class ExerciseCatalogFragment : Fragment() {
         val showArchived = binding.toolbar.menu.findItem(R.id.action_show_archived)
         showArchived.isChecked = viewModel.filter.value.includeArchived
         binding.toolbar.setOnMenuItemClickListener { item ->
-            if (item.itemId != R.id.action_show_archived) return@setOnMenuItemClickListener false
-            item.isChecked = !item.isChecked
-            viewModel.onShowArchivedChange(item.isChecked)
-            true
+            when (item.itemId) {
+                R.id.action_show_archived -> {
+                    item.isChecked = !item.isChecked
+                    viewModel.onShowArchivedChange(item.isChecked)
+                    true
+                }
+                R.id.action_import_wger -> {
+                    findNavController().navigate(R.id.action_exerciseCatalog_to_wgerSearch)
+                    true
+                }
+                else -> false
+            }
         }
     }
 
@@ -205,5 +232,11 @@ class ExerciseCatalogFragment : Fragment() {
 
         /** `LongArray` gravado no `SavedStateHandle` de quem abriu o catálogo. */
         const val RESULT_SELECTED_IDS = "selectedExerciseIds"
+
+        /** Nome do exercício que a importação do wger sugeriu no lugar de um duplicado. */
+        const val RESULT_SUGGESTED_NAME = "suggestedExerciseName"
+
+        /** Se o sugerido está arquivado, o catálogo passa a mostrar arquivados. */
+        const val RESULT_SUGGESTED_ARCHIVED = "suggestedExerciseArchived"
     }
 }

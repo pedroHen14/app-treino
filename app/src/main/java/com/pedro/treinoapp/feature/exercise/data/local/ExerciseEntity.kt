@@ -19,4 +19,5 @@ data class ExerciseEntity(
     @ColumnInfo(name = "is_custom") val isCustom: Boolean,
     @ColumnInfo(name = "is_archived") val isArchived: Boolean = false,
     @ColumnInfo(name = "wger_id") val wgerId: Long? = null,
+    @ColumnInfo(name = "description") val description: String? = null,
 )

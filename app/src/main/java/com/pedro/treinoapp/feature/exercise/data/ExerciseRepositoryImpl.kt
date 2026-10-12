@@ -22,10 +22,7 @@ class ExerciseRepositoryImpl @Inject constructor(
 
     override suspend fun insert(exercise: Exercise): Long = dao.insert(exercise.toEntity())
 
-    override suspend fun update(exercise: Exercise) {
-        val wgerId = dao.getById(exercise.id)?.wgerId
-        dao.update(exercise.toEntity(wgerId))
-    }
+    override suspend fun update(exercise: Exercise) = dao.update(exercise.toEntity())
 
     override suspend fun delete(id: Long) = dao.deleteById(id)
 

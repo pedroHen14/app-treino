@@ -9,7 +9,7 @@ App Android nativo (Kotlin, XML Views) para logbook de treinos de musculação, 
 - Backlog completo: `docs/backlog.md` (também cadastrado como issues no GitHub).
 
 ## Modelo de dados (Room)
-- exercise: id, name (único), muscle_group, is_custom, is_archived, wger_id (único, opcional)
+- exercise: id, name (único), muscle_group, is_custom, is_archived, wger_id (único, opcional), description (opcional)
 - workout_template: id, name (único), created_at, updated_at
 - template_exercise: id, template_id (FK cascade), exercise_id (FK restrict), position, target_sets, target_reps_min, target_reps_max
 - weekly_schedule: day_of_week (PK), template_id (FK set null = descanso)

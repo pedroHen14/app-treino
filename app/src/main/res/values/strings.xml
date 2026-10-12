@@ -107,6 +107,28 @@
     <string name="exercise_error_used_in_session">Este exercício já foi usado em uma sessão de treino. Você pode arquivá-lo: ele some da seleção, mas continua no histórico.</string>
     <string name="exercise_error_used_in_template">Este exercício faz parte de um modelo de treino. Você pode arquivá-lo para que ele não apareça mais na seleção.</string>
 
+    <!-- Importação do wger -->
+    <string name="wger_error_no_connection">Sem conexão com a internet. Verifique a rede e tente novamente.</string>
+    <string name="wger_error_unavailable">Não foi possível consultar o wger agora. Tente novamente mais tarde.</string>
+    <string name="wger_import_menu">Importar do wger</string>
+    <string name="wger_search_title">Importar do wger</string>
+    <string name="wger_search_hint">Buscar na base do wger</string>
+    <string name="wger_search_idle">Digite o nome de um exercício, em português ou inglês.</string>
+    <string name="wger_search_empty">Nenhum exercício encontrado no wger.</string>
+    <string name="wger_attribution">Dados de wger.de, sob licença CC BY-SA</string>
+    <string name="wger_muscle_group_unknown">Grupo não identificado</string>
+    <string name="wger_label_english">Nome em inglês</string>
+    <string name="wger_import_title">Importar exercício</string>
+    <string name="wger_import_action">Importar</string>
+    <string name="wger_english_name_warning">Sem tradução em português no wger. Revise o nome antes de importar.</string>
+    <string name="wger_unknown_group_warning">O wger não indica um grupo muscular equivalente. Escolha um.</string>
+    <string name="wger_imported">\"%1$s\" foi adicionado ao catálogo.</string>
+    <string name="wger_already_in_catalog_title">Exercício já existe</string>
+    <string name="wger_already_in_catalog">\"%1$s\" já está no seu catálogo. Use o exercício existente.</string>
+    <string name="wger_already_in_catalog_archived">\"%1$s\" já está no seu catálogo, arquivado. Você pode desarquivá-lo para usar de novo.</string>
+    <string name="wger_show_existing">Ver no catálogo</string>
+    <string name="action_retry">Tentar novamente</string>
+
     <!-- Dias da semana -->
     <string name="day_monday">Segunda</string>
     <string name="day_tuesday">Terça</string>
