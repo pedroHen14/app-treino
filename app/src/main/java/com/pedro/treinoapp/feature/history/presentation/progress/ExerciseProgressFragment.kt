@@ -179,10 +179,13 @@ class ExerciseProgressFragment : Fragment() {
         binding.bestReps.removeAllViews()
         records.bestRepsByWeight.forEach { mark ->
             val row = ItemProgressBestRepsBinding.inflate(layoutInflater, binding.bestReps, true)
-            row.root.text = getString(
+            row.weight.text = formatWeight(mark.weightGrams)
+            row.reps.text = mark.reps.toString()
+            row.date.text = mark.date.formatShort()
+            row.root.contentDescription = getString(
                 R.string.progress_mark_with_date,
                 formatSet(mark.weightGrams, mark.reps, requireContext()),
-                mark.date.formatShort(),
+                row.date.text,
             )
         }
     }

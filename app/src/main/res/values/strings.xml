@@ -327,6 +327,9 @@
     <string name="progress_chart_single">Faça mais uma sessão deste exercício para ver a evolução no gráfico.</string>
     <string name="progress_record_weight">Recorde de carga</string>
     <string name="progress_best_reps">Mais repetições por carga</string>
+    <string name="progress_column_weight">Carga (kg)</string>
+    <string name="progress_column_reps">Reps</string>
+    <string name="progress_column_date">Data</string>
     <string name="progress_executions">Execuções</string>
     <!-- %1$s: carga em kg, %2$s: repetições das séries com essa carga, ex.: "10, 9, 8" -->
     <string name="progress_execution_sets">%1$s × %2$s</string>

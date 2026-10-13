@@ -1,8 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Linha do caderno: Carga · Reps · Data, com pauta rule de 1dp em cima (a primeira separa do cabeçalho). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/space_1"
-    android:textAppearance="@style/TextAppearance.MuscleNotes.Load"
-    tools:text="62,5 kg × 9" />
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/rule" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="true"
+        android:gravity="center_vertical"
+        android:importantForAccessibility="noHideDescendants"
+        android:minHeight="@dimen/touch_min"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/weight"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.MuscleNotes.Load"
+            tools:text="70,0" />
+
+        <TextView
+            android:id="@+id/reps"
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.MuscleNotes.Load"
+            tools:text="6" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_4"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:maxLines="1"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            android:textColor="@color/ink_muted"
+            tools:text="Seg, 12 out" />
+
+    </LinearLayout>
+
+</LinearLayout>
