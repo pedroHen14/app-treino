@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Marca Muscle Notes: o M em ink (ferro ou giz conforme o tema) e o ponto em brasa. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="96"
+    android:viewportHeight="96">
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M18,78 V42 L42,64 L66,30 V78"
+        android:strokeColor="@color/ink"
+        android:strokeLineJoin="miter"
+        android:strokeMiterLimit="2"
+        android:strokeWidth="12" />
+    <path
+        android:fillColor="@color/brasa"
+        android:pathData="M79,16 m-8,0 a8,8 0 1,0 16,0 a8,8 0 1,0 -16,0" />
+</vector>

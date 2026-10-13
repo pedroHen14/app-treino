@@ -6,6 +6,12 @@
     <string name="nav_workouts">Treinos</string>
     <string name="nav_history">Histórico</string>
 
+    <!-- Tema -->
+    <string name="theme_title">Tema</string>
+    <string name="theme_ferro">Ferro (escuro)</string>
+    <string name="theme_giz">Giz (claro)</string>
+    <string name="theme_system">Seguir o sistema</string>
+
     <!-- Hoje -->
     <string name="today_workout_card_title">Treino do dia</string>
     <string name="today_workout_scheduled">Previsto na agenda de hoje</string>
