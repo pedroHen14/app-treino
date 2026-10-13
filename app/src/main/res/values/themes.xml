@@ -48,9 +48,9 @@
         <item name="colorControlNormal">@color/ink_muted</item>
         <item name="elevationOverlayEnabled">false</item>
 
-        <!-- Tipografia: Archivo para texto, IBM Plex Mono só por estilo explícito (números). -->
-        <item name="android:fontFamily">@font/archivo</item>
-        <item name="fontFamily">@font/archivo</item>
+        <!-- Tipografia: Archivo para texto, IBM Plex Mono só por estilo explícito (números).
+             Sem android:fontFamily no tema: ele venceria o textAppearance de cada view. -->
+        <item name="android:textViewStyle">@style/Widget.MuscleNotes.TextView</item>
         <item name="textAppearanceDisplayLarge">@style/TextAppearance.MuscleNotes.Display</item>
         <item name="textAppearanceDisplayMedium">@style/TextAppearance.MuscleNotes.Display</item>
         <item name="textAppearanceDisplaySmall">@style/TextAppearance.MuscleNotes.Display</item>

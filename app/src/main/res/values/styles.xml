@@ -117,6 +117,11 @@
 
     <!-- ===== Componentes ===== -->
 
+    <!-- TextView sem textAppearance próprio usa Archivo regular (body). -->
+    <style name="Widget.MuscleNotes.TextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.MuscleNotes.Body</item>
+    </style>
+
     <style name="Widget.MuscleNotes.Toolbar" parent="Widget.Material3.Toolbar">
         <item name="android:background">@color/surface</item>
         <item name="titleTextAppearance">@style/TextAppearance.MuscleNotes.Title</item>
@@ -197,6 +202,7 @@
         <item name="boxStrokeWidthFocused">2dp</item>
         <item name="boxBackgroundColor">@color/surface_raised</item>
         <item name="hintTextColor">@color/ink_muted</item>
+        <item name="hintTextAppearance">@style/TextAppearance.MuscleNotes.Caption</item>
     </style>
 
     <style name="Widget.MuscleNotes.TextInputLayout.Dense" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense">
@@ -206,6 +212,7 @@
         <item name="boxStrokeWidthFocused">2dp</item>
         <item name="boxBackgroundColor">@color/surface_raised</item>
         <item name="hintTextColor">@color/ink_muted</item>
+        <item name="hintTextAppearance">@style/TextAppearance.MuscleNotes.Caption</item>
     </style>
 
     <style name="Widget.MuscleNotes.TextInputLayout.ExposedDropdownMenu" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
@@ -215,6 +222,7 @@
         <item name="boxStrokeWidthFocused">2dp</item>
         <item name="boxBackgroundColor">@color/surface_raised</item>
         <item name="hintTextColor">@color/ink_muted</item>
+        <item name="hintTextAppearance">@style/TextAppearance.MuscleNotes.Caption</item>
     </style>
 
     <style name="Widget.MuscleNotes.Chip.Filter" parent="Widget.Material3.Chip.Filter">
