@@ -5,6 +5,7 @@
     <item
         android:id="@+id/action_finish"
         android:title="@string/session_finish"
+        app:actionLayout="@layout/action_primary_button"
         app:showAsAction="always" />
 
     <item

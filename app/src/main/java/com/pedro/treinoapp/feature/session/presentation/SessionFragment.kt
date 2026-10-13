@@ -18,6 +18,8 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.pedro.treinoapp.R
+import com.pedro.treinoapp.core.ui.bindPrimaryAction
+import com.pedro.treinoapp.core.ui.primaryActionButton
 import com.pedro.treinoapp.databinding.FragmentSessionBinding
 import com.pedro.treinoapp.feature.exercise.presentation.catalog.ExerciseCatalogFragment
 import com.pedro.treinoapp.feature.history.presentation.progress.ExerciseProgressFragment
@@ -73,12 +75,13 @@ class SessionFragment : Fragment() {
         }
         binding.toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.action_finish -> if (viewModel.uiState.value.isEditing) viewModel.saveEdit() else viewModel.requestFinish()
+                R.id.action_finish -> finishOrSave()
                 R.id.action_discard -> confirmDiscard()
                 else -> return@setOnMenuItemClickListener false
             }
             true
         }
+        binding.toolbar.bindPrimaryAction(R.id.action_finish, ::finishOrSave)
         binding.list.adapter = adapter
         // Cada digitação gera uma nova lista; sem animação de troca os campos não piscam.
         binding.list.itemAnimator = null
@@ -92,6 +95,10 @@ class SessionFragment : Fragment() {
                 launch { viewModel.events.collect(::handleEvent) }
             }
         }
+    }
+
+    private fun finishOrSave() {
+        if (viewModel.uiState.value.isEditing) viewModel.saveEdit() else viewModel.requestFinish()
     }
 
     private fun setUpTimerPanel() {
@@ -131,8 +138,9 @@ class SessionFragment : Fragment() {
         val templateTitle = state.templateName ?: getString(R.string.session_free_title)
         binding.toolbar.title = if (state.isEditing) getString(R.string.session_edit_title) else templateTitle
         binding.toolbar.subtitle = if (state.isEditing) templateTitle else null
-        binding.toolbar.menu.findItem(R.id.action_finish)
-            ?.setTitle(if (state.isEditing) R.string.action_save else R.string.session_finish)
+        val finishTitle = if (state.isEditing) R.string.action_save else R.string.session_finish
+        binding.toolbar.menu.findItem(R.id.action_finish)?.setTitle(finishTitle)
+        binding.toolbar.primaryActionButton(R.id.action_finish)?.setText(finishTitle)
         binding.toolbar.menu.findItem(R.id.action_discard)?.isVisible = !state.isEditing
         binding.timerPanel.isVisible = !state.isEditing
         saveEditOnBack.isEnabled = state.isEditing

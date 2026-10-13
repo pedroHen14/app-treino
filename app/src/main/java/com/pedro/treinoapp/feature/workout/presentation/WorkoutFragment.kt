@@ -13,8 +13,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.R as MaterialR
-import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.pedro.treinoapp.R
@@ -76,13 +74,7 @@ class WorkoutFragment : Fragment() {
             val templateLabel = day.templateName ?: getString(R.string.schedule_rest)
             row.day.text = dayLabel
             row.template.text = templateLabel
-            row.template.setTextColor(
-                MaterialColors.getColor(
-                    row.template,
-                    if (day.isRest) MaterialR.attr.colorOnSurfaceVariant
-                    else MaterialR.attr.colorOnSurface,
-                ),
-            )
+            row.template.setTextColor(requireContext().getColor(if (day.isRest) R.color.ink_muted else R.color.ink))
             row.root.contentDescription = getString(R.string.schedule_day_description, dayLabel, templateLabel)
             row.root.setOnClickListener { pickTemplateFor(day, templates) }
         }

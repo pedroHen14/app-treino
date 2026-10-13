@@ -23,7 +23,7 @@
             android:id="@+id/search_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginHorizontal="@dimen/space_4"
             android:hint="@string/exercise_search_hint"
             app:endIconMode="clear_text"
             app:startIconDrawable="@drawable/ic_search">
@@ -41,9 +41,9 @@
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/space_2"
             android:clipToPadding="false"
-            android:paddingHorizontal="16dp"
+            android:paddingHorizontal="@dimen/space_4"
             android:scrollbars="none">
 
             <com.google.android.material.chip.ChipGroup
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:padding="16dp"
+                android:padding="@dimen/space_4"
                 android:text="@string/exercise_list_empty"
                 android:textAppearance="?attr/textAppearanceBodyLarge"
                 android:visibility="gone" />
@@ -90,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/space_4"
         android:text="@string/exercise_add"
         app:icon="@drawable/ic_add" />
 

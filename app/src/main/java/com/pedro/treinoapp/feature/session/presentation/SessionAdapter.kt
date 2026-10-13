@@ -108,7 +108,11 @@ class SessionAdapter(
             binding.record.isVisible = record != null
             binding.record.text = record?.let { context.getString(it.labelRes()) }
             binding.remove.contentDescription = context.getString(R.string.session_remove_set, item.number)
-            binding.root.isActivated = item.isCompleted && item.canToggleCompleted
+            // Linha do caderno: a próxima série ganha fundo; as já feitas ficam em ink, as demais em ink_muted.
+            binding.root.isSelected = item.isCurrent
+            binding.number.setTextColor(
+                context.getColor(if (item.isCompleted || !item.canToggleCompleted) R.color.ink else R.color.ink_muted),
+            )
             binding.error.isVisible = item.error != null
             binding.error.text = item.error?.message(context)
         }

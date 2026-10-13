@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pedro.treinoapp.R
+import com.pedro.treinoapp.core.ui.bindPrimaryAction
+import com.pedro.treinoapp.core.ui.primaryActionButton
 import com.pedro.treinoapp.databinding.FragmentTemplateEditorBinding
 import com.pedro.treinoapp.feature.exercise.presentation.catalog.ExerciseCatalogFragment
 import com.pedro.treinoapp.feature.workout.presentation.message
@@ -66,6 +68,7 @@ class TemplateEditorFragment : Fragment() {
             viewModel.save()
             true
         }
+        binding.toolbar.bindPrimaryAction(R.id.action_save, viewModel::save)
         binding.name.doAfterTextChanged { viewModel.onNameChange(it?.toString().orEmpty()) }
         binding.list.adapter = adapter
         // Cada tecla atualiza a linha; a animação de "change" trocaria o ViewHolder e o campo perderia o foco e o cursor.
@@ -113,6 +116,7 @@ class TemplateEditorFragment : Fragment() {
 
         val enabled = !state.isLoading && !state.isSaving
         binding.toolbar.menu.findItem(R.id.action_save).isEnabled = enabled
+        binding.toolbar.primaryActionButton(R.id.action_save)?.isEnabled = enabled
         binding.addExercise.isEnabled = enabled
         discardCallback.isEnabled = state.hasChanges
     }

@@ -8,8 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="24dp"
-        android:paddingBottom="16dp">
+        android:paddingHorizontal="@dimen/space_6"
+        android:paddingBottom="@dimen/space_4">
 
         <com.google.android.material.bottomsheet.BottomSheetDragHandleView
             android:layout_width="match_parent"
@@ -26,7 +26,7 @@
             android:id="@+id/name_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/space_4"
             android:hint="@string/exercise_form_name">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -43,18 +43,18 @@
             android:id="@+id/english_name_warning"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/space_1"
             android:text="@string/wger_english_name_warning"
             android:textAppearance="?attr/textAppearanceBodySmall"
-            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textColor="@color/ink_muted"
             android:visibility="gone" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/muscle_group_layout"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            style="@style/Widget.MuscleNotes.TextInputLayout.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/space_2"
             android:hint="@string/exercise_form_muscle_group">
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -69,17 +69,17 @@
             android:id="@+id/unknown_group_warning"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/space_1"
             android:text="@string/wger_unknown_group_warning"
             android:textAppearance="?attr/textAppearanceBodySmall"
-            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textColor="@color/ink_muted"
             android:visibility="gone" />
 
         <TextView
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/space_4"
             android:textAppearance="?attr/textAppearanceBodyMedium"
             android:visibility="gone"
             tools:text="Deite no banco com um halter em cada mão." />
@@ -88,21 +88,21 @@
             android:id="@+id/general_error"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/space_2"
             android:textAppearance="?attr/textAppearanceBodyMedium"
-            android:textColor="?attr/colorError"
+            android:textColor="@color/perigo"
             android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/space_4"
             android:gravity="end"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/cancel_button"
-                style="@style/Widget.Material3.Button.TextButton"
+                style="@style/Widget.MuscleNotes.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/action_cancel" />
@@ -111,7 +111,7 @@
                 android:id="@+id/import_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="@dimen/space_2"
                 android:text="@string/wger_import_action" />
 
         </LinearLayout>

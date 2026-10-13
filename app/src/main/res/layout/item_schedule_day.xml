@@ -7,7 +7,7 @@
     android:gravity="center_vertical"
     android:minHeight="48dp"
     android:orientation="horizontal"
-    android:paddingHorizontal="16dp">
+    android:paddingHorizontal="@dimen/space_4">
 
     <TextView
         android:id="@+id/day"

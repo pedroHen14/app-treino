@@ -1,41 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Linha do caderno: Série · Carga · Reps · ✓, com pauta rule de 1dp embaixo. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_session_set"
-    android:orientation="vertical"
-    android:paddingVertical="4dp"
-    android:paddingStart="8dp"
-    android:paddingEnd="4dp">
+    android:minHeight="@dimen/touch_min"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/space_1"
+        android:paddingStart="@dimen/space_4"
+        android:paddingEnd="@dimen/space_1">
 
         <TextView
             android:id="@+id/number"
-            android:layout_width="24dp"
+            android:layout_width="@dimen/space_6"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textAppearance="?attr/textAppearanceLabelLarge"
-            android:textColor="?attr/colorOnSurfaceVariant"
+            android:gravity="start"
+            android:textAppearance="@style/TextAppearance.MuscleNotes.Load"
             tools:text="1" />
 
         <ImageButton
             android:id="@+id/weight_minus"
             android:layout_width="40dp"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/touch_min"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/session_weight_minus"
             android:src="@drawable/ic_remove" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/weight_layout"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+            style="@style/Widget.MuscleNotes.TextInputLayout.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -50,24 +51,25 @@
                 android:imeOptions="actionNext"
                 android:inputType="numberDecimal"
                 android:maxLength="7"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.MuscleNotes.Load" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageButton
             android:id="@+id/weight_plus"
             android:layout_width="40dp"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/touch_min"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/session_weight_plus"
             android:src="@drawable/ic_add" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/reps_layout"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+            style="@style/Widget.MuscleNotes.TextInputLayout.Dense"
             android:layout_width="72dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="@dimen/space_1"
             android:hint="@string/session_reps"
             app:expandedHintEnabled="false">
 
@@ -78,20 +80,21 @@
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:maxLength="3"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.MuscleNotes.Load" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/done"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="4dp" />
+            android:layout_width="@dimen/touch_min"
+            android:layout_height="@dimen/touch_min"
+            android:layout_marginStart="@dimen/space_1" />
 
         <ImageButton
             android:id="@+id/remove"
             android:layout_width="40dp"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/touch_min"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_close"
             tools:ignore="ContentDescription" />
@@ -100,22 +103,28 @@
 
     <TextView
         android:id="@+id/record"
-        style="@style/Widget.Treino.RecordBadge"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="4dp"
+        style="@style/Widget.MuscleNotes.RecordBadge"
+        android:layout_marginStart="80dp"
+        android:layout_marginBottom="@dimen/space_2"
         android:accessibilityLiveRegion="polite"
         android:visibility="gone"
-        tools:text="Novo recorde de carga"
+        tools:text="PR de carga"
         tools:visibility="visible" />
 
     <TextView
         android:id="@+id/error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:textAppearance="?attr/textAppearanceBodySmall"
-        android:textColor="?attr/colorError"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="@dimen/space_4"
+        android:layout_marginBottom="@dimen/space_2"
+        android:textAppearance="@style/TextAppearance.MuscleNotes.Caption"
+        android:textColor="@color/perigo"
         android:visibility="gone" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/rule" />
 
 </LinearLayout>

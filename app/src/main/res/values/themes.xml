@@ -1,9 +1,108 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Apptreino" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <!--
+        Muscle Notes. As cores vêm dos tokens (colors.xml = Giz, values-night/colors.xml = Ferro),
+        então um único tema serve aos dois modos. Ferro é o padrão: ver ThemeMode.
+
+        colorPrimary é ink, não brasa: brasa é rara de propósito e entra só por estilo explícito
+        (Widget.MuscleNotes.Button.Brasa, selo PR, linha de carga do gráfico).
+    -->
+    <style name="Base.Theme.MuscleNotes" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/ink</item>
+        <item name="colorOnPrimary">@color/surface</item>
+        <item name="colorPrimaryContainer">@color/surface_raised</item>
+        <item name="colorOnPrimaryContainer">@color/ink</item>
+        <item name="colorPrimaryInverse">@color/surface</item>
+
+        <item name="colorSecondary">@color/ink</item>
+        <item name="colorOnSecondary">@color/surface</item>
+        <item name="colorSecondaryContainer">@color/rule</item>
+        <item name="colorOnSecondaryContainer">@color/ink</item>
+
+        <item name="colorTertiary">@color/aco</item>
+        <item name="colorOnTertiary">@color/surface</item>
+        <item name="colorTertiaryContainer">@color/surface_raised</item>
+        <item name="colorOnTertiaryContainer">@color/aco</item>
+
+        <item name="colorError">@color/perigo</item>
+        <item name="colorOnError">@color/surface</item>
+        <item name="colorErrorContainer">@color/surface_raised</item>
+        <item name="colorOnErrorContainer">@color/perigo</item>
+
+        <item name="android:colorBackground">@color/surface</item>
+        <item name="colorOnBackground">@color/ink</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/ink</item>
+        <item name="colorSurfaceVariant">@color/surface_raised</item>
+        <item name="colorOnSurfaceVariant">@color/ink_muted</item>
+        <item name="colorSurfaceBright">@color/surface_raised</item>
+        <item name="colorSurfaceDim">@color/surface</item>
+        <item name="colorSurfaceContainerLowest">@color/surface</item>
+        <item name="colorSurfaceContainerLow">@color/surface</item>
+        <item name="colorSurfaceContainer">@color/surface_raised</item>
+        <item name="colorSurfaceContainerHigh">@color/surface_raised</item>
+        <item name="colorSurfaceContainerHighest">@color/surface_raised</item>
+        <item name="colorSurfaceInverse">@color/ink</item>
+        <item name="colorOnSurfaceInverse">@color/surface</item>
+        <item name="colorOutline">@color/rule</item>
+        <item name="colorOutlineVariant">@color/rule</item>
+        <item name="colorControlNormal">@color/ink_muted</item>
+        <item name="elevationOverlayEnabled">false</item>
+
+        <!-- Tipografia: Archivo para texto, IBM Plex Mono só por estilo explícito (números).
+             Sem android:fontFamily no tema: ele venceria o textAppearance de cada view. -->
+        <item name="android:textViewStyle">@style/Widget.MuscleNotes.TextView</item>
+        <item name="textAppearanceDisplayLarge">@style/TextAppearance.MuscleNotes.Display</item>
+        <item name="textAppearanceDisplayMedium">@style/TextAppearance.MuscleNotes.Display</item>
+        <item name="textAppearanceDisplaySmall">@style/TextAppearance.MuscleNotes.Display</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.MuscleNotes.Title</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.MuscleNotes.Title</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.MuscleNotes.Title</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.MuscleNotes.Title</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.MuscleNotes.Heading</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.MuscleNotes.BodyStrong</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.MuscleNotes.Body</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.MuscleNotes.Body</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.MuscleNotes.Caption</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.MuscleNotes.BodyStrong</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.MuscleNotes.Caption</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.MuscleNotes.Caption</item>
+
+        <!-- Cantos quase retos, como o M. -->
+        <item name="shapeAppearanceCornerExtraSmall">@style/ShapeAppearance.MuscleNotes.Small</item>
+        <item name="shapeAppearanceCornerSmall">@style/ShapeAppearance.MuscleNotes.Small</item>
+        <item name="shapeAppearanceCornerMedium">@style/ShapeAppearance.MuscleNotes.Medium</item>
+        <item name="shapeAppearanceCornerLarge">@style/ShapeAppearance.MuscleNotes.Medium</item>
+        <item name="shapeAppearanceCornerExtraLarge">@style/ShapeAppearance.MuscleNotes.Medium</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.MuscleNotes.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.MuscleNotes.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.MuscleNotes.Medium</item>
+
+        <!-- Componentes. -->
+        <item name="toolbarStyle">@style/Widget.MuscleNotes.Toolbar</item>
+        <item name="materialButtonStyle">@style/Widget.MuscleNotes.Button</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.MuscleNotes.Button.OutlinedButton</item>
+        <item name="materialCardViewStyle">@style/Widget.MuscleNotes.Card</item>
+        <item name="textInputStyle">@style/Widget.MuscleNotes.TextInputLayout</item>
+        <item name="chipStyle">@style/Widget.MuscleNotes.Chip.Filter</item>
+        <item name="extendedFloatingActionButtonStyle">@style/Widget.MuscleNotes.ExtendedFab</item>
+        <item name="bottomNavigationStyle">@style/Widget.MuscleNotes.BottomNavigation</item>
+        <item name="tabStyle">@style/Widget.MuscleNotes.Tabs</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.MuscleNotes.BottomSheetDialog</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.MuscleNotes.Dialog</item>
     </style>
 
-    <style name="Theme.Apptreino" parent="Base.Theme.Apptreino" />
+    <style name="Theme.MuscleNotes" parent="Base.Theme.MuscleNotes" />
+
+    <style name="ThemeOverlay.MuscleNotes.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.MuscleNotes.BottomSheet</item>
+    </style>
+
+    <style name="ThemeOverlay.MuscleNotes.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.MuscleNotes.Medium</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.MuscleNotes.Title</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.MuscleNotes.Body</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.MuscleNotes.Button.TextButton.Dialog</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.MuscleNotes.Button.TextButton.Dialog</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Widget.MuscleNotes.Button.TextButton.Dialog</item>
+    </style>
 </resources>

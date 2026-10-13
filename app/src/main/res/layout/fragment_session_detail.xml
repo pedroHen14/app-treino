@@ -24,9 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="16dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="24dp">
+            android:paddingHorizontal="@dimen/space_4"
+            android:paddingTop="@dimen/space_2"
+            android:paddingBottom="@dimen/space_6">
 
             <TextView
                 android:id="@+id/date"
@@ -40,13 +40,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textColor="@color/ink_muted"
                 tools:text="Duração: 55 min · 6 exercícios" />
 
             <TextView
                 android:id="@+id/makeup"
-                style="@style/Widget.Treino.OutlineBadge"
-                android:layout_marginTop="8dp"
+                style="@style/Widget.MuscleNotes.OutlineBadge"
+                android:layout_marginTop="@dimen/space_2"
                 android:visibility="gone"
                 tools:text="Reposição de ter"
                 tools:visibility="visible" />
@@ -55,7 +55,7 @@
                 android:id="@+id/exercises"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/space_2"
                 android:orientation="vertical" />
 
         </LinearLayout>

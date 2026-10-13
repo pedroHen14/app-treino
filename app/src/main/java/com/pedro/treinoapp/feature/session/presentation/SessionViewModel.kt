@@ -65,6 +65,8 @@ sealed interface SessionListItem {
         val repsText: String,
         val targetReps: RepRange?,
         val isCompleted: Boolean,
+        /** Próxima série a fazer do exercício: ganha destaque na linha do caderno. */
+        val isCurrent: Boolean,
         /** Na edição do histórico não há o que concluir: toda série preenchida conta. */
         val canToggleCompleted: Boolean,
         /** Recordes que a série bateu, recalculados a cada conclusão, edição ou exclusão. */
@@ -359,6 +361,7 @@ class SessionViewModel @Inject constructor(
     ) =
         exercises.flatMap { exercise ->
             val header = SessionListItem.Header(exercise.id, exercise.exerciseId, exercise.exerciseName, exercise.targetReps)
+            val currentSetId = exercise.sets.firstOrNull { !it.isCompleted }?.id.takeIf { canToggleCompleted }
             val rows = exercise.sets.mapIndexed { index, set ->
                 val draft = drafts[set.id]
                 SessionListItem.SetRow(
@@ -370,6 +373,7 @@ class SessionViewModel @Inject constructor(
                     repsText = draft?.reps ?: set.reps?.toString().orEmpty(),
                     targetReps = exercise.targetReps,
                     isCompleted = set.isCompleted,
+                    isCurrent = set.id == currentSetId,
                     canToggleCompleted = canToggleCompleted,
                     records = records[set.id].orEmpty(),
                     error = errors[set.id],

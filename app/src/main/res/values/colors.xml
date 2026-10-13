@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Muscle Notes — tema Giz (claro). Fonte da verdade: docs/design/tokens.json -->
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="surface">#F4F1EA</color>
+    <color name="surface_raised">#FFFFFF</color>
+    <color name="rule">#DCD7CB</color>
+    <color name="ink">#141412</color>
+    <color name="ink_muted">#5E5B53</color>
+    <color name="brasa">#FF5A1F</color>
+    <color name="on_brasa">#141412</color>
+    <color name="brasa_text">#B8400F</color>
+    <color name="aco">#2D5F8A</color>
+    <color name="perigo">#B42318</color>
+    <!-- Fundo do ícone adaptável: igual nos dois temas -->
+    <color name="ic_launcher_background">#141412</color>
 </resources>

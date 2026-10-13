@@ -15,7 +15,8 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.pedro.treinoapp"
+        // ID da Play Store: permanente após a primeira publicação. O namespace do código continua com.pedro.treinoapp.
+        applicationId = "com.pedro.musclenotes"
         minSdk = 26
         targetSdk = 36
         versionCode = 1

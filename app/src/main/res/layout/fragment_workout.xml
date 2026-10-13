@@ -25,12 +25,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingHorizontal="16dp"
-                android:paddingTop="8dp"
+                android:paddingHorizontal="@dimen/space_4"
+                android:paddingTop="@dimen/space_2"
                 android:paddingBottom="88dp">
 
                 <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.Material3.CardView.Outlined"
+                    style="@style/Widget.MuscleNotes.Card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -38,17 +38,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:paddingVertical="8dp">
+                        android:paddingVertical="@dimen/space_2">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:accessibilityHeading="true"
-                            android:paddingHorizontal="16dp"
-                            android:paddingVertical="8dp"
+                            android:paddingHorizontal="@dimen/space_4"
+                            android:paddingVertical="@dimen/space_2"
                             android:text="@string/schedule_header"
-                            android:textAppearance="?attr/textAppearanceLabelLarge"
-                            android:textColor="?attr/colorOnSurfaceVariant" />
+                            android:textAppearance="@style/TextAppearance.MuscleNotes.Label"
+                            android:textColor="@color/ink_muted" />
 
                         <LinearLayout
                             android:id="@+id/schedule"
@@ -63,12 +63,12 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="@dimen/space_6"
+                    android:layout_marginBottom="@dimen/space_2"
                     android:accessibilityHeading="true"
                     android:text="@string/templates_header"
-                    android:textAppearance="?attr/textAppearanceLabelLarge"
-                    android:textColor="?attr/colorOnSurfaceVariant" />
+                    android:textAppearance="@style/TextAppearance.MuscleNotes.Label"
+                    android:textColor="@color/ink_muted" />
 
                 <LinearLayout
                     android:id="@+id/templates"
@@ -80,7 +80,7 @@
                     android:id="@+id/templates_empty"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingVertical="16dp"
+                    android:paddingVertical="@dimen/space_4"
                     android:text="@string/templates_empty"
                     android:textAppearance="?attr/textAppearanceBodyLarge"
                     android:visibility="gone" />
@@ -96,7 +96,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/space_4"
         android:text="@string/template_new"
         app:icon="@drawable/ic_add" />
 

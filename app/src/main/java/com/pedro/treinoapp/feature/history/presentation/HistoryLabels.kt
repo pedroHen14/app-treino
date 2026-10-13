@@ -55,7 +55,7 @@ fun formatVolumeKg(volume: Long, context: Context): String {
     return context.getString(R.string.history_kg, number)
 }
 
-/** "62,5 kg × 10". */
+/** "62,5 × 10". */
 fun formatSet(weightGrams: Int, reps: Int, context: Context): String =
     context.getString(R.string.history_set, formatWeight(weightGrams), reps)
 
