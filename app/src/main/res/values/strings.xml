@@ -103,7 +103,7 @@
     <string name="exercise_unarchived">Exercício desarquivado</string>
     <string name="exercise_deleted">Exercício excluído</string>
     <string name="exercise_delete_title">Excluir \"%1$s\"?</string>
-    <string name="exercise_delete_message">Esta ação não pode ser desfeita.</string>
+    <string name="exercise_delete_message">O exercício sai do catálogo. Não é possível desfazer.</string>
     <string name="exercise_cannot_delete_title">Não é possível excluir</string>
     <string name="exercise_form_new_title">Novo exercício</string>
     <string name="exercise_form_edit_title">Editar exercício</string>
@@ -175,7 +175,7 @@
     <string name="template_duplicated">Modelo duplicado</string>
     <string name="template_deleted">Modelo excluído</string>
     <string name="template_delete_title">Excluir \"%1$s\"?</string>
-    <string name="template_delete_message">Esta ação não pode ser desfeita. Sessões já registradas continuam no histórico.</string>
+    <string name="template_delete_message">O modelo é apagado e não é possível desfazer. Sessões já registradas continuam no histórico.</string>
     <!-- %1$s: dias da agenda, ex.: "segunda e quinta" -->
     <plurals name="template_delete_message_scheduled">
         <item quantity="one">Este modelo está na agenda de %1$s, que vai virar dia de descanso. Sessões já registradas continuam no histórico.</item>
@@ -197,7 +197,7 @@
     <string name="template_reps_max">Até</string>
     <string name="template_reps_max_placeholder">Fixo</string>
     <string name="template_discard_title">Descartar alterações?</string>
-    <string name="template_discard_message">As alterações neste modelo não foram salvas.</string>
+    <string name="template_discard_message">As alterações que você fez neste modelo serão perdidas.</string>
     <string name="template_discard">Descartar</string>
     <string name="template_keep_editing">Continuar editando</string>
     <string name="template_error_name_blank">Informe o nome do modelo.</string>
@@ -236,10 +236,10 @@
     </plurals>
     <string name="session_keep_training">Continuar treinando</string>
     <string name="session_no_completed_title">Nenhuma série concluída</string>
-    <string name="session_no_completed_message">Não há nada para salvar no histórico. Deseja descartar esta sessão?</string>
+    <string name="session_no_completed_message">Não há nada para salvar no histórico. Quer descartar esta sessão?</string>
     <string name="session_discard">Cancelar treino</string>
     <string name="session_discard_title">Cancelar treino?</string>
-    <string name="session_discard_message">A sessão será descartada e nada ficará no histórico.</string>
+    <string name="session_discard_message">Todas as séries desta sessão serão apagadas e nada fica no histórico.</string>
     <string name="session_saved">Treino salvo no histórico</string>
     <string name="session_discarded">Treino cancelado</string>
     <string name="session_rest_idle">Descanso</string>
@@ -272,13 +272,13 @@
     <string name="session_edit_title">Editar treino</string>
     <string name="session_edit_saved">Treino atualizado</string>
     <string name="session_edit_empty_title">Nenhuma série no treino</string>
-    <string name="session_edit_empty_message">Sem séries, este treino não fica no histórico. Deseja excluí-lo?</string>
+    <string name="session_edit_empty_message">Sem séries, este treino não fica no histórico. Quer excluí-lo?</string>
     <string name="session_keep_editing">Continuar editando</string>
     <string name="session_progress">Progressão</string>
 
     <!-- Recordes -->
-    <string name="record_max_weight">Novo recorde de carga</string>
-    <string name="record_max_reps">Recorde de repetições com essa carga</string>
+    <string name="record_max_weight">PR de carga</string>
+    <string name="record_max_reps">PR de reps nessa carga</string>
 
     <!-- Histórico -->
     <string name="history_tab_sessions">Sessões</string>
@@ -307,7 +307,7 @@
     <!-- %1$s: número já formatado -->
     <string name="history_kg">%1$s kg</string>
     <!-- %1$s: carga em kg, %2$d: repetições -->
-    <string name="history_set">%1$s kg × %2$d</string>
+    <string name="history_set">%1$s × %2$d</string>
     <string name="history_volume">Volume: %1$s</string>
 
     <!-- Detalhe da sessão -->
@@ -329,9 +329,9 @@
     <string name="progress_best_reps">Mais repetições por carga</string>
     <string name="progress_executions">Execuções</string>
     <!-- %1$s: carga em kg, %2$s: repetições das séries com essa carga, ex.: "10, 9, 8" -->
-    <string name="progress_execution_sets">%1$s kg × %2$s</string>
-    <string name="progress_execution_record">Recorde</string>
-    <!-- %1$s: marca, ex.: "62,5 kg × 9"; %2$s: data -->
+    <string name="progress_execution_sets">%1$s × %2$s</string>
+    <string name="progress_execution_record">PR</string>
+    <!-- %1$s: marca, ex.: "62,5 × 9"; %2$s: data -->
     <string name="progress_mark_with_date">%1$s · %2$s</string>
     <!-- %1$s: métrica, %2$d: quantidade de sessões, %3$s e %4$s: primeira e última data -->
     <plurals name="progress_chart_description">

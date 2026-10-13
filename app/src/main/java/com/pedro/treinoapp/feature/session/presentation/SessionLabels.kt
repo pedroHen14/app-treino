@@ -9,9 +9,11 @@ import java.math.BigDecimal
 import kotlin.math.ceil
 import kotlin.time.Duration
 
-/** Carga em kg com vírgula e sem zeros à direita: 42500 g → "42,5". */
-fun formatWeight(grams: Int): String =
-    BigDecimal(grams).movePointLeft(3).stripTrailingZeros().toPlainString().replace('.', ',')
+/** Carga em kg com vírgula e ao menos uma casa: 80000 g → "80,0", 42500 g → "42,5". */
+fun formatWeight(grams: Int): String {
+    val kg = BigDecimal(grams).movePointLeft(3).stripTrailingZeros()
+    return kg.setScale(kg.scale().coerceAtLeast(1)).toPlainString().replace('.', ',')
+}
 
 /**
  * Converte o texto digitado (kg, com vírgula ou ponto) em gramas. Texto vazio é nulo.
