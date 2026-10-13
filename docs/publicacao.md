@@ -88,3 +88,22 @@ Respostas para **Segurança dos dados**, de acordo com o que o app faz hoje:
   de pesquisa no app" como coletado, processado de forma efêmera, opcional, para funcionalidade do app.
 - **Criptografia em trânsito:** sim (HTTPS).
 - **Exclusão:** a pessoa apaga os dados limpando o armazenamento do app ou desinstalando.
+
+## 6. Capturas de tela da loja
+
+Ficam em [`play-store/screenshots`](play-store/screenshots), em 1080 × 2160 (a Play Store não aceita
+lado maior que o dobro do menor, então 1080 × 2400 é recusado).
+
+Os dados vêm de uma seed fictícia que só existe no build debug (`app/src/debug`): quatro modelos,
+agenda semanal e doze semanas de histórico com progressão de carga. Para refazer no emulador:
+
+```bash
+./gradlew :app:installDebug
+adb shell wm size 1080x2160
+adb shell am broadcast -n com.pedro.musclenotes/com.pedro.treinoapp.debug.DemoSeedReceiver
+adb shell am force-stop com.pedro.musclenotes
+```
+
+A seed apaga modelos, agenda e sessões (o catálogo de exercícios fica). Com `--ez active true` ela
+também deixa o treino do dia em andamento, para capturar a tela de execução com o timer.
+Ao terminar, `adb shell wm size reset`.
