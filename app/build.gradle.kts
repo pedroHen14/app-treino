@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.ksp)
@@ -5,6 +7,25 @@ plugins {
     alias(libs.plugins.room)
     alias(libs.plugins.kotlin.serialization)
 }
+
+// Assinatura de release: keystore.properties fica fora do git (modelo em keystore.properties.example).
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties().apply {
+    if (keystorePropertiesFile.exists()) keystorePropertiesFile.inputStream().use { load(it) }
+}
+
+fun git(vararg args: String): String? = runCatching {
+    providers.exec {
+        commandLine("git", *args)
+        isIgnoreExitValue = true
+    }.standardOutput.asText.get().trim().ifEmpty { null }
+}.getOrNull()
+
+// versionCode = número de commits do HEAD; exige histórico completo (no CI, checkout com fetch-depth: 0).
+val gitVersionCode = git("rev-list", "--count", "HEAD")?.toIntOrNull() ?: 1
+
+// versionName = tag vX.Y.Z; fora de uma tag vira "X.Y.Z-N-g<hash>".
+val gitVersionName = git("describe", "--tags", "--match", "v[0-9]*")?.removePrefix("v") ?: "0.0.0-dev"
 
 android {
     namespace = "com.pedro.treinoapp"
@@ -19,14 +40,27 @@ android {
         applicationId = "com.pedro.musclenotes"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = gitVersionCode
+        versionName = gitVersionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        if (keystorePropertiesFile.exists()) {
+            create("release") {
+                storeFile = rootProject.file(keystoreProperties.getProperty("storeFile"))
+                storePassword = keystoreProperties.getProperty("storePassword")
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
+            // Sem keystore.properties (ex.: CI) o release sai sem assinatura, mas o build não quebra.
+            signingConfig = signingConfigs.findByName("release")
             optimization {
                 enable = false
             }
