@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Muscle Notes — estilos. Valores de docs/design/tokens.json. -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- ===== Tipografia ===== -->
 
@@ -319,7 +319,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingTop">@dimen/space_6</item>
         <item name="android:paddingBottom">@dimen/space_2</item>
-        <item name="android:accessibilityHeading">true</item>
+        <item name="android:accessibilityHeading" tools:targetApi="28">true</item>
         <item name="android:textAppearance">@style/TextAppearance.MuscleNotes.Label</item>
         <item name="android:textColor">@color/ink_muted</item>
     </style>
