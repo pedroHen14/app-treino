@@ -36,7 +36,7 @@
 
     <TextView
         android:id="@+id/record"
-        style="@style/Widget.Treino.RecordBadge"
+        style="@style/Widget.MuscleNotes.RecordBadge"
         android:layout_marginStart="8dp"
         android:importantForAccessibility="no"
         android:visibility="gone"

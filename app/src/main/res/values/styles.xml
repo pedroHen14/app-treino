@@ -1,51 +1,321 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Muscle Notes — estilos. Valores de docs/design/tokens.json. -->
 <resources>
 
-    <!-- Selo de recorde pessoal (histórico, detalhe da sessão e execução). -->
-    <style name="Widget.Treino.RecordBadge" parent="">
+    <!-- ===== Tipografia ===== -->
+
+    <!-- Uma vez por tela, no máximo: estado vazio, recorde. -->
+    <style name="TextAppearance.MuscleNotes.Display" parent="TextAppearance.Material3.DisplaySmall">
+        <item name="android:fontFamily">@font/archivo_black</item>
+        <item name="fontFamily">@font/archivo_black</item>
+        <item name="android:textSize">40sp</item>
+        <item name="lineHeight">44sp</item>
+        <item name="android:letterSpacing">-0.0125</item>
+    </style>
+
+    <!-- Título da tela e nome do treino do dia. -->
+    <style name="TextAppearance.MuscleNotes.Title" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:fontFamily">@font/archivo_extrabold</item>
+        <item name="fontFamily">@font/archivo_extrabold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="lineHeight">28sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- Nome do exercício, títulos de seção. -->
+    <style name="TextAppearance.MuscleNotes.Heading" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:fontFamily">@font/archivo_bold</item>
+        <item name="fontFamily">@font/archivo_bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="lineHeight">24sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="TextAppearance.MuscleNotes.Body" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:fontFamily">@font/archivo_regular</item>
+        <item name="fontFamily">@font/archivo_regular</item>
+        <item name="android:textSize">16sp</item>
+        <item name="lineHeight">24sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- Rótulos de botão e itens de lista. -->
+    <style name="TextAppearance.MuscleNotes.BodyStrong" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:fontFamily">@font/archivo_semibold</item>
+        <item name="fontFamily">@font/archivo_semibold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="lineHeight">24sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- Datas, metadados e legendas, em ink_muted. -->
+    <style name="TextAppearance.MuscleNotes.Caption" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:fontFamily">@font/archivo_medium</item>
+        <item name="fontFamily">@font/archivo_medium</item>
+        <item name="android:textSize">13sp</item>
+        <item name="lineHeight">18sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- Números de treino: carga em destaque, timer de descanso. -->
+    <style name="TextAppearance.MuscleNotes.LoadXl" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:fontFamily">@font/ibm_plex_mono_medium</item>
+        <item name="fontFamily">@font/ibm_plex_mono_medium</item>
+        <item name="android:fontFeatureSettings">tnum</item>
+        <item name="android:textSize">32sp</item>
+        <item name="lineHeight">36sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- Carga e reps de cada série na linha do caderno. -->
+    <style name="TextAppearance.MuscleNotes.Load" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:fontFamily">@font/ibm_plex_mono_medium</item>
+        <item name="fontFamily">@font/ibm_plex_mono_medium</item>
+        <item name="android:fontFeatureSettings">tnum</item>
+        <item name="android:textSize">18sp</item>
+        <item name="lineHeight">24sp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- Rótulos curtos em caixa alta: número da série, abas, selo PR. -->
+    <style name="TextAppearance.MuscleNotes.Label" parent="TextAppearance.Material3.LabelMedium">
+        <item name="android:fontFamily">@font/ibm_plex_mono_medium</item>
+        <item name="fontFamily">@font/ibm_plex_mono_medium</item>
+        <item name="android:fontFeatureSettings">tnum</item>
+        <item name="android:textSize">12sp</item>
+        <item name="lineHeight">16sp</item>
+        <item name="android:letterSpacing">0.125</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
+    <!-- ===== Forma ===== -->
+
+    <style name="ShapeAppearance.MuscleNotes.Small" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_sm</item>
+    </style>
+
+    <style name="ShapeAppearance.MuscleNotes.Medium" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radius_md</item>
+    </style>
+
+    <style name="ShapeAppearance.MuscleNotes.Pill" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="ShapeAppearance.MuscleNotes.BottomSheet" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">@dimen/radius_md</item>
+        <item name="cornerSizeTopRight">@dimen/radius_md</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+    <!-- ===== Componentes ===== -->
+
+    <style name="Widget.MuscleNotes.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">@color/surface</item>
+        <item name="titleTextAppearance">@style/TextAppearance.MuscleNotes.Title</item>
+        <item name="subtitleTextAppearance">@style/TextAppearance.MuscleNotes.Caption</item>
+    </style>
+
+    <!-- Botão preenchido neutro (ink). O botão principal da tela usa .Brasa. -->
+    <style name="Widget.MuscleNotes.Button" parent="Widget.Material3.Button">
+        <item name="shapeAppearance">@style/ShapeAppearance.MuscleNotes.Medium</item>
+        <item name="android:minHeight">@dimen/touch_min</item>
+        <item name="android:textAppearance">@style/TextAppearance.MuscleNotes.BodyStrong</item>
+    </style>
+
+    <!-- O botão principal da tela: no máximo um elemento brasa por tela. -->
+    <style name="Widget.MuscleNotes.Button.Brasa">
+        <item name="backgroundTint">@color/button_brasa_background</item>
+        <item name="android:textColor">@color/button_brasa_content</item>
+        <item name="iconTint">@color/button_brasa_content</item>
+        <item name="rippleColor">@color/on_brasa_ripple</item>
+    </style>
+
+    <style name="Widget.MuscleNotes.Button.OutlinedButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="shapeAppearance">@style/ShapeAppearance.MuscleNotes.Medium</item>
+        <item name="android:minHeight">@dimen/touch_min</item>
+        <item name="android:textAppearance">@style/TextAppearance.MuscleNotes.BodyStrong</item>
+    </style>
+
+    <style name="Widget.MuscleNotes.Button.TonalButton" parent="Widget.Material3.Button.TonalButton">
+        <item name="shapeAppearance">@style/ShapeAppearance.MuscleNotes.Medium</item>
+        <item name="android:minHeight">@dimen/touch_min</item>
+        <item name="android:textAppearance">@style/TextAppearance.MuscleNotes.BodyStrong</item>
+    </style>
+
+    <style name="Widget.MuscleNotes.Button.TextButton" parent="Widget.Material3.Button.TextButton">
+        <item name="shapeAppearance">@style/ShapeAppearance.MuscleNotes.Medium</item>
+        <item name="android:minHeight">@dimen/touch_min</item>
+        <item name="android:textAppearance">@style/TextAppearance.MuscleNotes.BodyStrong</item>
+    </style>
+
+    <style name="Widget.MuscleNotes.Button.TextButton.Icon" parent="Widget.Material3.Button.TextButton.Icon">
+        <item name="shapeAppearance">@style/ShapeAppearance.MuscleNotes.Medium</item>
+        <item name="android:minHeight">@dimen/touch_min</item>
+        <item name="android:textAppearance">@style/TextAppearance.MuscleNotes.BodyStrong</item>
+    </style>
+
+    <style name="Widget.MuscleNotes.Button.TextButton.Dialog" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="shapeAppearance">@style/ShapeAppearance.MuscleNotes.Medium</item>
+        <item name="android:textAppearance">@style/TextAppearance.MuscleNotes.BodyStrong</item>
+    </style>
+
+    <style name="Widget.MuscleNotes.Button.IconButton" parent="Widget.Material3.Button.IconButton">
+        <item name="shapeAppearance">@style/ShapeAppearance.MuscleNotes.Medium</item>
+    </style>
+
+    <style name="Widget.MuscleNotes.Button.IconButton.Filled" parent="Widget.Material3.Button.IconButton.Filled">
+        <item name="shapeAppearance">@style/ShapeAppearance.MuscleNotes.Medium</item>
+    </style>
+
+    <!-- Cards: sem sombra, separados por tom (surface_raised) e pauta (rule). -->
+    <style name="Widget.MuscleNotes.Card" parent="Widget.Material3.CardView.Outlined">
+        <item name="cardBackgroundColor">@color/surface_raised</item>
+        <item name="strokeColor">@color/rule</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.MuscleNotes.Medium</item>
+    </style>
+
+    <!-- Campos: cantos radius_sm, borda rule, foco 2dp em brasa_text. -->
+    <style name="Widget.MuscleNotes.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="shapeAppearance">@style/ShapeAppearance.MuscleNotes.Small</item>
+        <item name="boxStrokeColor">@color/text_input_stroke</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="boxBackgroundColor">@color/surface_raised</item>
+        <item name="hintTextColor">@color/ink_muted</item>
+    </style>
+
+    <style name="Widget.MuscleNotes.TextInputLayout.Dense" parent="Widget.Material3.TextInputLayout.OutlinedBox.Dense">
+        <item name="shapeAppearance">@style/ShapeAppearance.MuscleNotes.Small</item>
+        <item name="boxStrokeColor">@color/text_input_stroke</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="boxBackgroundColor">@color/surface_raised</item>
+        <item name="hintTextColor">@color/ink_muted</item>
+    </style>
+
+    <style name="Widget.MuscleNotes.TextInputLayout.ExposedDropdownMenu" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="shapeAppearance">@style/ShapeAppearance.MuscleNotes.Small</item>
+        <item name="boxStrokeColor">@color/text_input_stroke</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="boxBackgroundColor">@color/surface_raised</item>
+        <item name="hintTextColor">@color/ink_muted</item>
+    </style>
+
+    <style name="Widget.MuscleNotes.Chip.Filter" parent="Widget.Material3.Chip.Filter">
+        <item name="shapeAppearance">@style/ShapeAppearance.MuscleNotes.Small</item>
+        <item name="chipStrokeColor">@color/rule</item>
+        <item name="android:textAppearance">@style/TextAppearance.MuscleNotes.Caption</item>
+    </style>
+
+    <!-- Ação principal de listas (Novo treino, Novo exercício): o elemento brasa da tela. -->
+    <style name="Widget.MuscleNotes.ExtendedFab" parent="Widget.Material3.ExtendedFloatingActionButton.Icon.Primary">
+        <item name="backgroundTint">@color/brasa</item>
+        <item name="android:textColor">@color/on_brasa</item>
+        <item name="iconTint">@color/on_brasa</item>
+        <item name="rippleColor">@color/on_brasa_ripple</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.MuscleNotes.Medium</item>
+        <item name="android:textAppearance">@style/TextAppearance.MuscleNotes.BodyStrong</item>
+        <item name="elevation">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <style name="Widget.MuscleNotes.BottomNavigation" parent="Widget.Material3.BottomNavigationView">
+        <item name="backgroundTint">@color/surface</item>
+        <item name="elevation">0dp</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.MuscleNotes.Caption</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.MuscleNotes.Caption</item>
+        <item name="itemActiveIndicatorStyle">@style/Widget.MuscleNotes.BottomNavigation.ActiveIndicator</item>
+    </style>
+
+    <style name="Widget.MuscleNotes.BottomNavigation.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/surface_raised</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.MuscleNotes.Small</item>
+    </style>
+
+    <style name="Widget.MuscleNotes.Tabs" parent="Widget.Material3.TabLayout">
+        <item name="android:background">@color/surface</item>
+        <item name="tabIndicatorColor">@color/ink</item>
+        <item name="tabTextAppearance">@style/TextAppearance.MuscleNotes.Label</item>
+    </style>
+
+    <style name="Widget.MuscleNotes.BottomSheet" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="backgroundTint">@color/surface_raised</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.MuscleNotes.BottomSheet</item>
+    </style>
+
+    <style name="MaterialAlertDialog.MuscleNotes.Title" parent="MaterialAlertDialog.Material3.Title.Text">
+        <item name="android:textAppearance">@style/TextAppearance.MuscleNotes.Heading</item>
+    </style>
+
+    <style name="MaterialAlertDialog.MuscleNotes.Body" parent="MaterialAlertDialog.Material3.Body.Text">
+        <item name="android:textAppearance">@style/TextAppearance.MuscleNotes.Body</item>
+        <item name="android:textColor">@color/ink_muted</item>
+    </style>
+
+    <!-- ===== Peças do app ===== -->
+
+    <!-- Selo PR: preenchimento brasa, texto on_brasa (nunca branco). -->
+    <style name="Widget.MuscleNotes.RecordBadge" parent="">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/bg_badge</item>
-        <item name="android:backgroundTint">?attr/colorTertiaryContainer</item>
-        <item name="android:paddingStart">8dp</item>
-        <item name="android:paddingEnd">8dp</item>
-        <item name="android:paddingTop">4dp</item>
-        <item name="android:paddingBottom">4dp</item>
-        <item name="android:textAppearance">?attr/textAppearanceLabelMedium</item>
-        <item name="android:textColor">?attr/colorOnTertiaryContainer</item>
+        <item name="android:backgroundTint">@color/brasa</item>
+        <item name="android:paddingStart">@dimen/space_2</item>
+        <item name="android:paddingEnd">@dimen/space_2</item>
+        <item name="android:paddingTop">@dimen/space_1</item>
+        <item name="android:paddingBottom">@dimen/space_1</item>
+        <item name="android:textAppearance">@style/TextAppearance.MuscleNotes.Label</item>
+        <item name="android:textColor">@color/on_brasa</item>
     </style>
 
     <!-- Selo neutro, ex.: "Reposição de ter". -->
-    <style name="Widget.Treino.OutlineBadge" parent="Widget.Treino.RecordBadge">
+    <style name="Widget.MuscleNotes.OutlineBadge" parent="Widget.MuscleNotes.RecordBadge">
         <item name="android:background">@drawable/bg_badge_outline</item>
         <item name="android:backgroundTint">@null</item>
-        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textColor">@color/ink_muted</item>
     </style>
 
     <!-- Bloco de número do resumo semanal (volume, recordes); lido inteiro pelo leitor de tela. -->
-    <style name="Widget.Treino.WeeklyStat" parent="">
+    <style name="Widget.MuscleNotes.WeeklyStat" parent="">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
         <item name="android:orientation">vertical</item>
         <item name="android:focusable">true</item>
-        <item name="android:background">@drawable/bg_badge</item>
-        <item name="android:backgroundTint">?attr/colorSurfaceContainerHighest</item>
-        <item name="android:paddingStart">12dp</item>
-        <item name="android:paddingEnd">12dp</item>
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingBottom">8dp</item>
+        <item name="android:background">@drawable/bg_badge_outline</item>
+        <item name="android:paddingStart">@dimen/space_3</item>
+        <item name="android:paddingEnd">@dimen/space_3</item>
+        <item name="android:paddingTop">@dimen/space_2</item>
+        <item name="android:paddingBottom">@dimen/space_2</item>
     </style>
 
     <!-- Cabeçalho de seção em listas (mês no histórico, execuções na progressão). -->
-    <style name="Widget.Treino.SectionHeader" parent="">
+    <style name="Widget.MuscleNotes.SectionHeader" parent="">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingTop">@dimen/space_6</item>
+        <item name="android:paddingBottom">@dimen/space_2</item>
         <item name="android:accessibilityHeading">true</item>
-        <item name="android:textAppearance">?attr/textAppearanceLabelLarge</item>
-        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+        <item name="android:textAppearance">@style/TextAppearance.MuscleNotes.Label</item>
+        <item name="android:textColor">@color/ink_muted</item>
+    </style>
+
+    <!-- Rótulo curto acima de um bloco (ex.: "Resumo da semana"). -->
+    <style name="Widget.MuscleNotes.Label" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.MuscleNotes.Label</item>
+        <item name="android:textColor">@color/ink_muted</item>
     </style>
 
 </resources>

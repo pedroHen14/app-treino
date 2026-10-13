@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Borda dos campos: pauta em repouso, anel brasa_text no foco. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/brasa_text" android:state_focused="true" />
+    <item android:color="@color/ink_muted" android:state_hovered="true" />
+    <item android:alpha="0.38" android:color="@color/rule" android:state_enabled="false" />
+    <item android:color="@color/rule" />
+</selector>

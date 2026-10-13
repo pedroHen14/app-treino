@@ -59,7 +59,7 @@
 
             <LinearLayout
                 android:id="@+id/volume_box"
-                style="@style/Widget.Treino.WeeklyStat"
+                style="@style/Widget.MuscleNotes.WeeklyStat"
                 android:layout_marginEnd="4dp">
 
                 <TextView
@@ -80,7 +80,7 @@
 
             <LinearLayout
                 android:id="@+id/records_box"
-                style="@style/Widget.Treino.WeeklyStat"
+                style="@style/Widget.MuscleNotes.WeeklyStat"
                 android:layout_marginStart="4dp">
 
                 <TextView

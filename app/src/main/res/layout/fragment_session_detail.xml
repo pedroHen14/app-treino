@@ -45,7 +45,7 @@
 
             <TextView
                 android:id="@+id/makeup"
-                style="@style/Widget.Treino.OutlineBadge"
+                style="@style/Widget.MuscleNotes.OutlineBadge"
                 android:layout_marginTop="8dp"
                 android:visibility="gone"
                 tools:text="Reposição de ter"

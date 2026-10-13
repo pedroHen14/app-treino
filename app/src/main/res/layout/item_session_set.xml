@@ -35,7 +35,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/weight_layout"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+            style="@style/Widget.MuscleNotes.TextInputLayout.Dense"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -64,7 +64,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/reps_layout"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+            style="@style/Widget.MuscleNotes.TextInputLayout.Dense"
             android:layout_width="72dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -100,7 +100,7 @@
 
     <TextView
         android:id="@+id/record"
-        style="@style/Widget.Treino.RecordBadge"
+        style="@style/Widget.MuscleNotes.RecordBadge"
         android:layout_marginStart="64dp"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="4dp"

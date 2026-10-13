@@ -38,7 +38,7 @@
     <!-- Abaixo dos valores: o texto do recorde é longo e espremeria a carga numa linha só. -->
     <TextView
         android:id="@+id/record"
-        style="@style/Widget.Treino.RecordBadge"
+        style="@style/Widget.MuscleNotes.RecordBadge"
         android:layout_marginStart="72dp"
         android:layout_marginTop="4dp"
         android:importantForAccessibility="no"

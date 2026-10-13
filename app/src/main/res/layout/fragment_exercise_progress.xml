@@ -64,7 +64,7 @@
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
             <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.Material3.CardView.Outlined"
+                style="@style/Widget.MuscleNotes.Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp">
@@ -111,7 +111,7 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.Material3.CardView.Outlined"
+                    style="@style/Widget.MuscleNotes.Card"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="6dp"
@@ -152,7 +152,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.Material3.CardView.Outlined"
+                    style="@style/Widget.MuscleNotes.Card"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="6dp"
@@ -185,11 +185,11 @@
             </LinearLayout>
 
             <TextView
-                style="@style/Widget.Treino.SectionHeader"
+                style="@style/Widget.MuscleNotes.SectionHeader"
                 android:text="@string/progress_executions" />
 
             <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.Material3.CardView.Outlined"
+                style="@style/Widget.MuscleNotes.Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

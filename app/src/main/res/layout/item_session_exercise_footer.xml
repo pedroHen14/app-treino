@@ -7,7 +7,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/add_set"
-        style="@style/Widget.Material3.Button.TextButton.Icon"
+        style="@style/Widget.MuscleNotes.Button.TextButton.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/session_add_set"
