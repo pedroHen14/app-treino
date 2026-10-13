@@ -15,10 +15,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.pedro.treinoapp.R
+import com.pedro.treinoapp.core.ui.bindPrimaryAction
+import com.pedro.treinoapp.core.ui.primaryActionButton
 import com.pedro.treinoapp.databinding.FragmentSessionBinding
 import com.pedro.treinoapp.feature.exercise.presentation.catalog.ExerciseCatalogFragment
 import com.pedro.treinoapp.feature.history.presentation.progress.ExerciseProgressFragment
@@ -80,8 +81,7 @@ class SessionFragment : Fragment() {
             }
             true
         }
-        // Item com actionLayout não repassa o toque ao listener do menu.
-        finishButton()?.setOnClickListener { finishOrSave() }
+        binding.toolbar.bindPrimaryAction(R.id.action_finish, ::finishOrSave)
         binding.list.adapter = adapter
         // Cada digitação gera uma nova lista; sem animação de troca os campos não piscam.
         binding.list.itemAnimator = null
@@ -100,10 +100,6 @@ class SessionFragment : Fragment() {
     private fun finishOrSave() {
         if (viewModel.uiState.value.isEditing) viewModel.saveEdit() else viewModel.requestFinish()
     }
-
-    /** Botão brasa do item Finalizar (actionLayout), a ação principal da tela. */
-    private fun finishButton(): MaterialButton? =
-        binding.toolbar.menu.findItem(R.id.action_finish)?.actionView?.findViewById(R.id.action_button)
 
     private fun setUpTimerPanel() {
         binding.timerPause.setOnClickListener {
@@ -144,7 +140,7 @@ class SessionFragment : Fragment() {
         binding.toolbar.subtitle = if (state.isEditing) templateTitle else null
         val finishTitle = if (state.isEditing) R.string.action_save else R.string.session_finish
         binding.toolbar.menu.findItem(R.id.action_finish)?.setTitle(finishTitle)
-        finishButton()?.setText(finishTitle)
+        binding.toolbar.primaryActionButton(R.id.action_finish)?.setText(finishTitle)
         binding.toolbar.menu.findItem(R.id.action_discard)?.isVisible = !state.isEditing
         binding.timerPanel.isVisible = !state.isEditing
         saveEditOnBack.isEnabled = state.isEditing

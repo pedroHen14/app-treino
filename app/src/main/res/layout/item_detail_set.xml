@@ -6,8 +6,8 @@
     android:focusable="true"
     android:minHeight="36dp"
     android:orientation="vertical"
-    android:paddingVertical="4dp"
-    android:paddingEnd="8dp">
+    android:paddingVertical="@dimen/space_1"
+    android:paddingEnd="@dimen/space_2">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,8 +20,8 @@
             android:layout_width="72dp"
             android:layout_height="wrap_content"
             android:importantForAccessibility="no"
-            android:textAppearance="?attr/textAppearanceBodyMedium"
-            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textAppearance="@style/TextAppearance.MuscleNotes.Label"
+            android:textColor="@color/ink_muted"
             tools:text="Série 1" />
 
         <TextView
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:importantForAccessibility="no"
-            android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:textAppearance="@style/TextAppearance.MuscleNotes.Load"
             tools:text="62,5 kg × 10" />
 
     </LinearLayout>
@@ -40,7 +40,7 @@
         android:id="@+id/record"
         style="@style/Widget.MuscleNotes.RecordBadge"
         android:layout_marginStart="72dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="@dimen/space_1"
         android:importantForAccessibility="no"
         android:visibility="gone"
         tools:text="Novo recorde de carga"

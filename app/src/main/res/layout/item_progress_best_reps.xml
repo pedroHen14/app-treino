@@ -3,6 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="4dp"
-    android:textAppearance="?attr/textAppearanceBodyMedium"
+    android:paddingTop="@dimen/space_1"
+    android:textAppearance="@style/TextAppearance.MuscleNotes.Load"
     tools:text="62,5 kg × 9" />

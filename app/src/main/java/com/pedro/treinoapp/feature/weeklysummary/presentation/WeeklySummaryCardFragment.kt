@@ -1,12 +1,11 @@
 package com.pedro.treinoapp.feature.weeklysummary.presentation
 
 import android.content.res.ColorStateList
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.AttrRes
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.view.isInvisible
@@ -16,8 +15,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.google.android.material.R as MaterialR
-import com.google.android.material.color.MaterialColors
 import com.pedro.treinoapp.R
 import com.pedro.treinoapp.databinding.FragmentWeeklySummaryCardBinding
 import com.pedro.treinoapp.databinding.ItemWeekDayBinding
@@ -101,8 +98,7 @@ class WeeklySummaryCardFragment : Fragment() {
         view.statusIcon.imageTintList = style.iconColor?.let { ColorStateList.valueOf(color(it)) }
 
         view.dayLabel.text = day.date.formatDayOfWeek()
-        view.dayLabel.setTypeface(null, if (isToday) Typeface.BOLD else Typeface.NORMAL)
-        view.dayLabel.setTextColor(color(if (isToday) MaterialR.attr.colorOnSurface else MaterialR.attr.colorOnSurfaceVariant))
+        view.dayLabel.setTextColor(color(if (isToday) R.color.ink else R.color.ink_muted))
 
         val dayName = day.date.fullDayName()
         val status = getString(style.label)
@@ -113,7 +109,7 @@ class WeeklySummaryCardFragment : Fragment() {
         }
     }
 
-    private fun color(@AttrRes attr: Int): Int = MaterialColors.getColor(binding.root, attr)
+    private fun color(@ColorRes res: Int): Int = requireContext().getColor(res)
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -125,23 +121,23 @@ class WeeklySummaryCardFragment : Fragment() {
 /** Cor e ícone do círculo do dia; sem cor de fundo, o círculo é vazado. */
 private data class DayStyle(
     @DrawableRes val background: Int,
-    @AttrRes val backgroundColor: Int?,
+    @ColorRes val backgroundColor: Int?,
     @DrawableRes val icon: Int?,
-    @AttrRes val iconColor: Int?,
+    @ColorRes val iconColor: Int?,
     @StringRes val label: Int,
 )
 
 private fun DayStatus.style(): DayStyle = when (this) {
     DayStatus.DONE -> DayStyle(
-        R.drawable.bg_week_day, androidx.appcompat.R.attr.colorPrimary, R.drawable.ic_check, MaterialR.attr.colorOnPrimary,
+        R.drawable.bg_week_day, R.color.ink, R.drawable.ic_check, R.color.surface,
         R.string.weekly_summary_status_done,
     )
     DayStatus.MADE_UP -> DayStyle(
-        R.drawable.bg_week_day, MaterialR.attr.colorPrimaryContainer, R.drawable.ic_undo, MaterialR.attr.colorOnPrimaryContainer,
+        R.drawable.bg_week_day, R.color.rule, R.drawable.ic_undo, R.color.ink,
         R.string.weekly_summary_status_made_up,
     )
     DayStatus.MISSED -> DayStyle(
-        R.drawable.bg_week_day, MaterialR.attr.colorErrorContainer, R.drawable.ic_close, MaterialR.attr.colorOnErrorContainer,
+        R.drawable.bg_week_day, R.color.perigo, R.drawable.ic_close, R.color.surface,
         R.string.weekly_summary_status_missed,
     )
     DayStatus.PENDING -> DayStyle(
@@ -149,7 +145,7 @@ private fun DayStatus.style(): DayStyle = when (this) {
         R.string.weekly_summary_status_pending,
     )
     DayStatus.REST -> DayStyle(
-        R.drawable.bg_week_day, MaterialR.attr.colorSurfaceContainerHighest, R.drawable.ic_remove, MaterialR.attr.colorOnSurfaceVariant,
+        R.drawable.bg_week_day, R.color.surface, R.drawable.ic_remove, R.color.ink_muted,
         R.string.weekly_summary_status_rest,
     )
 }

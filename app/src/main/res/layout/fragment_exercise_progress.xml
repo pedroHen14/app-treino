@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="24dp"
+        android:padding="@dimen/space_6"
         android:text="@string/progress_empty"
         android:textAppearance="?attr/textAppearanceBodyLarge"
         android:visibility="gone" />
@@ -34,9 +34,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="16dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="24dp">
+            android:paddingHorizontal="@dimen/space_4"
+            android:paddingTop="@dimen/space_2"
+            android:paddingBottom="@dimen/space_6">
 
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:id="@+id/metric"
@@ -67,36 +67,36 @@
                 style="@style/Widget.MuscleNotes.Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp">
+                android:layout_marginTop="@dimen/space_3">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="@dimen/space_4">
 
                     <TextView
                         android:id="@+id/chart_label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="?attr/textAppearanceBodyMedium"
-                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:textColor="@color/ink_muted"
                         tools:text="Carga máxima por sessão (kg)" />
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:id="@+id/chart"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
-                        android:layout_marginTop="8dp" />
+                        android:layout_marginTop="@dimen/space_2" />
 
                     <TextView
                         android:id="@+id/chart_hint"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="@dimen/space_2"
                         android:text="@string/progress_chart_single"
                         android:textAppearance="?attr/textAppearanceBodySmall"
-                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:textColor="@color/ink_muted"
                         android:visibility="gone" />
 
                 </LinearLayout>
@@ -106,7 +106,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="@dimen/space_3"
                 android:baselineAligned="false"
                 android:orientation="horizontal">
 
@@ -123,20 +123,20 @@
                         android:layout_height="wrap_content"
                         android:focusable="true"
                         android:orientation="vertical"
-                        android:padding="12dp">
+                        android:padding="@dimen/space_3">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/progress_record_weight"
-                            android:textAppearance="?attr/textAppearanceLabelMedium"
-                            android:textColor="?attr/colorOnSurfaceVariant" />
+                            android:textAppearance="@style/TextAppearance.MuscleNotes.Label"
+                            android:textColor="@color/ink_muted" />
 
                         <TextView
                             android:id="@+id/max_weight"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?attr/textAppearanceTitleLarge"
+                            android:textAppearance="@style/TextAppearance.MuscleNotes.LoadXl"
                             tools:text="62,5 kg × 8" />
 
                         <TextView
@@ -144,7 +144,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textAppearance="?attr/textAppearanceBodySmall"
-                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textColor="@color/ink_muted"
                             tools:text="Qui, 8 out" />
 
                     </LinearLayout>
@@ -162,15 +162,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="12dp">
+                        android:padding="@dimen/space_3">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:accessibilityHeading="true"
                             android:text="@string/progress_best_reps"
-                            android:textAppearance="?attr/textAppearanceLabelMedium"
-                            android:textColor="?attr/colorOnSurfaceVariant" />
+                            android:textAppearance="@style/TextAppearance.MuscleNotes.Label"
+                            android:textColor="@color/ink_muted" />
 
                         <LinearLayout
                             android:id="@+id/best_reps"

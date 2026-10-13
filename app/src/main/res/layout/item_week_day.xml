@@ -15,18 +15,18 @@
         android:background="@drawable/bg_week_day"
         android:importantForAccessibility="no"
         android:padding="6dp"
-        tools:backgroundTint="?attr/colorPrimary"
+        tools:backgroundTint="@color/ink"
         tools:src="@drawable/ic_check"
-        tools:tint="?attr/colorOnPrimary" />
+        tools:tint="@color/surface" />
 
     <TextView
         android:id="@+id/day_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="@dimen/space_1"
         android:importantForAccessibility="no"
-        android:textAppearance="?attr/textAppearanceLabelSmall"
-        android:textColor="?attr/colorOnSurfaceVariant"
+        android:textAppearance="@style/TextAppearance.MuscleNotes.Label"
+        android:textColor="@color/ink_muted"
         tools:text="SEG" />
 
 </LinearLayout>

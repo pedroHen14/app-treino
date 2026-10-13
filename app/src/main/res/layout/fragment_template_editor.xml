@@ -26,8 +26,8 @@
         android:id="@+id/name_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="@dimen/space_4"
+        android:layout_marginTop="@dimen/space_2"
         android:hint="@string/template_name">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -44,17 +44,17 @@
         android:id="@+id/general_error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="@dimen/space_4"
+        android:layout_marginTop="@dimen/space_2"
         android:textAppearance="?attr/textAppearanceBodyMedium"
-        android:textColor="?attr/colorError"
+        android:textColor="@color/perigo"
         android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="@dimen/space_4"
+        android:layout_marginTop="@dimen/space_4"
         android:baselineAligned="true"
         android:orientation="horizontal">
 
@@ -63,15 +63,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/template_exercises_header"
-            android:textAppearance="?attr/textAppearanceLabelLarge"
-            android:textColor="?attr/colorOnSurfaceVariant" />
+            android:textAppearance="@style/TextAppearance.MuscleNotes.Label"
+            android:textColor="@color/ink_muted" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/template_drag_hint"
             android:textAppearance="?attr/textAppearanceBodySmall"
-            android:textColor="?attr/colorOnSurfaceVariant" />
+            android:textColor="@color/ink_muted" />
 
     </LinearLayout>
 
@@ -79,10 +79,10 @@
         android:id="@+id/list_error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginHorizontal="@dimen/space_4"
+        android:layout_marginTop="@dimen/space_1"
         android:textAppearance="?attr/textAppearanceBodyMedium"
-        android:textColor="?attr/colorError"
+        android:textColor="@color/perigo"
         android:visibility="gone" />
 
     <FrameLayout
@@ -95,7 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingVertical="4dp"
+            android:paddingVertical="@dimen/space_1"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_template_exercise" />
 
@@ -105,7 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:padding="16dp"
+            android:padding="@dimen/space_4"
             android:text="@string/template_exercises_empty"
             android:textAppearance="?attr/textAppearanceBodyLarge"
             android:visibility="gone" />
@@ -117,7 +117,7 @@
         style="@style/Widget.MuscleNotes.Button.TonalButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/space_4"
         android:text="@string/template_add_exercise"
         app:icon="@drawable/ic_add" />
 

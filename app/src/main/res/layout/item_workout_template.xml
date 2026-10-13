@@ -4,7 +4,7 @@
     style="@style/Widget.MuscleNotes.Card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp">
+    android:layout_marginBottom="@dimen/space_2">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,15 +12,15 @@
         android:gravity="center_vertical"
         android:minHeight="72dp"
         android:orientation="horizontal"
-        android:paddingStart="16dp"
-        android:paddingEnd="4dp">
+        android:paddingStart="@dimen/space_4"
+        android:paddingEnd="@dimen/space_1">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:paddingVertical="12dp">
+            android:paddingVertical="@dimen/space_3">
 
             <TextView
                 android:id="@+id/name"
@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textColor="@color/ink_muted"
                 tools:text="6 exercícios · Seg, Qui" />
 
         </LinearLayout>

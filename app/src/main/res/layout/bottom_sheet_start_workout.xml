@@ -7,13 +7,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="16dp">
+        android:paddingBottom="@dimen/space_4">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="24dp"
-            android:paddingVertical="8dp"
+            android:paddingHorizontal="@dimen/space_6"
+            android:paddingVertical="@dimen/space_2"
             android:text="@string/start_workout_title"
             android:textAppearance="?attr/textAppearanceTitleLarge" />
 
@@ -34,11 +34,11 @@
             android:id="@+id/empty_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="24dp"
-            android:paddingVertical="8dp"
+            android:paddingHorizontal="@dimen/space_6"
+            android:paddingVertical="@dimen/space_2"
             android:text="@string/start_workout_no_templates"
             android:textAppearance="?attr/textAppearanceBodyMedium"
-            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textColor="@color/ink_muted"
             android:visibility="gone" />
 
     </LinearLayout>

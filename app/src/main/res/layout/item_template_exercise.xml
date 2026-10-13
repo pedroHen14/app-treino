@@ -7,9 +7,9 @@
     android:background="?attr/colorSurface"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingVertical="8dp"
-    android:paddingStart="4dp"
-    android:paddingEnd="4dp">
+    android:paddingVertical="@dimen/space_2"
+    android:paddingStart="@dimen/space_1"
+    android:paddingEnd="@dimen/space_1">
 
     <ImageView
         android:id="@+id/drag_handle"
@@ -35,7 +35,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/space_1"
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -49,6 +49,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/sets"
+                    android:textAppearance="@style/TextAppearance.MuscleNotes.Load"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
@@ -63,13 +64,14 @@
                 style="@style/Widget.MuscleNotes.TextInputLayout.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="@dimen/space_2"
                 android:layout_weight="1"
                 android:hint="@string/template_reps_min"
                 app:expandedHintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/reps_min"
+                    android:textAppearance="@style/TextAppearance.MuscleNotes.Load"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
@@ -83,7 +85,7 @@
                 style="@style/Widget.MuscleNotes.TextInputLayout.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="@dimen/space_2"
                 android:layout_weight="1"
                 android:hint="@string/template_reps_max"
                 app:expandedHintEnabled="false"
@@ -91,6 +93,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/reps_max"
+                    android:textAppearance="@style/TextAppearance.MuscleNotes.Load"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionDone"
@@ -106,9 +109,9 @@
             android:id="@+id/error"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/space_1"
             android:textAppearance="?attr/textAppearanceBodySmall"
-            android:textColor="?attr/colorError"
+            android:textColor="@color/perigo"
             android:visibility="gone" />
 
     </LinearLayout>

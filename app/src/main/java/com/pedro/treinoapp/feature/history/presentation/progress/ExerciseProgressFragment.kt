@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,8 +17,6 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.google.android.material.R as MaterialR
-import com.google.android.material.color.MaterialColors
 import com.pedro.treinoapp.R
 import com.pedro.treinoapp.databinding.FragmentExerciseProgressBinding
 import com.pedro.treinoapp.databinding.ItemProgressBestRepsBinding
@@ -69,8 +68,10 @@ class ExerciseProgressFragment : Fragment() {
     }
 
     private fun setUpChart() = with(binding.chart) {
-        val textColor = MaterialColors.getColor(this, MaterialR.attr.colorOnSurfaceVariant)
-        val gridColor = MaterialColors.getColor(this, MaterialR.attr.colorOutlineVariant)
+        // Grade e eixos na pauta (rule), rótulos em ink_muted com a fonte dos números.
+        val textColor = context.getColor(R.color.ink_muted)
+        val gridColor = context.getColor(R.color.rule)
+        val numberTypeface = ResourcesCompat.getFont(context, R.font.ibm_plex_mono_medium)
         description.isEnabled = false
         legend.isEnabled = false
         axisRight.isEnabled = false
@@ -83,10 +84,12 @@ class ExerciseProgressFragment : Fragment() {
             position = XAxis.XAxisPosition.BOTTOM
             granularity = 1f
             setDrawGridLines(false)
+            typeface = numberTypeface
             this.textColor = textColor
             axisLineColor = gridColor
         }
         axisLeft.apply {
+            typeface = numberTypeface
             this.textColor = textColor
             this.gridColor = gridColor
             axisLineColor = gridColor
@@ -138,7 +141,13 @@ class ExerciseProgressFragment : Fragment() {
             }
             Entry(index.toFloat(), value)
         }
-        val lineColor = MaterialColors.getColor(binding.chart, androidx.appcompat.R.attr.colorPrimary)
+        // Carga máxima em brasa, volume em aço.
+        val lineColor = requireContext().getColor(
+            when (metric) {
+                ProgressMetric.MAX_WEIGHT -> R.color.brasa
+                ProgressMetric.VOLUME -> R.color.aco
+            },
+        )
         val dataSet = LineDataSet(entries, label).apply {
             color = lineColor
             setCircleColor(lineColor)
