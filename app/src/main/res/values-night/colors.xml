@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Muscle Notes — tema Ferro (escuro, padrão do app). Fonte da verdade: docs/design/tokens.json -->
+<resources>
+    <color name="surface">#141412</color>
+    <color name="surface_raised">#1E1E1B</color>
+    <color name="rule">#33322E</color>
+    <color name="ink">#F4F1EA</color>
+    <color name="ink_muted">#A3A097</color>
+    <color name="brasa">#FF5A1F</color>
+    <color name="on_brasa">#141412</color>
+    <color name="brasa_text">#FF7A45</color>
+    <color name="aco">#7FB0DE</color>
+    <color name="perigo">#FF8A80</color>
+</resources>
