@@ -66,3 +66,25 @@ O que o workflow vai precisar:
 - `actions/checkout` com `fetch-depth: 0` (senão o `versionCode` vira 1 e o `describe` não acha a tag).
 - Secrets: keystore em base64, as três senhas/alias e o JSON da conta de serviço.
 - Gerar `keystore.properties` e `key-generate-apk` no runner antes do `bundleRelease`.
+
+## 5. Política de privacidade e Segurança dos dados
+
+Texto em [`politica-de-privacidade.md`](politica-de-privacidade.md), publicado pelo GitHub Pages
+(branch `master`, pasta `/docs`) em:
+
+<https://pedrohen14.github.io/app-treino/politica-de-privacidade>
+
+Cole essa URL no Play Console em **Conteúdo do app → Política de privacidade**. Se o app passar a
+coletar algo (conta, sincronização, analytics, crash reporting), atualize a política e o formulário
+abaixo antes do release.
+
+Respostas para **Segurança dos dados**, de acordo com o que o app faz hoje:
+
+- **O app coleta ou compartilha dados do usuário?** Não. Treinos e preferências ficam só no aparelho
+  (Room e DataStore), sem servidor próprio.
+- **Busca no wger:** o termo digitado vai direto do aparelho para `wger.de`, por ação da pessoa, e o
+  desenvolvedor nunca o recebe. O Google isenta de "compartilhamento" a transferência iniciada pelo
+  usuário que ele espera que aconteça. Se quiser ser conservador, declare "Atividade no app → Histórico
+  de pesquisa no app" como coletado, processado de forma efêmera, opcional, para funcionalidade do app.
+- **Criptografia em trânsito:** sim (HTTPS).
+- **Exclusão:** a pessoa apaga os dados limpando o armazenamento do app ou desinstalando.
