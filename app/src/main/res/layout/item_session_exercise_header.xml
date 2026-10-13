@@ -1,43 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Cabeçalho do exercício na página do caderno; a pauta embaixo abre as linhas de série. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:paddingStart="16dp"
-    android:paddingTop="16dp"
-    android:paddingEnd="4dp">
+    android:orientation="vertical"
+    android:paddingTop="@dimen/space_6">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/space_4"
+        android:paddingEnd="@dimen/space_1"
+        android:paddingBottom="@dimen/space_2">
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceTitleMedium"
-            tools:text="Supino reto com barra" />
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/target"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceBodySmall"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            tools:text="Alvo: 8–12 reps" />
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:accessibilityHeading="true"
+                android:textAppearance="@style/TextAppearance.MuscleNotes.Heading"
+                tools:text="Supino reto com barra" />
+
+            <TextView
+                android:id="@+id/target"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MuscleNotes.Caption"
+                android:textColor="@color/ink_muted"
+                tools:text="Alvo: 8–12 reps" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/menu"
+            android:layout_width="@dimen/touch_min"
+            android:layout_height="@dimen/touch_min"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_more_vert"
+            tools:ignore="ContentDescription" />
 
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/menu"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_more_vert"
-        tools:ignore="ContentDescription" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/rule" />
 
 </LinearLayout>

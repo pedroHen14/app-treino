@@ -101,9 +101,10 @@
         <item name="cornerSize">@dimen/radius_md</item>
     </style>
 
-    <style name="ShapeAppearance.MuscleNotes.Pill" parent="">
+    <!-- Metade da altura da linha do timer: pílula recolhido, cantos largos com os controles abertos. -->
+    <style name="ShapeAppearance.MuscleNotes.RestTimer" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
+        <item name="cornerSize">28dp</item>
     </style>
 
     <style name="ShapeAppearance.MuscleNotes.BottomSheet" parent="">
@@ -181,6 +182,11 @@
         <item name="strokeWidth">1dp</item>
         <item name="cardElevation">0dp</item>
         <item name="shapeAppearance">@style/ShapeAppearance.MuscleNotes.Medium</item>
+    </style>
+
+    <!-- Timer de descanso flutuante: o único elemento em pílula (radius-pill quando recolhido). -->
+    <style name="Widget.MuscleNotes.Card.RestTimer">
+        <item name="shapeAppearance">@style/ShapeAppearance.MuscleNotes.RestTimer</item>
     </style>
 
     <!-- Campos: cantos radius_sm, borda rule, foco 2dp em brasa_text. -->
