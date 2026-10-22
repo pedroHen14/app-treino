@@ -18,12 +18,16 @@ import com.pedro.treinoapp.databinding.FragmentTodayWorkoutCardBinding
 import com.pedro.treinoapp.feature.session.domain.model.TodayPlan
 import com.pedro.treinoapp.feature.session.presentation.message
 import com.pedro.treinoapp.feature.session.presentation.openSession
+import com.pedro.treinoapp.feature.workout.presentation.labelRes
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.time.DayOfWeek
+import java.time.LocalDate
 
 /**
  * Card "Treino do dia" da tela Hoje: o treino previsto na agenda, ou descanso, com o botão para
- * iniciar. Com uma sessão em andamento, o card leva de volta a ela.
+ * iniciar. Com uma sessão em andamento, o card leva de volta a ela. Treino já feito ou adiantado
+ * não mostra o botão principal.
  */
 @AndroidEntryPoint
 class TodayWorkoutCardFragment : Fragment() {
@@ -85,6 +89,12 @@ class TodayWorkoutCardFragment : Fragment() {
                 binding.primaryButton.isVisible = false
                 binding.secondaryButton.isVisible = true
             }
+            plan.advancedOn != null -> {
+                binding.title.text = plan.scheduledTemplateName
+                binding.subtitle.text = advancedLabel(plan.advancedOn, plan.date)
+                binding.primaryButton.isVisible = false
+                binding.secondaryButton.isVisible = true
+            }
             else -> {
                 binding.title.text = plan.scheduledTemplateName
                 binding.subtitle.setText(R.string.today_workout_scheduled)
@@ -92,6 +102,15 @@ class TodayWorkoutCardFragment : Fragment() {
                 binding.secondaryButton.isVisible = true
             }
         }
+    }
+
+    private fun advancedLabel(advancedOn: LocalDate, today: LocalDate): String = when {
+        advancedOn == today.minusDays(1) -> getString(R.string.today_workout_advanced_yesterday)
+        advancedOn.dayOfWeek == DayOfWeek.SATURDAY -> getString(R.string.today_workout_advanced_on_saturday)
+        else -> getString(
+            R.string.today_workout_advanced_on,
+            getString(advancedOn.dayOfWeek.labelRes()).lowercase(resources.configuration.locales[0]),
+        )
     }
 
     private fun showPrimary(textRes: Int, onClick: () -> Unit) {
