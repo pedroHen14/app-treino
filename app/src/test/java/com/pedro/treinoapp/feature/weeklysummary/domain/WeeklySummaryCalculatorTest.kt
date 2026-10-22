@@ -5,11 +5,13 @@ import com.pedro.treinoapp.feature.history.domain.model.RecordedSet
 import com.pedro.treinoapp.feature.session.domain.TODAY
 import com.pedro.treinoapp.feature.session.domain.model.SessionDay
 import com.pedro.treinoapp.feature.weeklysummary.domain.model.DayStatus
+import com.pedro.treinoapp.feature.weeklysummary.domain.model.DayStatus.ADVANCED
 import com.pedro.treinoapp.feature.weeklysummary.domain.model.DayStatus.DONE
 import com.pedro.treinoapp.feature.weeklysummary.domain.model.DayStatus.MADE_UP
 import com.pedro.treinoapp.feature.weeklysummary.domain.model.DayStatus.MISSED
 import com.pedro.treinoapp.feature.weeklysummary.domain.model.DayStatus.PENDING
 import com.pedro.treinoapp.feature.weeklysummary.domain.model.DayStatus.REST
+import com.pedro.treinoapp.feature.weeklysummary.domain.model.DayStatus.TRAINED
 import com.pedro.treinoapp.feature.weeklysummary.domain.model.WeekDay
 import com.pedro.treinoapp.feature.weeklysummary.domain.model.WeeklySummary
 import com.pedro.treinoapp.feature.workout.domain.model.ScheduleDay
@@ -80,10 +82,52 @@ class WeeklySummaryCalculatorTest {
         val summary = calculate(listOf(SessionDay(monday, 1, null), SessionDay(wednesday, 2, makeupForDate = tuesday)))
 
         assertEquals(MADE_UP, summary.days[1].status)
-        assertEquals(REST, summary.days[2].status)
+        assertEquals(WeekDay(wednesday, "Lower", TRAINED), summary.days[2])
         assertEquals(4, summary.plannedCount)
         assertEquals(2, summary.doneCount)
         assertEquals(0, summary.extraCount)
+    }
+
+    @Test
+    fun `advanced day counts as done, the rest day it was done on is trained and nothing is extra`() {
+        val summary = calculate(listOf(SessionDay(wednesday, 1, makeupForDate = TODAY)), today = wednesday)
+
+        assertEquals(WeekDay(wednesday, "Upper", TRAINED), summary.days[2])
+        assertEquals(WeekDay(TODAY, "Upper", ADVANCED), summary.days[3])
+        assertEquals(listOf(MISSED, MISSED, TRAINED, ADVANCED, PENDING, REST, REST), summary.statuses())
+        assertEquals(4, summary.plannedCount)
+        assertEquals(1, summary.doneCount)
+        assertEquals(0, summary.extraCount)
+    }
+
+    @Test
+    fun `advance done on a scheduled day keeps that day's own status`() {
+        val summary = calculate(listOf(SessionDay(TODAY, 2, makeupForDate = friday)))
+
+        assertEquals(PENDING, summary.days[3].status)
+        assertEquals(ADVANCED, summary.days[4].status)
+        assertEquals(0, summary.extraCount)
+    }
+
+    @Test
+    fun `session of the day itself wins over an earlier advance, which becomes extra`() {
+        val summary = calculate(
+            listOf(SessionDay(wednesday, 2, makeupForDate = friday), SessionDay(friday, 2, null)),
+            today = sunday,
+        )
+
+        assertEquals(DONE, summary.days[4].status)
+        assertEquals(REST, summary.days[2].status)
+        assertEquals(1, summary.extraCount)
+    }
+
+    @Test
+    fun `advance of a day that is no longer scheduled is extra and leaves the rest day as rest`() {
+        val summary = calculate(listOf(SessionDay(wednesday, 2, makeupForDate = friday)), schedule = schedule(MONDAY to 1))
+
+        assertEquals(REST, summary.days[2].status)
+        assertEquals(REST, summary.days[4].status)
+        assertEquals(1, summary.extraCount)
     }
 
     @Test

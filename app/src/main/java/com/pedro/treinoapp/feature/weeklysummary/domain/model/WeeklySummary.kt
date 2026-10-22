@@ -9,6 +9,9 @@ enum class DayStatus {
     /** Dia agendado que não foi feito, mas teve uma sessão de reposição. */
     MADE_UP,
 
+    /** Dia agendado cumprido antes, por uma sessão de um dia anterior que o adiantou. */
+    ADVANCED,
+
     /** Dia agendado, hoje ou adiante, ainda não cumprido. */
     PENDING,
 
@@ -17,9 +20,15 @@ enum class DayStatus {
 
     /** Dia sem modelo na agenda. */
     REST,
+
+    /** Dia sem modelo na agenda em que houve sessão que repôs ou adiantou outro dia. */
+    TRAINED,
 }
 
-/** Um dia da semana corrente. `templateName` é o modelo agendado; nulo no descanso. */
+/**
+ * Um dia da semana corrente. `templateName` é o modelo agendado; nulo no descanso. Em [DayStatus.TRAINED],
+ * é o modelo do dia que a sessão cumpriu.
+ */
 data class WeekDay(
     val date: LocalDate,
     val templateName: String?,
@@ -37,8 +46,12 @@ data class WeeklySummary(
     val volume: Long,
     val recordCount: Int,
 ) {
-    val plannedCount: Int get() = days.count { it.status != DayStatus.REST }
+    val plannedCount: Int get() = days.count { it.status != DayStatus.REST && it.status != DayStatus.TRAINED }
 
-    /** Reposto conta como cumprido. */
-    val doneCount: Int get() = days.count { it.status == DayStatus.DONE || it.status == DayStatus.MADE_UP }
+    /** Reposto e adiantado contam como cumpridos. */
+    val doneCount: Int get() = days.count { it.status in DONE_STATUSES }
+
+    private companion object {
+        val DONE_STATUSES = setOf(DayStatus.DONE, DayStatus.MADE_UP, DayStatus.ADVANCED)
+    }
 }
