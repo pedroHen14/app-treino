@@ -181,4 +181,27 @@ class SessionRepositoryTest {
             repository.observeFinishedSessionDays(monday, sunday).first(),
         )
     }
+
+    @Test
+    fun advanceDateComesFromTheEarliestFinishedSessionBeforeTheDay() = runBlocking {
+        val friday = today.plusDays(1)
+        repository.finish(create(today, makeupForDate = friday), start)
+        repository.finish(create(today.minusDays(1), makeupForDate = friday), start)
+        create(today.minusDays(2), makeupForDate = friday)
+        repository.finish(create(friday.plusDays(1), makeupForDate = friday), start)
+
+        assertEquals(today.minusDays(1), repository.observeAdvanceDateFor(friday).first())
+        assertNull(repository.observeAdvanceDateFor(today).first())
+    }
+
+    @Test
+    fun makeupForDateCanBeChangedAndCleared() = runBlocking {
+        val id = create(today)
+
+        repository.setMakeupForDate(id, today.plusDays(1))
+        assertEquals(today.plusDays(1), repository.get(id)!!.makeupForDate)
+
+        repository.setMakeupForDate(id, null)
+        assertNull(repository.get(id)!!.makeupForDate)
+    }
 }

@@ -58,6 +58,15 @@ abstract class SessionDao {
     @Query("SELECT template_id FROM workout_session WHERE date = :date AND finished_at IS NOT NULL")
     abstract fun observeFinishedTemplateIdsOn(date: LocalDate): Flow<List<Long?>>
 
+    @Query(
+        "SELECT date FROM workout_session WHERE makeup_for_date = :date AND date < :date " +
+            "AND finished_at IS NOT NULL ORDER BY date, started_at LIMIT 1",
+    )
+    abstract fun observeAdvanceDateFor(date: LocalDate): Flow<LocalDate?>
+
+    @Query("UPDATE workout_session SET makeup_for_date = :date WHERE id = :sessionId")
+    abstract suspend fun updateMakeupForDate(sessionId: Long, date: LocalDate?)
+
     @Query("SELECT date, template_id, makeup_for_date FROM workout_session WHERE date BETWEEN :from AND :to")
     abstract suspend fun getSessionDays(from: LocalDate, to: LocalDate): List<SessionDayRow>
 

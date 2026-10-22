@@ -33,6 +33,14 @@ class FakeSessionRepository(initial: List<WorkoutSession> = emptyList()) : Sessi
     override fun observeFinishedTemplateIdsOn(date: LocalDate): Flow<List<Long?>> =
         sessions.map { list -> list.filter { it.date == date && !it.isActive }.map { it.templateId } }
 
+    override fun observeAdvanceDateFor(date: LocalDate): Flow<LocalDate?> =
+        sessions.map { list ->
+            list.filter { it.makeupForDate == date && it.date < date && !it.isActive }.minOfOrNull { it.date }
+        }
+
+    override suspend fun setMakeupForDate(sessionId: Long, date: LocalDate?) =
+        editSession(sessionId) { it.copy(makeupForDate = date) }
+
     override suspend fun getSessionDays(from: LocalDate, to: LocalDate): List<SessionDay> =
         sessions.value.filter { it.date in from..to }.map { it.toSessionDay() }
 

@@ -9,7 +9,7 @@ import java.time.Clock
 import java.time.LocalDate
 import javax.inject.Inject
 
-/** Treino previsto para hoje na agenda, ou descanso, e a sessão em andamento. */
+/** Treino previsto para hoje na agenda, ou descanso, se já foi adiantado e a sessão em andamento. */
 class ObserveTodayPlanUseCase @Inject constructor(
     private val observeSchedule: ObserveWeeklyScheduleUseCase,
     private val sessions: SessionRepository,
@@ -21,7 +21,8 @@ class ObserveTodayPlanUseCase @Inject constructor(
             observeSchedule(),
             sessions.observeActive(),
             sessions.observeFinishedTemplateIdsOn(today),
-        ) { schedule, active, finishedTemplateIds ->
+            sessions.observeAdvanceDateFor(today),
+        ) { schedule, active, finishedTemplateIds, advancedOn ->
             val day = schedule.first { it.dayOfWeek == today.dayOfWeek }
             TodayPlan(
                 date = today,
@@ -30,6 +31,7 @@ class ObserveTodayPlanUseCase @Inject constructor(
                 isScheduledDone = day.templateId != null && day.templateId in finishedTemplateIds,
                 activeSessionId = active?.id,
                 activeSessionName = active?.templateName,
+                advancedOn = advancedOn.takeIf { day.templateId != null },
             )
         }
     }

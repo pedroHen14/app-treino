@@ -1,5 +1,7 @@
 package com.pedro.treinoapp.feature.session.domain.model
 
+import com.pedro.treinoapp.core.time.weekEnd
+import com.pedro.treinoapp.core.time.weekStart
 import com.pedro.treinoapp.feature.workout.domain.model.RepRange
 import java.time.Instant
 import java.time.LocalDate
@@ -7,7 +9,8 @@ import java.time.LocalDate
 /**
  * Sessão de treino. Guarda o que foi executado, independente do modelo de origem:
  * `templateName` é uma cópia e `templateId` vira nulo se o modelo for excluído.
- * `finishedAt` nulo indica sessão em andamento; `makeupForDate` é o dia reposto, se for reposição.
+ * `finishedAt` nulo indica sessão em andamento. `makeupForDate` é o dia da agenda que a sessão cumpre:
+ * anterior a `date` numa reposição, posterior num adiantamento.
  */
 data class WorkoutSession(
     val id: Long,
@@ -75,7 +78,11 @@ data class NewSessionExercise(
     val sets: List<WorkoutSet>,
 )
 
-/** Resumo usado para saber quais dias da semana já tiveram treino. */
+/** Dia que uma sessão de [sessionDate] pode cumprir: outro dia da mesma semana (segunda a domingo). */
+fun isLinkableDay(day: LocalDate, sessionDate: LocalDate): Boolean =
+    day != sessionDate && day in sessionDate.weekStart()..sessionDate.weekEnd()
+
+/** Resumo usado para saber quais dias da semana já tiveram treino. `makeupForDate` como em [WorkoutSession]. */
 data class SessionDay(
     val date: LocalDate,
     val templateId: Long?,
