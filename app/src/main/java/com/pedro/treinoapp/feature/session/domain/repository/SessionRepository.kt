@@ -22,6 +22,9 @@ interface SessionRepository {
     /** Templates (ids) das sessões finalizadas no dia. */
     fun observeFinishedTemplateIdsOn(date: LocalDate): Flow<List<Long?>>
 
+    /** Data da primeira sessão finalizada, anterior a [date], que adiantou [date]; nula se nenhuma. */
+    fun observeAdvanceDateFor(date: LocalDate): Flow<LocalDate?>
+
     /** Sessões com data entre [from] e [to], inclusive. */
     suspend fun getSessionDays(from: LocalDate, to: LocalDate): List<SessionDay>
 
@@ -50,5 +53,8 @@ interface SessionRepository {
      * [completedAt]; as vazias e os exercícios que ficarem sem séries são descartados.
      */
     suspend fun saveEdit(sessionId: Long, completedAt: Instant)
+
+    /** Define o dia da agenda que a sessão cumpre; nulo deixa a sessão sem vínculo. */
+    suspend fun setMakeupForDate(sessionId: Long, date: LocalDate?)
     suspend fun delete(sessionId: Long)
 }

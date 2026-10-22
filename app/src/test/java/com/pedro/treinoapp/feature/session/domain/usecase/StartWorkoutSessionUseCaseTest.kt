@@ -101,13 +101,24 @@ class StartWorkoutSessionUseCaseTest {
     }
 
     @Test
-    fun `makeup date must be before today in the current week`() = runTest {
+    fun `advanced date is linked to the session`() = runTest {
+        val repository = FakeSessionRepository()
+        val friday = TODAY.plusDays(1)
+
+        val id = (startWith(repository)(templateId = 1, makeupForDate = friday) as SessionResult.Success).value
+
+        assertEquals(friday, repository.get(id)!!.makeupForDate)
+    }
+
+    @Test
+    fun `linked date must be another day of the current week`() = runTest {
         val start = startWith(FakeSessionRepository())
         val invalid = SessionResult.Failure(SessionError.InvalidMakeupDate)
 
         assertEquals(invalid, start(templateId = 1, makeupForDate = TODAY))
         assertEquals(invalid, start(templateId = 1, makeupForDate = TODAY.minusDays(4)))
-        assertEquals(invalid, start(templateId = 1, makeupForDate = TODAY.plusDays(1)))
+        assertEquals(invalid, start(templateId = 1, makeupForDate = TODAY.plusDays(4)))
         assertEquals(invalid, start(templateId = null, makeupForDate = TODAY.minusDays(1)))
+        assertEquals(invalid, start(templateId = null, makeupForDate = TODAY.plusDays(1)))
     }
 }

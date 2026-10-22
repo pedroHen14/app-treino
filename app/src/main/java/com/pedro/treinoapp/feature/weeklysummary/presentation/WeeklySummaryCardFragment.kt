@@ -136,6 +136,14 @@ private fun DayStatus.style(): DayStyle = when (this) {
         R.drawable.bg_week_day, R.color.rule, R.drawable.ic_undo, R.color.ink,
         R.string.weekly_summary_status_made_up,
     )
+    DayStatus.ADVANCED -> DayStyle(
+        R.drawable.bg_week_day, R.color.rule, R.drawable.ic_redo, R.color.ink,
+        R.string.weekly_summary_status_advanced,
+    )
+    DayStatus.TRAINED -> DayStyle(
+        R.drawable.bg_week_day, R.color.surface_raised, R.drawable.ic_check, R.color.ink_muted,
+        R.string.weekly_summary_status_trained,
+    )
     DayStatus.MISSED -> DayStyle(
         R.drawable.bg_week_day, R.color.perigo, R.drawable.ic_close, R.color.surface,
         R.string.weekly_summary_status_missed,

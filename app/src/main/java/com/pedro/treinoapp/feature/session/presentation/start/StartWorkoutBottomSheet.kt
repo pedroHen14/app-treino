@@ -82,6 +82,7 @@ class StartWorkoutBottomSheet : BottomSheetDialogFragment() {
     private fun handleEvent(event: StartWorkoutEvent) {
         when (event) {
             is StartWorkoutEvent.AskMakeup -> askMakeup(event.template, event.date)
+            is StartWorkoutEvent.AskAdvance -> askAdvance(event.template, event.date)
             is StartWorkoutEvent.OpenSession ->
                 findNavController().openSession(event.sessionId, popUpTo = R.id.startWorkoutBottomSheet)
             is StartWorkoutEvent.ShowError ->
@@ -92,13 +93,23 @@ class StartWorkoutBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
-    private fun askMakeup(template: WorkoutTemplateSummary, date: LocalDate) {
+    private fun askMakeup(template: WorkoutTemplateSummary, date: LocalDate) = askLink(
+        template, date,
+        R.string.start_workout_makeup_title, R.string.start_workout_makeup_message, R.string.start_workout_makeup_yes,
+    )
+
+    private fun askAdvance(template: WorkoutTemplateSummary, date: LocalDate) = askLink(
+        template, date,
+        R.string.start_workout_advance_title, R.string.start_workout_advance_message, R.string.start_workout_advance_yes,
+    )
+
+    private fun askLink(template: WorkoutTemplateSummary, date: LocalDate, title: Int, message: Int, yes: Int) {
         val day = getString(date.dayOfWeek.labelRes()).lowercase(resources.configuration.locales[0])
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.start_workout_makeup_title)
-            .setMessage(getString(R.string.start_workout_makeup_message, template.name, day))
-            .setNegativeButton(R.string.start_workout_makeup_no) { _, _ -> viewModel.onMakeupAnswered(template.id, null) }
-            .setPositiveButton(R.string.start_workout_makeup_yes) { _, _ -> viewModel.onMakeupAnswered(template.id, date) }
+            .setTitle(title)
+            .setMessage(getString(message, template.name, day))
+            .setNegativeButton(R.string.start_workout_makeup_no) { _, _ -> viewModel.onLinkAnswered(template.id, null) }
+            .setPositiveButton(yes) { _, _ -> viewModel.onLinkAnswered(template.id, date) }
             .show()
     }
 

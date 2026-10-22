@@ -41,6 +41,8 @@ class SessionRepositoryImpl @Inject constructor(
     override fun observeFinishedTemplateIdsOn(date: LocalDate): Flow<List<Long?>> =
         dao.observeFinishedTemplateIdsOn(date)
 
+    override fun observeAdvanceDateFor(date: LocalDate): Flow<LocalDate?> = dao.observeAdvanceDateFor(date)
+
     override suspend fun getSessionDays(from: LocalDate, to: LocalDate): List<SessionDay> =
         dao.getSessionDays(from, to).map { it.toDomain() }
 
@@ -78,6 +80,8 @@ class SessionRepositoryImpl @Inject constructor(
     override suspend fun finish(sessionId: Long, finishedAt: Instant) = dao.finish(sessionId, finishedAt)
 
     override suspend fun saveEdit(sessionId: Long, completedAt: Instant) = dao.saveEdit(sessionId, completedAt)
+
+    override suspend fun setMakeupForDate(sessionId: Long, date: LocalDate?) = dao.updateMakeupForDate(sessionId, date)
 
     override suspend fun delete(sessionId: Long) = dao.deleteSession(sessionId)
 }

@@ -1,10 +1,10 @@
 package com.pedro.treinoapp.feature.session.domain.usecase
 
-import com.pedro.treinoapp.core.time.weekStart
 import com.pedro.treinoapp.feature.session.domain.model.NewSessionExercise
 import com.pedro.treinoapp.feature.session.domain.model.NewWorkoutSession
 import com.pedro.treinoapp.feature.session.domain.model.SessionError
 import com.pedro.treinoapp.feature.session.domain.model.SessionResult
+import com.pedro.treinoapp.feature.session.domain.model.isLinkableDay
 import com.pedro.treinoapp.feature.session.domain.repository.SessionRepository
 import com.pedro.treinoapp.feature.workout.domain.repository.WorkoutTemplateRepository
 import java.time.Clock
@@ -13,8 +13,8 @@ import javax.inject.Inject
 
 /**
  * Cria a sessão de hoje a partir de um modelo, ou vazia com `templateId` nulo. Só pode haver
- * uma sessão em andamento. `makeupForDate`, quando informado, precisa ser um dia anterior
- * a hoje na semana corrente (segunda a domingo).
+ * uma sessão em andamento. `makeupForDate`, quando informado, é o dia reposto (anterior a hoje) ou
+ * adiantado (posterior) e precisa estar na semana corrente (segunda a domingo).
  */
 class StartWorkoutSessionUseCase @Inject constructor(
     private val repository: SessionRepository,
@@ -27,7 +27,7 @@ class StartWorkoutSessionUseCase @Inject constructor(
         if (repository.getActiveId() != null) return SessionResult.Failure(SessionError.AlreadyActive)
 
         val today = LocalDate.now(clock)
-        if (makeupForDate != null && (templateId == null || makeupForDate !in today.weekStart()..<today)) {
+        if (makeupForDate != null && (templateId == null || !isLinkableDay(makeupForDate, today))) {
             return SessionResult.Failure(SessionError.InvalidMakeupDate)
         }
         val template = templateId?.let { templates.getById(it) ?: return SessionResult.Failure(SessionError.NotFound) }

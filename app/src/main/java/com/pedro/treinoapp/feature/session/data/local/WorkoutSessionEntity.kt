@@ -10,8 +10,8 @@ import java.time.Instant
 import java.time.LocalDate
 
 /**
- * `finishedAt` nulo indica sessão em andamento. `makeupForDate` guarda o dia reposto,
- * quando a sessão é uma reposição.
+ * `finishedAt` nulo indica sessão em andamento. `makeupForDate` guarda o dia da agenda que a sessão
+ * cumpre: anterior a `date` numa reposição, posterior num adiantamento.
  */
 @Entity(
     tableName = "workout_session",

@@ -12,6 +12,7 @@ import com.pedro.treinoapp.feature.workout.domain.usecase.ObserveWeeklyScheduleU
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.time.DayOfWeek.MONDAY
@@ -46,6 +47,28 @@ class ObserveTodayPlanUseCaseTest {
         val plan = observe(FakeWeeklyScheduleRepository(mapOf(THURSDAY to 1)), sessions)().first()
 
         assertTrue(plan.isScheduledDone)
+    }
+
+    @Test
+    fun `scheduled workout advanced on an earlier day reports that day`() = runTest {
+        val tuesday = TODAY.minusDays(2)
+        val sessions = FakeSessionRepository(
+            listOf(session(5, tuesday, templateId = 1, makeupForDate = TODAY), session(6, TODAY.minusDays(1), templateId = 1)),
+        )
+
+        val plan = observe(FakeWeeklyScheduleRepository(mapOf(THURSDAY to 1)), sessions)().first()
+
+        assertEquals(tuesday, plan.advancedOn)
+        assertEquals(false, plan.isScheduledDone)
+    }
+
+    @Test
+    fun `active advance session does not count yet`() = runTest {
+        val sessions = FakeSessionRepository(listOf(session(5, TODAY.minusDays(1), templateId = 1, finished = false, makeupForDate = TODAY)))
+
+        val plan = observe(FakeWeeklyScheduleRepository(mapOf(THURSDAY to 1)), sessions)().first()
+
+        assertNull(plan.advancedOn)
     }
 
     @Test

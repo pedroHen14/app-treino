@@ -4,7 +4,7 @@ import java.time.LocalDate
 
 /**
  * O que a tela Hoje mostra sobre treino: o modelo agendado (nulo = descanso), se ele já foi
- * feito hoje e a sessão em andamento, se houver.
+ * feito hoje, o dia em que foi adiantado, se foi, e a sessão em andamento, se houver.
  */
 data class TodayPlan(
     val date: LocalDate,
@@ -13,6 +13,7 @@ data class TodayPlan(
     val isScheduledDone: Boolean,
     val activeSessionId: Long?,
     val activeSessionName: String?,
+    val advancedOn: LocalDate? = null,
 ) {
     val isRestDay: Boolean get() = scheduledTemplateId == null
 }
