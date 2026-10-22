@@ -61,9 +61,7 @@ class HistoryAdapter(
             binding.records.text =
                 context.resources.getQuantityString(R.plurals.history_record_count, session.recordCount, session.recordCount)
             binding.makeup.isVisible = session.makeupForDate != null
-            binding.makeup.text = session.makeupForDate?.let {
-                context.getString(R.string.history_makeup, it.formatDayOfWeek().lowercase())
-            }
+            binding.makeup.text = formatLinkedDay(session.date, session.makeupForDate, context)
             binding.root.contentDescription = listOfNotNull(
                 session.date.formatLong(),
                 binding.name.text,

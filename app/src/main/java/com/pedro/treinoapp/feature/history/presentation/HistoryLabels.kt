@@ -59,6 +59,13 @@ fun formatVolumeKg(volume: Long, context: Context): String {
 fun formatSet(weightGrams: Int, reps: Int, context: Context): String =
     context.getString(R.string.history_set, formatWeight(weightGrams), reps)
 
+/** "Reposição de ter" ou "Adiantamento de sex"; nulo para sessão sem vínculo com outro dia. */
+fun formatLinkedDay(date: LocalDate, makeupForDate: LocalDate?, context: Context): String? {
+    makeupForDate ?: return null
+    val label = if (makeupForDate > date) R.string.history_advance else R.string.history_makeup
+    return context.getString(label, makeupForDate.formatDayOfWeek().lowercase(PT_BR))
+}
+
 @StringRes
 fun RecordType.labelRes(): Int = when (this) {
     RecordType.MAX_WEIGHT -> R.string.record_max_weight

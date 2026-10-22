@@ -19,8 +19,8 @@ import com.pedro.treinoapp.R
 import com.pedro.treinoapp.databinding.FragmentSessionDetailBinding
 import com.pedro.treinoapp.databinding.ItemDetailExerciseBinding
 import com.pedro.treinoapp.databinding.ItemDetailSetBinding
-import com.pedro.treinoapp.feature.history.presentation.formatDayOfWeek
 import com.pedro.treinoapp.feature.history.presentation.formatDuration
+import com.pedro.treinoapp.feature.history.presentation.formatLinkedDay
 import com.pedro.treinoapp.feature.history.presentation.formatLong
 import com.pedro.treinoapp.feature.history.presentation.formatSet
 import com.pedro.treinoapp.feature.history.presentation.formatVolumeKg
@@ -28,8 +28,10 @@ import com.pedro.treinoapp.feature.history.presentation.labelRes
 import com.pedro.treinoapp.feature.history.presentation.progress.ExerciseProgressFragment
 import com.pedro.treinoapp.feature.session.presentation.message
 import com.pedro.treinoapp.feature.session.presentation.openSession
+import com.pedro.treinoapp.feature.workout.presentation.labelRes
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 /** Sessão finalizada, só leitura. Editar abre a tela da sessão no modo de edição. */
 @AndroidEntryPoint
@@ -55,6 +57,7 @@ class SessionDetailFragment : Fragment() {
         binding.toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.action_edit -> findNavController().openSession(viewModel.sessionId)
+                R.id.action_link -> chooseLinkedDay(viewModel.uiState.value)
                 R.id.action_delete -> confirmDelete()
                 else -> return@setOnMenuItemClickListener false
             }
@@ -83,7 +86,8 @@ class SessionDetailFragment : Fragment() {
             resources.getQuantityString(R.plurals.history_exercise_count, state.exercises.size, state.exercises.size),
         ).joinToString(" · ")
         binding.makeup.isVisible = state.makeupForDate != null
-        binding.makeup.text = state.makeupForDate?.let { getString(R.string.history_makeup, it.formatDayOfWeek().lowercase()) }
+        binding.makeup.text = formatLinkedDay(date, state.makeupForDate, requireContext())
+        binding.toolbar.menu.findItem(R.id.action_link).isVisible = state.canLink
         renderExercises(state.exercises)
     }
 
@@ -109,6 +113,27 @@ class SessionDetailFragment : Fragment() {
         }
     }
 
+    /** Escolha única entre os dias agendados da semana da sessão e "nenhum"; o vínculo atual vem marcado. */
+    private fun chooseLinkedDay(state: SessionDetailUiState) {
+        if (state.linkOptions.isEmpty() && state.makeupForDate == null) {
+            Snackbar.make(binding.root, R.string.session_detail_link_empty, Snackbar.LENGTH_SHORT).show()
+            return
+        }
+        val dates = listOf<LocalDate?>(null) + state.linkOptions.map { it.date }
+        val labels = listOf(getString(R.string.session_detail_link_none)) + state.linkOptions.map {
+            getString(R.string.session_detail_link_option, getString(it.date.dayOfWeek.labelRes()), it.templateName)
+        }
+        var selected = dates.indexOf(state.makeupForDate).coerceAtLeast(0)
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.session_detail_link)
+            .setSingleChoiceItems(labels.toTypedArray(), selected) { _, which -> selected = which }
+            .setNegativeButton(R.string.action_cancel, null)
+            .setPositiveButton(R.string.action_save) { _, _ ->
+                if (dates[selected] != state.makeupForDate) viewModel.link(dates[selected])
+            }
+            .show()
+    }
+
     private fun confirmDelete() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.session_detail_delete_title)
@@ -122,6 +147,8 @@ class SessionDetailFragment : Fragment() {
         when (event) {
             is SessionDetailEvent.ShowError ->
                 Snackbar.make(binding.root, event.error.message(requireContext()), Snackbar.LENGTH_SHORT).show()
+            SessionDetailEvent.Linked ->
+                Snackbar.make(binding.root, R.string.session_detail_linked, Snackbar.LENGTH_SHORT).show()
             SessionDetailEvent.Deleted -> {
                 Toast.makeText(requireContext(), R.string.session_detail_deleted, Toast.LENGTH_SHORT).show()
                 leave()
